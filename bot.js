@@ -59,14 +59,15 @@ function clearHistory(channelId) {
 // QUALITY OF LIFE FEATURE #3:
 // System Prompt (Bot's Personality!)
 // ===================================
-const SYSTEM_PROMPT = `You are a friendly, helpful AI assistant in a Discord server. 
-You're talking to people who might be young, so:
-- Keep your answers clear and easy to understand
-- Be encouraging and positive
-- If someone asks something inappropriate, politely redirect them
-- Use emojis sometimes to be friendly! 😊
-- Keep responses reasonably short (under 1500 characters when possible)
-- If you don't know something, it's okay to say so!`;
+const SYSTEM_PROMPT = `You are a smart, witty AI assistant in a Discord server.
+You're talking to people in their 20s, so:
+- Be casual and conversational, like a knowledgeable friend
+- Don't over-explain or be condescending
+- Try to avoid light humor and sarcasm
+- Be direct and get to the point
+- Use emojis sparingly, only when it adds to the vibe
+- Keep responses concise but informative
+- It's fine to say "I don't know" or suggest they Google something obscure`;
 
 // ===================================
 // THE MAIN CHAT FUNCTION
@@ -167,7 +168,72 @@ client.on('messageCreate', async (message) => {
         await message.reply('🧹 Memory cleared! I forgot our conversation. Let\'s start fresh!');
         return;
     }
+    // ===================================
+    // MATH SOLVER COMMAND
+    // ===================================
+    if (content.toLowerCase().startsWith('!math ')) {
+        const problem = content.slice(6).trim();
+        if (problem) {
+            const mathPrompt = `Solve this math problem step-by-step:
+${problem}
 
+Rules:
+- Show clear, numbered steps
+- Explain the reasoning briefly (assume the person knows basic math)
+- Skip obvious steps, focus on the tricky parts
+- Give the final answer clearly at the end
+- Keep it concise, no fluff`;
+
+            const response = await anthropic.messages.create({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 1024,
+                messages: [{ role: 'user', content: mathPrompt }],
+            });
+
+            const answer = response.content
+                .filter(block => block.type === 'text')
+                .map(block => block.text)
+                .join('\n\n');
+
+            await sendResponseWithTyping(message, answer);
+        } else {
+            await message.reply('🔢 Give me a math problem! Example: `!math 25 x 4 + 10`');
+        }
+        return;
+    }
+
+    // ===================================
+    // SUMMARY BOT COMMAND
+    // ===================================
+    if (content.toLowerCase().startsWith('!summary ')) {
+        const textToSummarize = content.slice(9).trim();
+        if (textToSummarize) {
+            const summaryPrompt = `Summarize this text:
+${textToSummarize}
+
+Rules:
+- Hit the key points, skip the filler
+- Use bullet points if it makes sense, otherwise just a short paragraph
+- Don't dumb it down
+- End with a TL;DR if it's a longer piece`;
+
+            const response = await anthropic.messages.create({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 1024,
+                messages: [{ role: 'user', content: summaryPrompt }],
+            });
+
+            const summary = response.content
+                .filter(block => block.type === 'text')
+                .map(block => block.text)
+                .join('\n\n');
+
+            await sendResponseWithTyping(message, summary);
+        } else {
+            await message.reply('📝 Give me something to summarize! Example: `!summary [paste a long paragraph here]`');
+        }
+        return;
+    }
     // Command: !help - Show what the bot can do
     if (content.toLowerCase() === '!help') {
         const helpMessage = `
@@ -179,6 +245,9 @@ client.on('messageCreate', async (message) => {
 
 **Special commands:**
 - \`!help\` - Shows this help message
+- \`!ask\` - Ask the bot a question
+- \`!math\` - Solve a math problem step-by-step 🔢
+- \`!summary\` - Summarize long text 📝
 - \`!clear\` - Makes me forget our conversation (fresh start!)
 
 **Tips:**
