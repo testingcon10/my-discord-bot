@@ -192,6 +192,49 @@ client.on('messageCreate', async (message) => {
             await message.reply("❌ Couldn't find that market. Check the ticker and try again.\nExample: `!kalshi KXHIGHNY`");
         }
         return;
+        // ===================================
+    // KALSHI SEARCH COMMAND (uses Claude)
+    // ===================================
+    if (content.toLowerCase().startsWith('!markets ')) {
+        const query = content.slice(9).trim();
+
+        if (!query) {
+            await message.reply("🔍 What markets are you looking for? Example: `!markets election odds`");
+            return;
+        }
+
+        try {
+            await message.channel.sendTyping();
+
+            const response = await anthropic.messages.create({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 1024,
+                messages: [{
+                    role: 'user',
+                    content: `Search for current Kalshi prediction markets related to: ${query}
+          
+Give me 3-5 relevant markets with their tickers if possible. Include current prices/odds if available. Keep it brief and scannable.`
+                }],
+                tools: [
+                    {
+                        type: "web_search_20250305",
+                        name: "web_search"
+                    }
+                ]
+            });
+
+            const answer = response.content
+                .filter(block => block.type === 'text')
+                .map(block => block.text)
+                .join('\n\n');
+
+            await sendResponseWithTyping(message, answer);
+        } catch (error) {
+            console.error('Markets search error:', error.message);
+            await message.reply("❌ Couldn't search markets right now. Try again later.");
+        }
+        return;
+    }
     }
 
     // =================================== 
