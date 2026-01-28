@@ -12,7 +12,9 @@
   "type": "commonjs",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
+    "axios": "^1.13.4",
     "discord.js": "^14.25.1",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "pdf-parse": "^2.4.5"
   }
 }

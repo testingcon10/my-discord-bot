@@ -6,6 +6,7 @@
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const Anthropic = require('@anthropic-ai/sdk');
 require('dotenv').config();
+const axios = require('axios');
 
 // Create the Discord bot
 const client = new Client({
@@ -156,7 +157,45 @@ client.on('messageCreate', async (message) => {
 
     // Get the message content
     const content = message.content.trim();
+    // ===================================
+    // KALSHI MARKET FEED COMMAND
+    // ===================================
+    if (content.toLowerCase().startsWith('!kalshi ')) {
+        const ticker = content.slice(8).trim().toUpperCase();
 
+        if (!ticker) {
+            await message.reply("📊 Give me a ticker! Example: `!kalshi KXHIGHNY`");
+            return;
+        }
+
+        try {
+            await message.channel.sendTyping();
+
+            // Fetch data from Kalshi's public API
+            const url = `https://api.elections.kalshi.com/trade-api/v2/markets/${ticker}`;
+            const response = await axios.get(url);
+            const market = response.data.market;
+
+            const priceMessage = `
+**📊 Kalshi Market: ${market.title}**
+
+- **Ticker:** ${market.ticker}
+- **Yes Price:** $${(market.yes_bid / 100).toFixed(2)}
+- **No Price:** $${(market.no_ask / 100).toFixed(2)}
+- **Status:** ${market.status}
+- **Closes:** ${new Date(market.close_time).toLocaleString()}
+      `;
+
+            await message.reply(priceMessage);
+        } catch (error) {
+            console.error('Kalshi Error:', error.message);
+            await message.reply("❌ Couldn't find that market. Check the ticker and try again.\nExample: `!kalshi KXHIGHNY`");
+        }
+        return;
+    }
+
+    // =================================== 
+    // (your other commands like !clear, !help, etc. continue below)
     // ===================================
     // QUALITY OF LIFE FEATURE #5:
     // Special Commands
@@ -248,7 +287,9 @@ Rules:
 - \`!ask\` - Ask the bot a question
 - \`!math\` - Solve a math problem step-by-step 🔢
 - \`!summary\` - Summarize long text 📝
-- \`!clear\` - Makes me forget our conversation (fresh start!)
+- \`!kalshi [ticker]\` - Get live Kalshi market prices 📊
+- \`!markets [topic]\` - Search for Kalshi markets 🔍
+- \`!clear\` - Fresh start, clear memory
 
 **Tips:**
 - I remember our conversation, so you can ask follow-up questions!
