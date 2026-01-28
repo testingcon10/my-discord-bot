@@ -208,8 +208,21 @@ client.on('messageCreate', async (message) => {
 
             // 2. Filter for Sports & Sort by Volume
             // We do the "thinking" here in JS, saving AI tokens
+           // 2. Filter for Sports & Sort by Volume (BROADER VERSION)
             const sportsMarkets = response.data.markets
-                .filter(m => m.category === 'Sports' || m.ticker.startsWith('NBA') || m.ticker.startsWith('NFL'))
+                .filter(m => {
+                    // Combine all text data into one big uppercase string to search
+                    const marketData = (m.title + m.category + m.ticker).toUpperCase();
+                    
+                    // Return TRUE if it contains any of these keywords
+                    return marketData.includes('SPORT') || 
+                           marketData.includes('NFL') || 
+                           marketData.includes('NBA') || 
+                           marketData.includes('FOOTBALL') || 
+                           marketData.includes('BASKETBALL') ||
+                           marketData.includes('SUPER BOWL') ||
+                           marketData.includes('UFC');
+                })
                 .sort((a, b) => b.volume - a.volume)
                 .slice(0, 5);
 
