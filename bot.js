@@ -185,7 +185,7 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
-// ===================================
+    // ===================================
     // COMMAND: !sports (Bulletproof & Compact)
     // ===================================
     if (lowerContent === '!sports') {
@@ -263,6 +263,28 @@ client.on('messageCreate', async (message) => {
                     if (p.markets?.[0]?.outcomePrices) {
                         try { 
                             // Polymarket prices are JSON strings '["0.5", "0.5"]'
+                            const parsed = JSON.parse(p.markets[0].outcomePrices);
+                            price = parseFloat(parsed[0] || 0).toFixed(2); 
+                        } catch(e){ console.log("Poly Parse Error", e); }
+                    }
+                    const shortTitle = p.title.length > 22 ? p.title.substring(0, 21) + '..' : p.title;
+                    polyText += `**${shortTitle}**\n└ 🟢 $${price} • 📊 $${formatVol(p.volume)}\n\n`;
+                });
+            } else { polyText = "⚠️ No high-vol data"; }
+
+            embed.addFields(
+                { name: '🇺🇸 Kalshi', value: kalshiText, inline: true },
+                { name: '🌐 Polymarket', value: polyText, inline: true }
+            );
+
+            await message.reply({ embeds: [embed] });
+
+        } catch (error) {
+            console.error('Sports Feed CRITICAL Error:', error); 
+            await message.reply("❌ Bot Error. Check your terminal for details.");
+        }
+        return;
+    }
 
     // --------------------------------------------------
     // COMMAND: !math [problem]
