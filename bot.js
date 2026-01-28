@@ -42,7 +42,6 @@ const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// Conversation state management
 const conversationHistory = new Map();
 
 // ==========================================
@@ -59,10 +58,7 @@ function getConversationHistory(channelId) {
 function addToHistory(channelId, role, content) {
     const history = getConversationHistory(channelId);
     history.push({ role, content });
-
-    if (history.length > HISTORY_LIMIT) {
-        history.shift();
-    }
+    if (history.length > HISTORY_LIMIT) history.shift();
 }
 
 function clearHistory(channelId) {
@@ -71,17 +67,13 @@ function clearHistory(channelId) {
 
 async function sendResponseWithTyping(message, response) {
     await message.channel.sendTyping();
-
     if (response.length <= 2000) {
         await message.reply(response);
     } else {
         const chunks = response.match(/.{1,1900}/gs) || [];
         for (let i = 0; i < chunks.length; i++) {
-            if (i === 0) {
-                await message.reply(chunks[i]);
-            } else {
-                await message.channel.send(chunks[i]);
-            }
+            if (i === 0) await message.reply(chunks[i]);
+            else await message.channel.send(chunks[i]);
         }
     }
 }
@@ -92,7 +84,7 @@ async function chatWithClaude(channelId, userMessage) {
         const history = getConversationHistory(channelId);
 
         const response = await anthropic.messages.create({
-            model: 'claude-sonnet-4-20250514', // Verify this model version is current
+            model: 'claude-sonnet-4-20250514',
             max_tokens: 1024,
             system: SYSTEM_PROMPT,
             messages: history,
@@ -139,7 +131,6 @@ client.on('messageCreate', async (message) => {
             await message.reply("📊 Please provide a ticker. Example: `!kalshi KXHIGHNY`");
             return;
         }
-
         try {
             await message.channel.sendTyping();
             const url = `https://api.elections.kalshi.com/trade-api/v2/markets/${ticker}`;
@@ -163,7 +154,7 @@ client.on('messageCreate', async (message) => {
     }
 
     // ===================================
-    // COMMAND: !sports (Bulletproof & Fixed)
+    // COMMAND: !sports (Paranoid Safety V3)
     // ===================================
     if (lowerContent === '!sports') {
         try {
@@ -175,7 +166,8 @@ client.on('messageCreate', async (message) => {
                 .catch(err => { console.error("Kalshi Failed:", err.message); return []; });
 
             const fetchPoly = axios.get('https://gamma-api.polymarket.com/events?limit=20&active=true&closed=false&sort=volume&order=desc')
-                .then(res => res.data)
+                // EXTRA SAFETY: Check if result is actually an array
+                .then(res => Array.isArray(res.data) ? res.data : [])
                 .catch(err => { console.error("Polymarket Failed:", err.message); return []; });
 
             // 2. Run both concurrently
@@ -199,7 +191,7 @@ client.on('messageCreate', async (message) => {
                 .sort((a, b) => b.volume - a.volume)
                 .slice(0, 2);
 
-            // 4. Process Polymarket (FIXED SYNTAX HERE)
+            // 4. Process Polymarket
             const polyTop2 = polyData
                 .filter(e => {
                     if (!e.title) return false;
@@ -252,7 +244,8 @@ client.on('messageCreate', async (message) => {
 
         } catch (error) {
             console.error('Sports Feed CRITICAL Error:', error); 
-            await message.reply("❌ Bot Error. Check your terminal for details.");
+            // I CHANGED THIS MESSAGE SO YOU KNOW IF THE UPDATE WORKED
+            await message.reply("❌ V3 ERROR: Check your terminal.");
         }
         return;
     }
@@ -264,7 +257,6 @@ client.on('messageCreate', async (message) => {
         const problem = content.slice(6).trim();
         if (problem) {
             const mathPrompt = `Solve this math problem step-by-step:\n${problem}\n\nRules:\n- Show clear, numbered steps\n- Explain briefly\n- Final answer at the end`;
-            
             try {
                 await message.channel.sendTyping();
                 const response = await anthropic.messages.create({
@@ -291,7 +283,6 @@ client.on('messageCreate', async (message) => {
         const textToSummarize = content.slice(9).trim();
         if (textToSummarize) {
             const summaryPrompt = `Summarize this text:\n${textToSummarize}\n\nRules:\n- Bullet points preferred\n- Include TL;DR if long`;
-            
             try {
                 await message.channel.sendTyping();
                 const response = await anthropic.messages.create({
