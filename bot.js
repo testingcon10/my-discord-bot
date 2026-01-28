@@ -3,7 +3,7 @@
 // ===================================
 
 // These lines load all the tools we need
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, EmbedBuilder } = require('discord.js');
 const Anthropic = require('@anthropic-ai/sdk');
 require('dotenv').config();
 const axios = require('axios');
@@ -193,7 +193,61 @@ client.on('messageCreate', async (message) => {
         }
         return;
     }
-        // ===================================
+    // ===================================
+    // NEW: LIVE SPORTS FEED (Token Optimized)
+    // ===================================
+    if (content.toLowerCase() === '!sports') {
+        try {
+            // OPTIMIZATION: We do NOT call 'anthropic' here.
+            // This runs purely on your CPU + Kalshi API (Free & Fast)
+            await message.channel.sendTyping();
+
+            // 1. Fetch 100 active markets
+            const url = 'https://api.elections.kalshi.com/trade-api/v2/markets?limit=100&status=open';
+            const response = await axios.get(url);
+
+            // 2. Filter for Sports & Sort by Volume
+            // We do the "thinking" here in JS, saving AI tokens
+            const sportsMarkets = response.data.markets
+                .filter(m => m.category === 'Sports' || m.ticker.startsWith('NBA') || m.ticker.startsWith('NFL'))
+                .sort((a, b) => b.volume - a.volume)
+                .slice(0, 5);
+
+            if (sportsMarkets.length === 0) {
+                await message.reply("📉 No active high-volume sports markets found.");
+                return;
+            }
+
+            // 3. Create the Embed (Mobile Friendly)
+            const embed = new EmbedBuilder()
+                .setColor(0x00FF00)
+                .setTitle('🏆 Top Live Sports Markets')
+                .setDescription('Sorted by highest trading volume')
+                .setFooter({ text: 'Data: Kalshi API • 0 Tokens Used' });
+
+            for (const market of sportsMarkets) {
+                const yesPrice = (market.yes_bid / 100).toFixed(2);
+                const noPrice = (market.no_ask / 100).toFixed(2);
+                // Simple volume formatter (e.g. 15000 -> 15k)
+                const vol = (market.volume > 1000)
+                    ? (market.volume / 1000).toFixed(1) + 'k'
+                    : market.volume;
+
+                embed.addFields({
+                    name: market.title,
+                    value: `🟢 **Yes:** $${yesPrice} | 🔴 **No:** $${noPrice}\n-# 📊 Vol: ${vol} • Ends: ${new Date(market.close_time).toLocaleDateString()}`
+                });
+            }
+
+            await message.reply({ embeds: [embed] });
+
+        } catch (error) {
+            console.error('Sports Feed Error:', error.message);
+            await message.reply("❌ API Error. Try again in a minute.");
+        }
+        return; // Stop here so we don't accidentally trigger the AI
+    }
+    // ===================================
     // KALSHI SEARCH COMMAND (uses Claude)
     // ===================================
     if (content.toLowerCase().startsWith('!markets ')) {
