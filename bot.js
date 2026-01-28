@@ -192,6 +192,7 @@ client.on('messageCreate', async (message) => {
             await message.reply("❌ Couldn't find that market. Check the ticker and try again.\nExample: `!kalshi KXHIGHNY`");
         }
         return;
+    }
         // ===================================
     // KALSHI SEARCH COMMAND (uses Claude)
     // ===================================
@@ -234,7 +235,6 @@ Give me 3-5 relevant markets with their tickers if possible. Include current pri
             await message.reply("❌ Couldn't search markets right now. Try again later.");
         }
         return;
-    }
     }
 
     // =================================== 
