@@ -196,59 +196,59 @@ client.on('messageCreate', async (message) => {
     // ===================================
     // NEW: LIVE SPORTS FEED (Token Optimized)
     // ===================================
+  // ===================================
+    // NEW: LIVE SPORTS FEED (Filtered & Clean)
+    // ===================================
     if (content.toLowerCase() === '!sports') {
         try {
-            // OPTIMIZATION: We do NOT call 'anthropic' here.
-            // This runs purely on your CPU + Kalshi API (Free & Fast)
             await message.channel.sendTyping();
 
-            // 1. Fetch 100 active markets
-            const url = 'https://api.elections.kalshi.com/trade-api/v2/markets?limit=100&status=open';
+            // FIX 1: Increase limit to 500 to catch more games
+            // FIX 2: Add 'mve_filter=exclude' to ban parlays/combos
+            const url = 'https://api.elections.kalshi.com/trade-api/v2/markets?limit=500&status=open&mve_filter=exclude';
             const response = await axios.get(url);
-
-            // 2. Filter for Sports & Sort by Volume
-            // We do the "thinking" here in JS, saving AI tokens
-           // 2. Filter for Sports & Sort by Volume (BROADER VERSION)
+            
             const sportsMarkets = response.data.markets
                 .filter(m => {
-                    // Combine all text data into one big uppercase string to search
-                    const marketData = (m.title + m.category + m.ticker).toUpperCase();
-                    
-                    // Return TRUE if it contains any of these keywords
-                    return marketData.includes('SPORT') || 
-                           marketData.includes('NFL') || 
-                           marketData.includes('NBA') || 
-                           marketData.includes('FOOTBALL') || 
-                           marketData.includes('BASKETBALL') ||
-                           marketData.includes('SUPER BOWL') ||
-                           marketData.includes('UFC');
+                    const text = (m.title + m.category + m.ticker).toUpperCase();
+                    // FIX 3: Strict keyword check to find REAL games
+                    const isSport = text.includes('NFL') || 
+                                  text.includes('NBA') || 
+                                  text.includes('SUPER BOWL') ||
+                                  text.includes('UFC') ||
+                                  text.includes('CHAMPION') ||
+                                  (m.category && m.category.includes('Sports'));
+
+                    // FIX 4: Hide markets with $0 volume (dead markets)
+                    return isSport && m.volume > 100; 
                 })
-                .sort((a, b) => b.volume - a.volume)
-                .slice(0, 5);
+                .sort((a, b) => b.volume - a.volume) // Highest volume first
+                .slice(0, 5); // Show top 5
 
             if (sportsMarkets.length === 0) {
-                await message.reply("📉 No active high-volume sports markets found.");
+                await message.reply("📉 No active high-volume sports markets found right now.");
                 return;
             }
 
-            // 3. Create the Embed (Mobile Friendly)
             const embed = new EmbedBuilder()
                 .setColor(0x00FF00)
                 .setTitle('🏆 Top Live Sports Markets')
-                .setDescription('Sorted by highest trading volume')
+                .setDescription('**Sorted by Volume** (Excluding Parlays)')
                 .setFooter({ text: 'Data: Kalshi API • 0 Tokens Used' });
 
             for (const market of sportsMarkets) {
-                const yesPrice = (market.yes_bid / 100).toFixed(2);
-                const noPrice = (market.no_ask / 100).toFixed(2);
-                // Simple volume formatter (e.g. 15000 -> 15k)
-                const vol = (market.volume > 1000)
-                    ? (market.volume / 1000).toFixed(1) + 'k'
-                    : market.volume;
+                // Formatting: Handle cases where price might be missing
+                const yesPrice = market.yes_bid ? (market.yes_bid / 100).toFixed(2) : "0.00";
+                const noPrice = market.no_ask ? (market.no_ask / 100).toFixed(2) : "0.00";
+                
+                // Volume formatter (e.g. 4500000 -> $4.5M)
+                let volDisplay = `$${market.volume}`;
+                if (market.volume > 1000000) volDisplay = `$${(market.volume / 1000000).toFixed(1)}M`;
+                else if (market.volume > 1000) volDisplay = `$${(market.volume / 1000).toFixed(1)}k`;
 
                 embed.addFields({
-                    name: market.title,
-                    value: `🟢 **Yes:** $${yesPrice} | 🔴 **No:** $${noPrice}\n-# 📊 Vol: ${vol} • Ends: ${new Date(market.close_time).toLocaleDateString()}`
+                    name: market.title, // e.g. "Super Bowl Winner"
+                    value: `🟢 **Yes:** $${yesPrice} | 🔴 **No:** $${noPrice}\n-# 📊 Vol: ${volDisplay} • Ends: ${new Date(market.close_time).toLocaleDateString()}`
                 });
             }
 
@@ -257,49 +257,6 @@ client.on('messageCreate', async (message) => {
         } catch (error) {
             console.error('Sports Feed Error:', error.message);
             await message.reply("❌ API Error. Try again in a minute.");
-        }
-        return; // Stop here so we don't accidentally trigger the AI
-    }
-    // ===================================
-    // KALSHI SEARCH COMMAND (uses Claude)
-    // ===================================
-    if (content.toLowerCase().startsWith('!markets ')) {
-        const query = content.slice(9).trim();
-
-        if (!query) {
-            await message.reply("🔍 What markets are you looking for? Example: `!markets election odds`");
-            return;
-        }
-
-        try {
-            await message.channel.sendTyping();
-
-            const response = await anthropic.messages.create({
-                model: 'claude-sonnet-4-20250514',
-                max_tokens: 1024,
-                messages: [{
-                    role: 'user',
-                    content: `Search for current Kalshi prediction markets related to: ${query}
-          
-Give me 3-5 relevant markets with their tickers if possible. Include current prices/odds if available. Keep it brief and scannable.`
-                }],
-                tools: [
-                    {
-                        type: "web_search_20250305",
-                        name: "web_search"
-                    }
-                ]
-            });
-
-            const answer = response.content
-                .filter(block => block.type === 'text')
-                .map(block => block.text)
-                .join('\n\n');
-
-            await sendResponseWithTyping(message, answer);
-        } catch (error) {
-            console.error('Markets search error:', error.message);
-            await message.reply("❌ Couldn't search markets right now. Try again later.");
         }
         return;
     }
