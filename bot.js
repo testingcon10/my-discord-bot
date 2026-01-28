@@ -153,87 +153,95 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
-    // ===================================
-    // COMMAND: !sports (Paranoid Safety V3)
+ // ===================================
+    // COMMAND: !sports
     // ===================================
     if (lowerContent === '!sports') {
         try {
             await message.channel.sendTyping();
 
-            // 1. Define Request Functions
-            const fetchKalshi = axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=300&status=open&mve_filter=exclude')
-                .then(res => res.data.markets)
+            // 1. Fetch from both APIs
+            const fetchKalshi = axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=500&status=open')
+                .then(res => res.data.markets || [])
                 .catch(err => { console.error("Kalshi Failed:", err.message); return []; });
 
-            const fetchPoly = axios.get('https://gamma-api.polymarket.com/events?limit=20&active=true&closed=false&sort=volume&order=desc')
-                // EXTRA SAFETY: Check if result is actually an array
+            const fetchPoly = axios.get('https://gamma-api.polymarket.com/events?limit=50&active=true&closed=false')
                 .then(res => Array.isArray(res.data) ? res.data : [])
                 .catch(err => { console.error("Polymarket Failed:", err.message); return []; });
 
-            // 2. Run both concurrently
             const [kalshiData, polyData] = await Promise.all([fetchKalshi, fetchPoly]);
+
+            console.log(`Fetched ${kalshiData.length} Kalshi markets, ${polyData.length} Polymarket events`);
 
             const formatVol = (num) => {
                 if (!num) return "0";
                 if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
                 if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
-                return num.toFixed(0);
+                return num.toString();
             };
 
-            // 3. Process Kalshi
-            const kalshiTop2 = kalshiData
+            // 2. Process Kalshi - broader sports keywords
+            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'SUPER BOWL', 'FOOTBALL', 'BASKETBALL', 'SOCCER', 'MLB', 'HOCKEY', 'NHL', 'TENNIS', 'GOLF', 'BOXING', 'MMA', 'SPORTS', 'GAME', 'MATCH', 'CHAMPIONSHIP', 'SERIES', 'PLAYOFF'];
+            
+            const kalshiSports = kalshiData
                 .filter(m => {
                     if (!m.title) return false;
-                    const t = (m.title + m.category + m.ticker).toUpperCase();
-                    return (t.includes('NFL') || t.includes('NBA') || t.includes('UFC') || t.includes('SUPER BOWL') || t.includes('FOOTBALL'))
-                        && m.volume > 1000;
+                    const searchText = (m.title + ' ' + (m.category || '') + ' ' + (m.ticker || '')).toUpperCase();
+                    return sportsKeywords.some(keyword => searchText.includes(keyword));
                 })
-                .sort((a, b) => b.volume - a.volume)
-                .slice(0, 2);
+                .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+                .slice(0, 3);
 
-            // 4. Process Polymarket
-            const polyTop2 = polyData
+            console.log(`Found ${kalshiSports.length} Kalshi sports markets`);
+
+            // 3. Process Polymarket - broader sports keywords
+            const polySports = polyData
                 .filter(e => {
                     if (!e.title) return false;
-                    const t = e.title.toUpperCase();
+                    const searchText = e.title.toUpperCase();
                     const hasMarkets = e.markets && e.markets.length > 0;
-                    const isSport = (t.includes('NFL') || t.includes('NBA') || t.includes('UFC') || t.includes('SUPER BOWL') || t.includes('CHAMPIONS LEAGUE'));
-                    return isSport && hasMarkets;
+                    return hasMarkets && sportsKeywords.some(keyword => searchText.includes(keyword));
                 })
-                .sort((a, b) => b.volume - a.volume)
-                .slice(0, 2);
+                .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+                .slice(0, 3);
 
-            // 5. Build Output
+            console.log(`Found ${polySports.length} Polymarket sports events`);
+
+            // 4. Build Embed
             const embed = new EmbedBuilder()
                 .setColor(0xFF4500)
-                .setTitle('⚡ High Voltage Sports Markets (Top 2)')
+                .setTitle('⚡ Live Sports Markets')
                 .setFooter({ text: 'Sources: Kalshi & Polymarket • Live' });
 
-            // --- Kalshi Column ---
+            // Kalshi Column
             let kalshiText = "";
-            if (kalshiTop2.length > 0) {
-                kalshiTop2.forEach(m => {
-                    const yes = m.yes_bid ? (m.yes_bid / 100).toFixed(2) : ".--";
-                    const shortTitle = m.title.length > 22 ? m.title.substring(0, 21) + '..' : m.title;
+            if (kalshiSports.length > 0) {
+                kalshiSports.forEach(m => {
+                    const yes = m.yes_bid ? (m.yes_bid / 100).toFixed(2) : "-.--";
+                    const shortTitle = m.title.length > 30 ? m.title.substring(0, 29) + '...' : m.title;
                     kalshiText += `**${shortTitle}**\n└ 🟢 $${yes} • 📊 $${formatVol(m.volume)}\n\n`;
                 });
-            } else { kalshiText = "⚠️ No high-vol data"; }
+            } else {
+                kalshiText = "No sports markets found right now";
+            }
 
-            // --- Polymarket Column ---
+            // Polymarket Column
             let polyText = "";
-            if (polyTop2.length > 0) {
-                polyTop2.forEach(p => {
-                    let price = "?.??";
+            if (polySports.length > 0) {
+                polySports.forEach(p => {
+                    let price = "-.--";
                     if (p.markets?.[0]?.outcomePrices) {
-                        try { 
+                        try {
                             const parsed = JSON.parse(p.markets[0].outcomePrices);
-                            price = parseFloat(parsed[0] || 0).toFixed(2); 
-                        } catch(e){ console.log("Poly Parse Error", e); }
+                            price = parseFloat(parsed[0] || 0).toFixed(2);
+                        } catch (e) { console.log("Poly Parse Error", e); }
                     }
-                    const shortTitle = p.title.length > 22 ? p.title.substring(0, 21) + '..' : p.title;
+                    const shortTitle = p.title.length > 30 ? p.title.substring(0, 29) + '...' : p.title;
                     polyText += `**${shortTitle}**\n└ 🟢 $${price} • 📊 $${formatVol(p.volume)}\n\n`;
                 });
-            } else { polyText = "⚠️ No high-vol data"; }
+            } else {
+                polyText = "No sports markets found right now";
+            }
 
             embed.addFields(
                 { name: '🇺🇸 Kalshi', value: kalshiText, inline: true },
@@ -243,35 +251,8 @@ client.on('messageCreate', async (message) => {
             await message.reply({ embeds: [embed] });
 
         } catch (error) {
-            console.error('Sports Feed CRITICAL Error:', error); 
-            // I CHANGED THIS MESSAGE SO YOU KNOW IF THE UPDATE WORKED
-            await message.reply("❌ V3 ERROR: Check your terminal.");
-        }
-        return;
-    }
-
-    // --------------------------------------------------
-    // COMMAND: !math [problem]
-    // --------------------------------------------------
-    if (lowerContent.startsWith('!math ')) {
-        const problem = content.slice(6).trim();
-        if (problem) {
-            const mathPrompt = `Solve this math problem step-by-step:\n${problem}\n\nRules:\n- Show clear, numbered steps\n- Explain briefly\n- Final answer at the end`;
-            try {
-                await message.channel.sendTyping();
-                const response = await anthropic.messages.create({
-                    model: 'claude-sonnet-4-20250514',
-                    max_tokens: 1024,
-                    messages: [{ role: 'user', content: mathPrompt }],
-                });
-                const answer = response.content[0].text;
-                await sendResponseWithTyping(message, answer);
-            } catch (e) {
-                console.error(e);
-                await message.reply("Error solving math problem.");
-            }
-        } else {
-            await message.reply('🔢 Example: `!math 25 x 4 + 10`');
+            console.error('Sports Feed Error:', error);
+            await message.reply("❌ Error fetching sports markets. Try again later.");
         }
         return;
     }
