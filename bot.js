@@ -49,11 +49,6 @@ const conversationHistory = new Map();
 // HELPER FUNCTIONS
 // ==========================================
 
-/**
- * Retrieves the conversation history for a specific channel.
- * @param {string} channelId 
- * @returns {Array} Array of message objects
- */
 function getConversationHistory(channelId) {
     if (!conversationHistory.has(channelId)) {
         conversationHistory.set(channelId, []);
@@ -61,12 +56,6 @@ function getConversationHistory(channelId) {
     return conversationHistory.get(channelId);
 }
 
-/**
- * Adds a message to the history buffer, maintaining the size limit.
- * @param {string} channelId 
- * @param {string} role - 'user' or 'assistant'
- * @param {string} content 
- */
 function addToHistory(channelId, role, content) {
     const history = getConversationHistory(channelId);
     history.push({ role, content });
@@ -76,19 +65,10 @@ function addToHistory(channelId, role, content) {
     }
 }
 
-/**
- * Clears conversation history for a channel.
- * @param {string} channelId 
- */
 function clearHistory(channelId) {
     conversationHistory.set(channelId, []);
 }
 
-/**
- * Sends a typing indicator followed by the response (chunked if necessary).
- * @param {Message} message - Discord message object
- * @param {string} response - The text response to send
- */
 async function sendResponseWithTyping(message, response) {
     await message.channel.sendTyping();
 
@@ -106,9 +86,6 @@ async function sendResponseWithTyping(message, response) {
     }
 }
 
-/**
- * Core Logic: Communicates with Anthropic Claude API.
- */
 async function chatWithClaude(channelId, userMessage) {
     try {
         addToHistory(channelId, 'user', userMessage);
@@ -186,14 +163,13 @@ client.on('messageCreate', async (message) => {
     }
 
     // ===================================
-    // COMMAND: !sports (Bulletproof & Compact)
+    // COMMAND: !sports (Bulletproof & Fixed)
     // ===================================
     if (lowerContent === '!sports') {
         try {
             await message.channel.sendTyping();
 
-            // 1. Define Request Functions (Safe Mode)
-            // We attach .catch() to each request so one failure doesn't kill the other
+            // 1. Define Request Functions
             const fetchKalshi = axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=300&status=open&mve_filter=exclude')
                 .then(res => res.data.markets)
                 .catch(err => { console.error("Kalshi Failed:", err.message); return []; });
@@ -205,7 +181,6 @@ client.on('messageCreate', async (message) => {
             // 2. Run both concurrently
             const [kalshiData, polyData] = await Promise.all([fetchKalshi, fetchPoly]);
 
-            // 3. HELPER: Compact Number Formatter
             const formatVol = (num) => {
                 if (!num) return "0";
                 if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
@@ -213,7 +188,7 @@ client.on('messageCreate', async (message) => {
                 return num.toFixed(0);
             };
 
-            // 4. Process Kalshi (Safe Filter)
+            // 3. Process Kalshi
             const kalshiTop2 = kalshiData
                 .filter(m => {
                     if (!m.title) return false;
@@ -224,12 +199,11 @@ client.on('messageCreate', async (message) => {
                 .sort((a, b) => b.volume - a.volume)
                 .slice(0, 2);
 
-            // 5. Process Polymarket (Safe Filter)
+            // 4. Process Polymarket (FIXED SYNTAX HERE)
             const polyTop2 = polyData
                 .filter(e => {
                     if (!e.title) return false;
                     const t = e.title.toUpperCase();
-                    // Must have markets to be valid
                     const hasMarkets = e.markets && e.markets.length > 0;
                     const isSport = (t.includes('NFL') || t.includes('NBA') || t.includes('UFC') || t.includes('SUPER BOWL') || t.includes('CHAMPIONS LEAGUE'));
                     return isSport && hasMarkets;
@@ -237,32 +211,29 @@ client.on('messageCreate', async (message) => {
                 .sort((a, b) => b.volume - a.volume)
                 .slice(0, 2);
 
-            // 6. Build Output
+            // 5. Build Output
             const embed = new EmbedBuilder()
                 .setColor(0xFF4500)
                 .setTitle('⚡ High Voltage Sports Markets (Top 2)')
                 .setFooter({ text: 'Sources: Kalshi & Polymarket • Live' });
 
-            // --- KALSHI COLUMN ---
+            // --- Kalshi Column ---
             let kalshiText = "";
             if (kalshiTop2.length > 0) {
                 kalshiTop2.forEach(m => {
                     const yes = m.yes_bid ? (m.yes_bid / 100).toFixed(2) : ".--";
-                    // Truncate title to 22 chars
                     const shortTitle = m.title.length > 22 ? m.title.substring(0, 21) + '..' : m.title;
                     kalshiText += `**${shortTitle}**\n└ 🟢 $${yes} • 📊 $${formatVol(m.volume)}\n\n`;
                 });
             } else { kalshiText = "⚠️ No high-vol data"; }
 
-            // --- POLYMARKET COLUMN ---
+            // --- Polymarket Column ---
             let polyText = "";
             if (polyTop2.length > 0) {
                 polyTop2.forEach(p => {
                     let price = "?.??";
-                    // SAFETY CHECK: Use ?. to prevent crashing on empty arrays
                     if (p.markets?.[0]?.outcomePrices) {
                         try { 
-                            // Polymarket prices are JSON strings '["0.5", "0.5"]'
                             const parsed = JSON.parse(p.markets[0].outcomePrices);
                             price = parseFloat(parsed[0] || 0).toFixed(2); 
                         } catch(e){ console.log("Poly Parse Error", e); }
@@ -294,7 +265,6 @@ client.on('messageCreate', async (message) => {
         if (problem) {
             const mathPrompt = `Solve this math problem step-by-step:\n${problem}\n\nRules:\n- Show clear, numbered steps\n- Explain briefly\n- Final answer at the end`;
             
-            // Direct call to Anthropic (bypass main chat function for custom prompt)
             try {
                 await message.channel.sendTyping();
                 const response = await anthropic.messages.create({
