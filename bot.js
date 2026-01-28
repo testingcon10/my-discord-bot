@@ -179,28 +179,41 @@ client.on('messageCreate', async (message) => {
             };
 
             // 2. Sports keywords
-            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'SUPER BOWL', 'FOOTBALL', 'BASKETBALL', 'MLB', 'NHL', 'STANLEY CUP', 'WORLD SERIES', 'CHAMPION', 'PLAYOFF', 'FINALS'];
+            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'SUPER BOWL', 'MLB', 'NHL', 'STANLEY CUP', 'WORLD SERIES', 'MARCH MADNESS', 'PREMIER LEAGUE', 'CHAMPIONS LEAGUE'];
             
-            // 3. Parlay/combo keywords to EXCLUDE
-            const parlayKeywords = ['YES', '+', 'AND', 'PARLAY', 'COMBO', 'BOTH', 'EITHER', 'OVER', 'UNDER', '2+', '3+', '4+', '5+', '6+'];
+            // 3. Parlay indicators to EXCLUDE (more specific)
+            const parlayPatterns = [
+                /\d\+/,           // "2+", "3+", etc.
+                /YES.*YES/i,      // Multiple "yes" in title
+                /AND.*AND/i,      // Multiple "and"
+                /PARLAY/i,
+                /COMBO/i,
+                /BOTH.*WIN/i,
+                /ALL.*WIN/i
+            ];
 
             // 4. Process Kalshi - filter OUT parlays
             const kalshiSports = kalshiData
                 .filter(m => {
                     if (!m.title) return false;
                     const title = m.title.toUpperCase();
-                    const searchText = (title + ' ' + (m.category || '')).toUpperCase();
+                    const category = (m.category || '').toUpperCase();
                     
-                    // Must include a sports keyword
-                    const isSport = sportsKeywords.some(keyword => searchText.includes(keyword));
+                    // Must include a sports keyword in title OR category
+                    const isSport = sportsKeywords.some(keyword => 
+                        title.includes(keyword) || category.includes(keyword)
+                    );
                     
-                    // Must NOT be a parlay (check title only)
-                    const isParlay = parlayKeywords.some(keyword => title.includes(keyword));
+                    // Check for parlay patterns
+                    const isParlay = parlayPatterns.some(pattern => pattern.test(m.title));
                     
-                    return isSport && !isParlay;
+                    return isSport && !isParlay && (m.volume || 0) > 0;
                 })
                 .sort((a, b) => (b.volume || 0) - (a.volume || 0))
                 .slice(0, 3);
+
+            // Debug: log what Kalshi sports we found
+            console.log('Kalshi sports found:', kalshiSports.map(m => m.title));
 
             // 5. Process Polymarket - filter OUT parlays
             const polySports = polyData
@@ -212,8 +225,8 @@ client.on('messageCreate', async (message) => {
                     // Must include a sports keyword
                     const isSport = sportsKeywords.some(keyword => title.includes(keyword));
                     
-                    // Must NOT be a parlay
-                    const isParlay = parlayKeywords.some(keyword => title.includes(keyword));
+                    // Check for parlay patterns
+                    const isParlay = parlayPatterns.some(pattern => pattern.test(e.title));
                     
                     return hasMarkets && isSport && !isParlay;
                 })
@@ -235,7 +248,7 @@ client.on('messageCreate', async (message) => {
                     kalshiText += `**${shortTitle}**\n└ 🟢 $${yes} • Vol: $${formatVol(m.volume)}\n\n`;
                 });
             } else {
-                kalshiText = "No single-event sports markets";
+                kalshiText = "No sports markets found";
             }
 
             // Polymarket Column
@@ -253,7 +266,7 @@ client.on('messageCreate', async (message) => {
                     polyText += `**${shortTitle}**\n└ 🟢 $${price} • Vol: $${formatVol(p.volume)}\n\n`;
                 });
             } else {
-                polyText = "No single-event sports markets";
+                polyText = "No sports markets found";
             }
 
             embed.addFields(
@@ -267,54 +280,6 @@ client.on('messageCreate', async (message) => {
             console.error('Sports Feed Error:', error);
             await message.reply("❌ Error fetching sports markets. Try again later.");
         }
-        return;
-    }
-    // --------------------------------------------------
-    // COMMAND: !summary [text]
-    // --------------------------------------------------
-    if (lowerContent.startsWith('!summary ')) {
-        const textToSummarize = content.slice(9).trim();
-        if (textToSummarize) {
-            const summaryPrompt = `Summarize this text:\n${textToSummarize}\n\nRules:\n- Bullet points preferred\n- Include TL;DR if long`;
-            try {
-                await message.channel.sendTyping();
-                const response = await anthropic.messages.create({
-                    model: 'claude-sonnet-4-20250514',
-                    max_tokens: 1024,
-                    messages: [{ role: 'user', content: summaryPrompt }],
-                });
-                const summary = response.content[0].text;
-                await sendResponseWithTyping(message, summary);
-            } catch (e) {
-                console.error(e);
-                await message.reply("Error generating summary.");
-            }
-        } else {
-            await message.reply('📝 Example: `!summary [paste text]`');
-        }
-        return;
-    }
-
-    // --------------------------------------------------
-    // COMMAND: !help
-    // --------------------------------------------------
-    if (lowerContent === '!help') {
-        const helpMessage = `
-**🤖 Claude Assistant Help**
-
-**Interaction:**
-- Mention me: @${client.user.username} [question]
-- Command: \`!ask [question]\`
-
-**Features:**
-- \`!sports\` - Top live sports markets (High Vol) 🏆
-- \`!kalshi [ticker]\` - Live market prices 📊
-- \`!math\` - Step-by-step solver 🔢
-- \`!summary\` - Text summarizer 📝
-- \`!clear\` - Clear conversation memory 🧹
-- \`!help\` - Show this menu
-    `;
-        await message.reply(helpMessage);
         return;
     }
 
