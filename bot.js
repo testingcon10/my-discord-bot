@@ -185,68 +185,118 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
-    // --------------------------------------------------
-    // COMMAND: !sports (Live Feed)
-    // --------------------------------------------------
+ // ===================================
+    // COMMAND: !sports (Unified Kalshi + Polymarket)
+    // ===================================
     if (lowerContent === '!sports') {
         try {
             await message.channel.sendTyping();
 
-            // Fetch high-volume markets, filtering out parlays
-            const url = 'https://api.elections.kalshi.com/trade-api/v2/markets?limit=500&status=open&mve_filter=exclude';
-            const response = await axios.get(url);
+            // 1. Define both API requests
+            // Kalshi: Banning parlays with mve_filter
+            const kalshiPromise = axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=300&status=open&mve_filter=exclude');
+            
+            // Polymarket: Fetching active events
+            // We fetch 50 events to ensure we find enough sports games
+            const polyPromise = axios.get('https://gamma-api.polymarket.com/events?limit=50&active=true&closed=false');
 
-            const sportsMarkets = response.data.markets
+            // 2. Run both requests AT THE SAME TIME (Fast!)
+            const [kalshiRes, polyRes] = await Promise.all([kalshiPromise, polyPromise]);
+
+            // ===========================
+            // PROCESS KALSHI DATA
+            // ===========================
+            const kalshiMarkets = kalshiRes.data.markets
                 .filter(m => {
                     const text = (m.title + m.category + m.ticker).toUpperCase();
-                    // Strict keyword check
-                    const isSport = text.includes('NFL') ||
-                        text.includes('NBA') ||
-                        text.includes('SUPER BOWL') ||
-                        text.includes('UFC') ||
-                        text.includes('CHAMPION') ||
-                        (m.category && m.category.includes('Sports'));
-
-                    // Filter out dead markets (volume < 100)
-                    return isSport && m.volume > 100;
+                    return (text.includes('NFL') || text.includes('NBA') || text.includes('UFC') || text.includes('SUPER BOWL')) 
+                           && m.volume > 1000; // Only show significant volume
                 })
                 .sort((a, b) => b.volume - a.volume)
-                .slice(0, 5);
+                .slice(0, 3); // Top 3 Kalshi
 
-            if (sportsMarkets.length === 0) {
-                await message.reply("📉 No active high-volume sports markets found.");
+            // ===========================
+            // PROCESS POLYMARKET DATA
+            // ===========================
+            const polyMarkets = polyRes.data
+                .filter(e => {
+                    if (!e.title) return false;
+                    const text = e.title.toUpperCase();
+                    // Filter for sports keywords
+                    const isSport = text.includes('NFL') || text.includes('NBA') || text.includes('UFC') || text.includes('SUPER BOWL') || text.includes('PREMIER LEAGUE');
+                    return isSport && e.volume > 1000;
+                })
+                .sort((a, b) => b.volume - a.volume)
+                .slice(0, 3); // Top 3 Polymarket
+
+            if (kalshiMarkets.length === 0 && polyMarkets.length === 0) {
+                await message.reply("📉 No active sports markets found on either platform.");
                 return;
             }
 
-            const embed = new EmbedBuilder()
-                .setColor(0x00FF00)
-                .setTitle('🏆 Top Live Sports Markets')
-                .setDescription('**Sorted by Volume** (Excluding Parlays)')
-                .setFooter({ text: 'Data: Kalshi API • 0 Tokens Used' });
+            // 3. Build the Embeds (One for each platform)
+            const embeds = [];
 
-            for (const market of sportsMarkets) {
-                const yesPrice = market.yes_bid ? (market.yes_bid / 100).toFixed(2) : "0.00";
-                const noPrice = market.no_ask ? (market.no_ask / 100).toFixed(2) : "0.00";
+            // --- Kalshi Embed ---
+            if (kalshiMarkets.length > 0) {
+                const kalshiEmbed = new EmbedBuilder()
+                    .setColor(0x00FF00) // Green
+                    .setTitle('🇺🇸 Kalshi Sports (US Regulated)')
+                    .setFooter({ text: 'Source: Kalshi API' });
 
-                let volDisplay = `$${market.volume}`;
-                if (market.volume > 1000000) volDisplay = `$${(market.volume / 1000000).toFixed(1)}M`;
-                else if (market.volume > 1000) volDisplay = `$${(market.volume / 1000).toFixed(1)}k`;
-
-                embed.addFields({
-                    name: market.title,
-                    value: `🟢 **Yes:** $${yesPrice} | 🔴 **No:** $${noPrice}\n-# 📊 Vol: ${volDisplay} • Ends: ${new Date(market.close_time).toLocaleDateString()}`
-                });
+                for (const m of kalshiMarkets) {
+                    const yes = m.yes_bid ? (m.yes_bid / 100).toFixed(2) : "0.00";
+                    const no = m.no_ask ? (m.no_ask / 100).toFixed(2) : "0.00";
+                    const vol = (m.volume > 1000000) ? (m.volume/1000000).toFixed(1) + 'M' : (m.volume/1000).toFixed(1) + 'k';
+                    
+                    kalshiEmbed.addFields({
+                        name: m.title,
+                        value: `🟢 **Yes:** $${yes} | 🔴 **No:** $${no}\n-# 📊 Vol: $${vol}`
+                    });
+                }
+                embeds.push(kalshiEmbed);
             }
 
-            await message.reply({ embeds: [embed] });
+            // --- Polymarket Embed ---
+            if (polyMarkets.length > 0) {
+                const polyEmbed = new EmbedBuilder()
+                    .setColor(0x0099FF) // Blue
+                    .setTitle('🌐 Polymarket Sports (Global/Crypto)')
+                    .setFooter({ text: 'Source: Polymarket Gamma API' });
+
+                for (const p of polyMarkets) {
+                    // Polymarket prices are often in a JSON string like "["0.65", "0.35"]"
+                    // We grab the first market in the event group
+                    const market = p.markets ? p.markets[0] : null;
+                    let yes = "?.??";
+                    let no = "?.??";
+
+                    if (market && market.outcomePrices) {
+                        try {
+                            const prices = JSON.parse(market.outcomePrices);
+                            yes = parseFloat(prices[0]).toFixed(2);
+                            no = parseFloat(prices[1]).toFixed(2);
+                        } catch (e) { /* ignore parse error */ }
+                    }
+
+                    const vol = (p.volume > 1000000) ? (p.volume/1000000).toFixed(1) + 'M' : (p.volume/1000).toFixed(1) + 'k';
+
+                    polyEmbed.addFields({
+                        name: p.title,
+                        value: `🟢 **Yes:** $${yes} | 🔴 **No:** $${no}\n-# 📊 Vol: $${vol}`
+                    });
+                }
+                embeds.push(polyEmbed);
+            }
+
+            await message.reply({ embeds: embeds });
 
         } catch (error) {
             console.error('Sports Feed Error:', error.message);
-            await message.reply("❌ API Error. Please try again later.");
+            await message.reply("❌ Error fetching sports data. One of the APIs might be down.");
         }
         return;
     }
-
     // --------------------------------------------------
     // COMMAND: !clear
     // --------------------------------------------------
