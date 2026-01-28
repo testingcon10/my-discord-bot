@@ -153,7 +153,7 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
- // ===================================
+// ===================================
     // COMMAND: !sports
     // ===================================
     if (lowerContent === '!sports') {
@@ -171,8 +171,6 @@ client.on('messageCreate', async (message) => {
 
             const [kalshiData, polyData] = await Promise.all([fetchKalshi, fetchPoly]);
 
-            console.log(`Fetched ${kalshiData.length} Kalshi markets, ${polyData.length} Polymarket events`);
-
             const formatVol = (num) => {
                 if (!num) return "0";
                 if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
@@ -180,49 +178,64 @@ client.on('messageCreate', async (message) => {
                 return num.toString();
             };
 
-            // 2. Process Kalshi - broader sports keywords
-            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'SUPER BOWL', 'FOOTBALL', 'BASKETBALL', 'SOCCER', 'MLB', 'HOCKEY', 'NHL', 'TENNIS', 'GOLF', 'BOXING', 'MMA', 'SPORTS', 'GAME', 'MATCH', 'CHAMPIONSHIP', 'SERIES', 'PLAYOFF'];
+            // 2. Sports keywords
+            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'SUPER BOWL', 'FOOTBALL', 'BASKETBALL', 'MLB', 'NHL', 'STANLEY CUP', 'WORLD SERIES', 'CHAMPION', 'PLAYOFF', 'FINALS'];
             
+            // 3. Parlay/combo keywords to EXCLUDE
+            const parlayKeywords = ['YES', '+', 'AND', 'PARLAY', 'COMBO', 'BOTH', 'EITHER', 'OVER', 'UNDER', '2+', '3+', '4+', '5+', '6+'];
+
+            // 4. Process Kalshi - filter OUT parlays
             const kalshiSports = kalshiData
                 .filter(m => {
                     if (!m.title) return false;
-                    const searchText = (m.title + ' ' + (m.category || '') + ' ' + (m.ticker || '')).toUpperCase();
-                    return sportsKeywords.some(keyword => searchText.includes(keyword));
+                    const title = m.title.toUpperCase();
+                    const searchText = (title + ' ' + (m.category || '')).toUpperCase();
+                    
+                    // Must include a sports keyword
+                    const isSport = sportsKeywords.some(keyword => searchText.includes(keyword));
+                    
+                    // Must NOT be a parlay (check title only)
+                    const isParlay = parlayKeywords.some(keyword => title.includes(keyword));
+                    
+                    return isSport && !isParlay;
                 })
                 .sort((a, b) => (b.volume || 0) - (a.volume || 0))
                 .slice(0, 3);
 
-            console.log(`Found ${kalshiSports.length} Kalshi sports markets`);
-
-            // 3. Process Polymarket - broader sports keywords
+            // 5. Process Polymarket - filter OUT parlays
             const polySports = polyData
                 .filter(e => {
                     if (!e.title) return false;
-                    const searchText = e.title.toUpperCase();
+                    const title = e.title.toUpperCase();
                     const hasMarkets = e.markets && e.markets.length > 0;
-                    return hasMarkets && sportsKeywords.some(keyword => searchText.includes(keyword));
+                    
+                    // Must include a sports keyword
+                    const isSport = sportsKeywords.some(keyword => title.includes(keyword));
+                    
+                    // Must NOT be a parlay
+                    const isParlay = parlayKeywords.some(keyword => title.includes(keyword));
+                    
+                    return hasMarkets && isSport && !isParlay;
                 })
                 .sort((a, b) => (b.volume || 0) - (a.volume || 0))
                 .slice(0, 3);
 
-            console.log(`Found ${polySports.length} Polymarket sports events`);
-
-            // 4. Build Embed
+            // 6. Build Embed
             const embed = new EmbedBuilder()
                 .setColor(0xFF4500)
-                .setTitle('⚡ Live Sports Markets')
-                .setFooter({ text: 'Sources: Kalshi & Polymarket • Live' });
+                .setTitle('⚡ Top Sports Markets by Volume')
+                .setFooter({ text: 'Highest volume • Kalshi & Polymarket' });
 
             // Kalshi Column
             let kalshiText = "";
             if (kalshiSports.length > 0) {
                 kalshiSports.forEach(m => {
                     const yes = m.yes_bid ? (m.yes_bid / 100).toFixed(2) : "-.--";
-                    const shortTitle = m.title.length > 30 ? m.title.substring(0, 29) + '...' : m.title;
-                    kalshiText += `**${shortTitle}**\n└ 🟢 $${yes} • 📊 $${formatVol(m.volume)}\n\n`;
+                    const shortTitle = m.title.length > 35 ? m.title.substring(0, 34) + '...' : m.title;
+                    kalshiText += `**${shortTitle}**\n└ 🟢 $${yes} • Vol: $${formatVol(m.volume)}\n\n`;
                 });
             } else {
-                kalshiText = "No sports markets found right now";
+                kalshiText = "No single-event sports markets";
             }
 
             // Polymarket Column
@@ -234,18 +247,18 @@ client.on('messageCreate', async (message) => {
                         try {
                             const parsed = JSON.parse(p.markets[0].outcomePrices);
                             price = parseFloat(parsed[0] || 0).toFixed(2);
-                        } catch (e) { console.log("Poly Parse Error", e); }
+                        } catch (e) { }
                     }
-                    const shortTitle = p.title.length > 30 ? p.title.substring(0, 29) + '...' : p.title;
-                    polyText += `**${shortTitle}**\n└ 🟢 $${price} • 📊 $${formatVol(p.volume)}\n\n`;
+                    const shortTitle = p.title.length > 35 ? p.title.substring(0, 34) + '...' : p.title;
+                    polyText += `**${shortTitle}**\n└ 🟢 $${price} • Vol: $${formatVol(p.volume)}\n\n`;
                 });
             } else {
-                polyText = "No sports markets found right now";
+                polyText = "No single-event sports markets";
             }
 
             embed.addFields(
-                { name: '🇺🇸 Kalshi', value: kalshiText, inline: true },
-                { name: '🌐 Polymarket', value: polyText, inline: true }
+                { name: '🇺🇸 Kalshi (Top 3)', value: kalshiText, inline: true },
+                { name: '🌐 Polymarket (Top 3)', value: polyText, inline: true }
             );
 
             await message.reply({ embeds: [embed] });
@@ -256,7 +269,6 @@ client.on('messageCreate', async (message) => {
         }
         return;
     }
-
     // --------------------------------------------------
     // COMMAND: !summary [text]
     // --------------------------------------------------
