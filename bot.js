@@ -153,6 +153,9 @@ client.on('messageCreate', async (message) => {
         return;
     }
 
+    // ===================================
+    // COMMAND: !sports
+    // ===================================
 // ===================================
     // COMMAND: !sports
     // ===================================
@@ -171,6 +174,9 @@ client.on('messageCreate', async (message) => {
 
             const [kalshiData, polyData] = await Promise.all([fetchKalshi, fetchPoly]);
 
+            // Debug: Log some Kalshi titles and categories to see what's available
+            console.log('Sample Kalshi markets:', kalshiData.slice(0, 10).map(m => ({ title: m.title, category: m.category, ticker: m.ticker })));
+
             const formatVol = (num) => {
                 if (!num) return "0";
                 if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
@@ -178,56 +184,57 @@ client.on('messageCreate', async (message) => {
                 return num.toString();
             };
 
-            // 2. Sports keywords
-            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'SUPER BOWL', 'MLB', 'NHL', 'STANLEY CUP', 'WORLD SERIES', 'MARCH MADNESS', 'PREMIER LEAGUE', 'CHAMPIONS LEAGUE'];
-            
-            // 3. Parlay indicators to EXCLUDE (more specific)
+            // 2. Sports keywords (expanded)
+            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'SUPER BOWL', 'MLB', 'NHL', 'STANLEY CUP', 'WORLD SERIES', 'MARCH MADNESS', 'PREMIER LEAGUE', 'CHAMPIONS LEAGUE', 'SPORTS', 'FOOTBALL', 'BASKETBALL', 'BASEBALL', 'HOCKEY', 'SOCCER', 'BOXING', 'MMA', 'TENNIS', 'GOLF', 'WRESTLING', 'NCAA', 'COLLEGE', 'SERIES', 'FINALS', 'PLAYOFF', 'GAME', 'MATCH', 'WIN', 'CHAMPIONSHIP'];
+
+            // 3. Parlay indicators to EXCLUDE
             const parlayPatterns = [
                 /\d\+/,           // "2+", "3+", etc.
                 /YES.*YES/i,      // Multiple "yes" in title
-                /AND.*AND/i,      // Multiple "and"
                 /PARLAY/i,
                 /COMBO/i,
                 /BOTH.*WIN/i,
                 /ALL.*WIN/i
             ];
 
-            // 4. Process Kalshi - filter OUT parlays
+            // 4. Process Kalshi - look for sports category OR keywords
             const kalshiSports = kalshiData
                 .filter(m => {
                     if (!m.title) return false;
                     const title = m.title.toUpperCase();
                     const category = (m.category || '').toUpperCase();
-                    
-                    // Must include a sports keyword in title OR category
-                    const isSport = sportsKeywords.some(keyword => 
-                        title.includes(keyword) || category.includes(keyword)
+                    const ticker = (m.ticker || '').toUpperCase();
+
+                    // Check if it's in a sports-related category
+                    const isSportsCategory = category.includes('SPORT') || category.includes('ENTERTAINMENT');
+
+                    // Check if title/ticker contains sports keywords
+                    const hasSportsKeyword = sportsKeywords.some(keyword =>
+                        title.includes(keyword) || ticker.includes(keyword)
                     );
-                    
+
+                    const isSport = isSportsCategory || hasSportsKeyword;
+
                     // Check for parlay patterns
                     const isParlay = parlayPatterns.some(pattern => pattern.test(m.title));
-                    
+
                     return isSport && !isParlay && (m.volume || 0) > 0;
                 })
                 .sort((a, b) => (b.volume || 0) - (a.volume || 0))
                 .slice(0, 3);
 
-            // Debug: log what Kalshi sports we found
             console.log('Kalshi sports found:', kalshiSports.map(m => m.title));
 
-            // 5. Process Polymarket - filter OUT parlays
+            // 5. Process Polymarket
             const polySports = polyData
                 .filter(e => {
                     if (!e.title) return false;
                     const title = e.title.toUpperCase();
                     const hasMarkets = e.markets && e.markets.length > 0;
-                    
-                    // Must include a sports keyword
+
                     const isSport = sportsKeywords.some(keyword => title.includes(keyword));
-                    
-                    // Check for parlay patterns
                     const isParlay = parlayPatterns.some(pattern => pattern.test(e.title));
-                    
+
                     return hasMarkets && isSport && !isParlay;
                 })
                 .sort((a, b) => (b.volume || 0) - (a.volume || 0))
@@ -248,7 +255,7 @@ client.on('messageCreate', async (message) => {
                     kalshiText += `**${shortTitle}**\n└ 🟢 $${yes} • Vol: $${formatVol(m.volume)}\n\n`;
                 });
             } else {
-                kalshiText = "No sports markets found";
+                kalshiText = "No sports markets on Kalshi right now";
             }
 
             // Polymarket Column
