@@ -281,7 +281,7 @@ client.on('messageCreate', async (message) => {
     }
 
 
- /* ========================================================================
+/* ========================================================================
        COMMAND: !sports
        Live sports markets - Next 24 hours only, no futures, no parlays
        ======================================================================== */
@@ -309,169 +309,135 @@ client.on('messageCreate', async (message) => {
 
             const [kalshiData, polyData] = await Promise.all([fetchKalshi, fetchPoly]);
 
-            console.log(`[!sports] Fetched ${kalshiData.length} Kalshi markets, ${polyData.length} Polymarket events`);
-
-            // DEBUG: Log sample Kalshi data to see structure
-            console.log('[!sports] Sample Kalshi markets:', kalshiData.slice(0, 5).map(m => ({
-                title: m.title,
-                category: m.category,
-                ticker: m.ticker,
-                close_time: m.close_time,
-                volume: m.volume
-            })));
-
-            // DEBUG: Log sample Polymarket data
-            console.log('[!sports] Sample Polymarket events:', polyData.slice(0, 5).map(e => ({
-                title: e.title,
-                volume: e.volume,
-                endDate: e.markets?.[0]?.endDate
-            })));
+            console.log(`[!sports] Fetched ${kalshiData.length} Kalshi, ${polyData.length} Polymarket`);
 
             // ─────────────────────────────────────────────────────────────────
-            // TIME FILTERS
+            // TIME FILTERS - STRICT 24 HOURS ONLY
             // ─────────────────────────────────────────────────────────────────
             
             const now = new Date();
             const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-            const in7Days = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // Fallback
 
             // ─────────────────────────────────────────────────────────────────
             // KEYWORD DEFINITIONS
             // ─────────────────────────────────────────────────────────────────
 
-            // Sports leagues/events to INCLUDE
+            // Sports identifiers
             const sportsKeywords = [
                 'NFL', 'NBA', 'UFC', 'MLB', 'NHL', 'NCAA', 'MLS', 'WNBA',
                 'FOOTBALL', 'BASKETBALL', 'BASEBALL', 'HOCKEY', 'SOCCER',
                 'MMA', 'BOXING', 'TENNIS', 'GOLF',
-                'SUPER BOWL', 'MARCH MADNESS', 'WORLD SERIES', 'STANLEY CUP',
                 'PREMIER LEAGUE', 'CHAMPIONS LEAGUE', 'LA LIGA', 'SERIE A',
-                'LAKERS', 'CELTICS', 'WARRIORS', 'BULLS', 'HEAT', 'KNICKS',
-                'CHIEFS', 'EAGLES', 'COWBOYS', 'PACKERS', '49ERS', 'RAVENS',
-                'YANKEES', 'DODGERS', 'RED SOX', 'METS', 'CUBS',
-                'GAME', 'VS', 'VERSUS'
+                'LAKERS', 'CELTICS', 'WARRIORS', 'BULLS', 'HEAT', 'KNICKS', 'NETS', 'SUNS', 'BUCKS', 'NUGGETS',
+                'CHIEFS', 'EAGLES', 'COWBOYS', 'PACKERS', '49ERS', 'RAVENS', 'BILLS', 'BENGALS',
+                'YANKEES', 'DODGERS', 'RED SOX', 'METS', 'CUBS', 'ASTROS', 'BRAVES',
+                'VS', 'VERSUS', 'GAME'
             ];
 
-            // Short-term bet types to PRIORITIZE
-            const shortTermKeywords = [
-                'GAME', 'MATCH', 'VS', 'V.S.', 'VERSUS',
-                'POINTS', 'SCORE', 'SPREAD', 'OVER', 'UNDER',
-                'TOUCHDOWN', 'TD', 'GOAL', 'ASSIST', 'REBOUND',
-                'WINNER', 'WIN', 'BEAT', 'DEFEAT',
-                'PROP', 'PLAYER', 'TEAM',
-                'TONIGHT', 'TODAY', 'TOMORROW',
-                'QUARTER', 'HALF', 'INNING', 'PERIOD', 'ROUND',
-                'FIRST', 'ANYTIME'
+            // FUTURES - These words mean it's a long-term bet (EXCLUDE)
+            const futuresPatterns = [
+                /WINNER$/i,                    // Ends with "Winner"
+                /CHAMPION/i,                   // Any champion
+                /MVP/i,                        // MVP awards
+                /ROOKIE OF THE YEAR/i,
+                /DEFENSIVE PLAYER/i,
+                /AWARD/i,
+                /WIN THE 202/i,                // "Win the 2025"
+                /202[5-9].*WINNER/i,           // "2025 Winner"
+                /WINNER.*202[5-9]/i,           // "Winner 2025"
+                /SEASON/i,
+                /CHAMPIONSHIP$/i,              // Ends with "Championship"
+                /PREMIER LEAGUE WINNER/i,
+                /CHAMPIONS LEAGUE WINNER/i,
+                /LA LIGA WINNER/i,
+                /SERIE A WINNER/i,
+                /SUPER BOWL WINNER/i,
+                /WORLD SERIES WINNER/i,
+                /STANLEY CUP WINNER/i,
+                /NBA.*WINNER/i,
+                /NFL.*WINNER/i,
+                /HALL OF FAME/i,
+                /RETIRE/i,
+                /DRAFT/i,
+                /ALL.?STAR/i
             ];
 
-            // Futures/long-term to EXCLUDE
-            const futuresKeywords = [
-                'CHAMPION 2025', 'CHAMPION 2026', 'CHAMPION 2027',
-                'MVP 2025', 'MVP 2026', 'ROOKIE OF THE YEAR',
-                'DEFENSIVE PLAYER OF THE YEAR',
-                'SUPER BOWL CHAMPION', 'NBA CHAMPION', 'NFL CHAMPION',
-                'WORLD SERIES CHAMPION', 'STANLEY CUP CHAMPION',
-                'WIN THE 2025', 'WIN THE 2026', 'WIN 2025', 'WIN 2026',
-                'AWARD', 'HALL OF FAME', 'RETIRE', 'DRAFT PICK'
-            ];
-
-            // Parlay patterns to EXCLUDE
+            // Parlay patterns (EXCLUDE)
             const parlayPatterns = [
-                /\d\+\s*(YES|POINTS|GAMES)/i,   // "2+ YES", "3+ POINTS"
+                /\d\+/,              // "2+", "3+", etc.
                 /PARLAY/i,
                 /COMBO/i
             ];
 
             // ─────────────────────────────────────────────────────────────────
-            // PROCESS KALSHI DATA
+            // HELPER: Check if market is a futures bet
+            // ─────────────────────────────────────────────────────────────────
+            
+            function isFuturesBet(title) {
+                return futuresPatterns.some(pattern => pattern.test(title));
+            }
+
+            function isParlay(title) {
+                return parlayPatterns.some(pattern => pattern.test(title));
+            }
+
+            function isSportsRelated(title, category = '') {
+                const text = (title + ' ' + category).toUpperCase();
+                return sportsKeywords.some(kw => text.includes(kw));
+            }
+
+            // ─────────────────────────────────────────────────────────────────
+            // PROCESS KALSHI DATA - STRICT 24H ONLY
             // ─────────────────────────────────────────────────────────────────
 
-            // First, find ALL sports markets (ignore time for debugging)
-            const allKalshiSports = kalshiData.filter(m => {
-                if (!m.title) return false;
-                const title = m.title.toUpperCase();
-                const category = (m.category || '').toUpperCase();
-                return sportsKeywords.some(kw => title.includes(kw) || category.includes(kw));
-            });
-
-            console.log(`[!sports] All Kalshi sports markets (any time): ${allKalshiSports.length}`);
-            console.log('[!sports] Kalshi sports sample:', allKalshiSports.slice(0, 3).map(m => m.title));
-
-            // Now filter for 24h
-            const kalshiSports = allKalshiSports
+            const kalshiSports = kalshiData
                 .filter(m => {
-                    if (!m.close_time) return false;
+                    if (!m.title || !m.close_time) return false;
                     
-                    const title = m.title.toUpperCase();
                     const closeTime = new Date(m.close_time);
                     
-                    // Must close within 24 hours (or 7 days as fallback if nothing in 24h)
-                    const isWithin24h = closeTime <= in24Hours && closeTime > now;
+                    // STRICT: Must close within 24 hours
+                    if (closeTime > in24Hours || closeTime < now) return false;
                     
-                    // Exclude futures
-                    const isFutures = futuresKeywords.some(kw => title.includes(kw));
-                    if (isFutures) return false;
+                    // Must be sports
+                    if (!isSportsRelated(m.title, m.category)) return false;
                     
-                    // Exclude parlays
-                    const isParlay = parlayPatterns.some(pattern => pattern.test(m.title));
-                    if (isParlay) return false;
+                    // No futures
+                    if (isFuturesBet(m.title)) return false;
                     
-                    return isWithin24h;
+                    // No parlays
+                    if (isParlay(m.title)) return false;
+                    
+                    // Must have volume
+                    if ((m.volume || 0) <= 0) return false;
+                    
+                    return true;
                 })
                 .sort((a, b) => (b.volume_24h || b.volume || 0) - (a.volume_24h || a.volume || 0))
                 .slice(0, 4);
 
-            // If no 24h markets, try 7 days
-            let kalshiFinal = kalshiSports;
-            let kalshiTimeframe = "24h";
-            
-            if (kalshiSports.length === 0) {
-                kalshiFinal = allKalshiSports
-                    .filter(m => {
-                        if (!m.close_time) return false;
-                        const title = m.title.toUpperCase();
-                        const closeTime = new Date(m.close_time);
-                        const isFutures = futuresKeywords.some(kw => title.includes(kw));
-                        const isParlay = parlayPatterns.some(pattern => pattern.test(m.title));
-                        return closeTime <= in7Days && closeTime > now && !isFutures && !isParlay;
-                    })
-                    .sort((a, b) => (b.volume || 0) - (a.volume || 0))
-                    .slice(0, 4);
-                kalshiTimeframe = "7d";
-            }
-
-            console.log(`[!sports] Kalshi final (${kalshiTimeframe}): ${kalshiFinal.map(m => m.title).join(', ') || 'None'}`);
+            console.log(`[!sports] Kalshi 24h sports: ${kalshiSports.length}`);
 
             // ─────────────────────────────────────────────────────────────────
-            // PROCESS POLYMARKET DATA
+            // PROCESS POLYMARKET DATA - STRICT 24H ONLY
             // ─────────────────────────────────────────────────────────────────
 
-            // First find all sports events
-            const allPolySports = polyData.filter(e => {
-                if (!e.title) return false;
-                const title = e.title.toUpperCase();
-                return sportsKeywords.some(kw => title.includes(kw)) && e.markets?.length > 0;
-            });
-
-            console.log(`[!sports] All Polymarket sports events: ${allPolySports.length}`);
-            console.log('[!sports] Polymarket sports sample:', allPolySports.slice(0, 3).map(e => e.title));
-
-            // Filter for short-term
-            const polySports = allPolySports
+            const polySports = polyData
                 .filter(e => {
-                    const title = e.title.toUpperCase();
+                    if (!e.title || !e.markets?.length) return false;
                     
-                    // Exclude futures
-                    const isFutures = futuresKeywords.some(kw => title.includes(kw));
-                    if (isFutures) return false;
+                    // Must be sports
+                    if (!isSportsRelated(e.title, '')) return false;
                     
-                    // Exclude parlays
-                    const isParlay = parlayPatterns.some(pattern => pattern.test(e.title));
-                    if (isParlay) return false;
+                    // No futures
+                    if (isFuturesBet(e.title)) return false;
+                    
+                    // No parlays
+                    if (isParlay(e.title)) return false;
 
-                    // Check if closes within 24h
+                    // STRICT: Check if ANY market closes within 24h
                     const hasShortTermMarket = e.markets.some(m => {
-                        if (!m.endDate) return true; // Include if no end date
+                        if (!m.endDate) return false;
                         const closeTime = new Date(m.endDate);
                         return closeTime <= in24Hours && closeTime > now;
                     });
@@ -481,43 +447,22 @@ client.on('messageCreate', async (message) => {
                 .sort((a, b) => (b.volume || 0) - (a.volume || 0))
                 .slice(0, 4);
 
-            // Fallback to 7 days
-            let polyFinal = polySports;
-            let polyTimeframe = "24h";
-            
-            if (polySports.length === 0) {
-                polyFinal = allPolySports
-                    .filter(e => {
-                        const title = e.title.toUpperCase();
-                        const isFutures = futuresKeywords.some(kw => title.includes(kw));
-                        const isParlay = parlayPatterns.some(pattern => pattern.test(e.title));
-                        return !isFutures && !isParlay;
-                    })
-                    .sort((a, b) => (b.volume || 0) - (a.volume || 0))
-                    .slice(0, 4);
-                polyTimeframe = "7d";
-            }
-
-            console.log(`[!sports] Polymarket final (${polyTimeframe}): ${polyFinal.map(e => e.title).join(', ') || 'None'}`);
+            console.log(`[!sports] Polymarket 24h sports: ${polySports.length}`);
 
             // ─────────────────────────────────────────────────────────────────
             // BUILD DISCORD EMBED
             // ─────────────────────────────────────────────────────────────────
 
-            const timeframeText = (kalshiTimeframe === "24h" && polyTimeframe === "24h") 
-                ? "Next 24 Hours" 
-                : "Upcoming Games";
-
             const embed = new EmbedBuilder()
                 .setColor(0x00FF00)
-                .setTitle(`🏈 Live Sports Markets (${timeframeText})`)
-                .setDescription('Game outcomes, props & spreads • Sorted by volume • No futures')
+                .setTitle('🏈 Live Sports Markets (Next 24 Hours)')
+                .setDescription('Props, spreads & game outcomes • No futures • Sorted by volume')
                 .setFooter({ text: `Updated: ${now.toLocaleTimeString()}` });
 
             // Kalshi Column
             let kalshiText = "";
-            if (kalshiFinal.length > 0) {
-                kalshiFinal.forEach(m => {
+            if (kalshiSports.length > 0) {
+                kalshiSports.forEach(m => {
                     const yesPrice = m.yes_bid ? (m.yes_bid / 100).toFixed(2) : "-.--";
                     const volume = m.volume_24h || m.volume || 0;
                     const closeTime = new Date(m.close_time);
@@ -531,13 +476,13 @@ client.on('messageCreate', async (message) => {
                     kalshiText += `└ 🟢 $${yesPrice} • 📊 $${formatVolume(volume)} • ⏰ ${hoursLeft}h\n\n`;
                 });
             } else {
-                kalshiText = "No markets found\n\n*Kalshi may have limited sports*";
+                kalshiText = "No games in next 24h\n\n*Check back on game days*";
             }
 
             // Polymarket Column
             let polyText = "";
-            if (polyFinal.length > 0) {
-                polyFinal.forEach(p => {
+            if (polySports.length > 0) {
+                polySports.forEach(p => {
                     let price = "-.--";
                     let hoursLeft = "?";
                     
@@ -562,7 +507,7 @@ client.on('messageCreate', async (message) => {
                     polyText += `└ 🟢 $${price} • 📊 $${formatVolume(p.volume)} • ⏰ ${hoursLeft}h\n\n`;
                 });
             } else {
-                polyText = "No markets found\n\n*Check back during game days*";
+                polyText = "No games in next 24h\n\n*Check back on game days*";
             }
 
             embed.addFields(
@@ -578,7 +523,58 @@ client.on('messageCreate', async (message) => {
         }
         return;
     }
+    
+/* ========================================================================
+       COMMAND: !debug (temporary - shows raw API data)
+       ======================================================================== */
+    if (lowerContent === '!debug') {
+        try {
+            await message.channel.sendTyping();
 
+            // Fetch Kalshi
+            const kalshiRes = await axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=100&status=open');
+            const kalshiData = kalshiRes.data.markets || [];
+
+            // Get unique categories
+            const categories = [...new Set(kalshiData.map(m => m.category))];
+            
+            // Get sample titles from each category
+            let debugText = `**Kalshi has ${kalshiData.length} open markets**\n\n`;
+            debugText += `**Categories:** ${categories.join(', ')}\n\n`;
+            
+            // Show first 10 markets
+            debugText += `**Sample markets:**\n`;
+            kalshiData.slice(0, 10).forEach((m, i) => {
+                const closeTime = new Date(m.close_time);
+                const hoursLeft = Math.round((closeTime - new Date()) / (1000 * 60 * 60));
+                debugText += `${i+1}. [${m.category}] ${m.title.substring(0, 50)}... (${hoursLeft}h)\n`;
+            });
+
+            // Check for anything sports-related
+            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'MLB', 'NHL', 'GAME', 'VS', 'SPORTS', 'FOOTBALL', 'BASKETBALL'];
+            const sportish = kalshiData.filter(m => {
+                const text = (m.title + ' ' + m.category).toUpperCase();
+                return sportsKeywords.some(kw => text.includes(kw));
+            });
+
+            debugText += `\n**Sports-related markets found: ${sportish.length}**\n`;
+            sportish.slice(0, 5).forEach(m => {
+                debugText += `- ${m.title.substring(0, 60)}...\n`;
+            });
+
+            // Truncate if too long
+            if (debugText.length > 1900) {
+                debugText = debugText.substring(0, 1900) + '...';
+            }
+
+            await message.reply(debugText);
+
+        } catch (error) {
+            console.error('Debug error:', error);
+            await message.reply(`❌ Error: ${error.message}`);
+        }
+        return;
+    }
 
     /* ========================================================================
        COMMAND: !math [problem]
