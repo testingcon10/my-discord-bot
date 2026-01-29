@@ -523,7 +523,7 @@ client.on('messageCreate', async (message) => {
         }
         return;
     }
-    
+
 /* ========================================================================
        COMMAND: !debug (temporary - shows raw API data)
        ======================================================================== */
@@ -575,7 +575,310 @@ client.on('messageCreate', async (message) => {
         }
         return;
     }
+/* ========================================================================
+       COMMAND: !odds [team or matchup]
+       Get odds from multiple sportsbooks
+       Example: !odds bucks vs wizards
+       Example: !odds lakers
+       ======================================================================== */
+    if (lowerContent.startsWith('!odds ')) {
+        const query = content.slice(6).trim().toUpperCase();
+        
+        if (!query) {
+            await message.reply('🎰 Usage: `!odds [team or matchup]`\nExample: `!odds bucks vs wizards` or `!odds lakers`');
+            return;
+        }
 
+        try {
+            await message.channel.sendTyping();
+
+            const ODDS_API_KEY = process.env.ODDS_API_KEY;
+            
+            if (!ODDS_API_KEY) {
+                await message.reply('❌ Odds API key not configured. Add ODDS_API_KEY to environment variables.');
+                return;
+            }
+
+            // Sports to check (can expand this list)
+            const sports = [
+                'basketball_nba',
+                'football_nfl',
+                'baseball_mlb',
+                'hockey_nhl',
+                'mma_mixed_martial_arts',
+                'basketball_ncaab',
+                'football_ncaaf'
+            ];
+
+            // Try each sport until we find matches
+            let allGames = [];
+            
+            for (const sport of sports) {
+                try {
+                    const response = await axios.get(
+                        `https://api.the-odds-api.com/v4/sports/${sport}/odds`, {
+                            params: {
+                                apiKey: ODDS_API_KEY,
+                                regions: 'us',
+                                markets: 'h2h,spreads,totals',
+                                oddsFormat: 'american'
+                            }
+                        }
+                    );
+                    
+                    if (response.data && response.data.length > 0) {
+                        allGames = allGames.concat(response.data.map(g => ({ ...g, sport })));
+                    }
+                } catch (err) {
+                    // Sport might not be in season, continue
+                    console.log(`[!odds] ${sport}: ${err.message}`);
+                }
+            }
+
+            console.log(`[!odds] Found ${allGames.length} total games`);
+
+            // Search for the query in team names
+            const searchTerms = query.replace(' VS ', ' ').replace(' V ', ' ').split(' ').filter(t => t.length > 2);
+            
+            const matchingGames = allGames.filter(game => {
+                const homeTeam = game.home_team.toUpperCase();
+                const awayTeam = game.away_team.toUpperCase();
+                const matchup = `${homeTeam} ${awayTeam}`;
+                
+                return searchTerms.some(term => matchup.includes(term));
+            });
+
+            console.log(`[!odds] Matching games for "${query}": ${matchingGames.length}`);
+
+            if (matchingGames.length === 0) {
+                // Show available games
+                const todayGames = allGames
+                    .filter(g => {
+                        const gameTime = new Date(g.commence_time);
+                        const now = new Date();
+                        const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+                        return gameTime >= now && gameTime <= tomorrow;
+                    })
+                    .slice(0, 8);
+
+                let availableText = "**Couldn't find that matchup.**\n\n";
+                
+                if (todayGames.length > 0) {
+                    availableText += "**Games available today:**\n";
+                    todayGames.forEach(g => {
+                        const time = new Date(g.commence_time).toLocaleTimeString('en-US', { 
+                            hour: 'numeric', 
+                            minute: '2-digit' 
+                        });
+                        availableText += `• ${g.away_team} @ ${g.home_team} (${time})\n`;
+                    });
+                    availableText += "\n*Try: `!odds [team name]`*";
+                } else {
+                    availableText += "*No games found in the next 24 hours.*";
+                }
+
+                await message.reply(availableText);
+                return;
+            }
+
+            // Use the first matching game
+            const game = matchingGames[0];
+            const gameTime = new Date(game.commence_time);
+            const timeStr = gameTime.toLocaleString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+
+            // Build the embed
+            const embed = new EmbedBuilder()
+                .setColor(0xFF6B00)
+                .setTitle(`🏀 ${game.away_team} @ ${game.home_team}`)
+                .setDescription(`📅 ${timeStr}`)
+                .setFooter({ text: 'Source: The Odds API • Lines may vary' });
+
+            // Process bookmakers
+            const bookmakers = game.bookmakers || [];
+            
+            if (bookmakers.length === 0) {
+                embed.addFields({ name: '❌ No Odds Available', value: 'Lines not yet posted for this game.', inline: false });
+            } else {
+                // MONEYLINE (h2h)
+                let moneylineText = "";
+                bookmakers.forEach(book => {
+                    const h2h = book.markets.find(m => m.key === 'h2h');
+                    if (h2h) {
+                        const away = h2h.outcomes.find(o => o.name === game.away_team);
+                        const home = h2h.outcomes.find(o => o.name === game.home_team);
+                        if (away && home) {
+                            const awayOdds = away.price > 0 ? `+${away.price}` : away.price;
+                            const homeOdds = home.price > 0 ? `+${home.price}` : home.price;
+                            moneylineText += `**${book.title}:** ${game.away_team} ${awayOdds} | ${game.home_team} ${homeOdds}\n`;
+                        }
+                    }
+                });
+                
+                if (moneylineText) {
+                    embed.addFields({ name: '💰 Moneyline', value: moneylineText.substring(0, 1024), inline: false });
+                }
+
+                // SPREADS
+                let spreadText = "";
+                bookmakers.forEach(book => {
+                    const spread = book.markets.find(m => m.key === 'spreads');
+                    if (spread) {
+                        const away = spread.outcomes.find(o => o.name === game.away_team);
+                        const home = spread.outcomes.find(o => o.name === game.home_team);
+                        if (away && home) {
+                            const awaySpread = away.point > 0 ? `+${away.point}` : away.point;
+                            const homeSpread = home.point > 0 ? `+${home.point}` : home.point;
+                            spreadText += `**${book.title}:** ${game.away_team} ${awaySpread} | ${game.home_team} ${homeSpread}\n`;
+                        }
+                    }
+                });
+                
+                if (spreadText) {
+                    embed.addFields({ name: '📊 Spread', value: spreadText.substring(0, 1024), inline: false });
+                }
+
+                // TOTALS (Over/Under)
+                let totalsText = "";
+                bookmakers.forEach(book => {
+                    const totals = book.markets.find(m => m.key === 'totals');
+                    if (totals) {
+                        const over = totals.outcomes.find(o => o.name === 'Over');
+                        const under = totals.outcomes.find(o => o.name === 'Under');
+                        if (over && under) {
+                            totalsText += `**${book.title}:** O/U ${over.point} (O: ${over.price > 0 ? '+' + over.price : over.price} | U: ${under.price > 0 ? '+' + under.price : under.price})\n`;
+                        }
+                    }
+                });
+                
+                if (totalsText) {
+                    embed.addFields({ name: '🎯 Total (O/U)', value: totalsText.substring(0, 1024), inline: false });
+                }
+            }
+
+            await message.reply({ embeds: [embed] });
+
+        } catch (error) {
+            console.error('[!odds] Error:', error);
+            await message.reply("❌ Error fetching odds. Try again later.");
+        }
+        return;
+    }
+
+
+    /* ========================================================================
+       COMMAND: !games [sport]
+       List today's games
+       Example: !games nba
+       ======================================================================== */
+    if (lowerContent.startsWith('!games')) {
+        const sportQuery = content.slice(6).trim().toUpperCase();
+        
+        try {
+            await message.channel.sendTyping();
+
+            const ODDS_API_KEY = process.env.ODDS_API_KEY;
+            
+            if (!ODDS_API_KEY) {
+                await message.reply('❌ Odds API key not configured.');
+                return;
+            }
+
+            // Map user input to API sport key
+            const sportMap = {
+                'NBA': 'basketball_nba',
+                'BASKETBALL': 'basketball_nba',
+                'NFL': 'football_nfl',
+                'FOOTBALL': 'football_nfl',
+                'MLB': 'baseball_mlb',
+                'BASEBALL': 'baseball_mlb',
+                'NHL': 'hockey_nhl',
+                'HOCKEY': 'hockey_nhl',
+                'UFC': 'mma_mixed_martial_arts',
+                'MMA': 'mma_mixed_martial_arts',
+                'NCAAB': 'basketball_ncaab',
+                'CBB': 'basketball_ncaab',
+                'NCAAF': 'football_ncaaf',
+                'CFB': 'football_ncaaf'
+            };
+
+            const sportKey = sportMap[sportQuery] || 'basketball_nba'; // Default to NBA
+            const sportName = sportQuery || 'NBA';
+
+            const response = await axios.get(
+                `https://api.the-odds-api.com/v4/sports/${sportKey}/odds`, {
+                    params: {
+                        apiKey: ODDS_API_KEY,
+                        regions: 'us',
+                        markets: 'h2h',
+                        oddsFormat: 'american'
+                    }
+                }
+            );
+
+            const games = response.data || [];
+            const now = new Date();
+            const tomorrow = new Date(now.getTime() + 36 * 60 * 60 * 1000);
+
+            // Filter to games in next 36 hours
+            const upcomingGames = games
+                .filter(g => {
+                    const gameTime = new Date(g.commence_time);
+                    return gameTime >= now && gameTime <= tomorrow;
+                })
+                .sort((a, b) => new Date(a.commence_time) - new Date(b.commence_time))
+                .slice(0, 10);
+
+            const embed = new EmbedBuilder()
+                .setColor(0x5865F2)
+                .setTitle(`🏀 ${sportName} Games Today`)
+                .setFooter({ text: 'Use !odds [team] for full odds comparison' });
+
+            if (upcomingGames.length > 0) {
+                let gamesText = "";
+                
+                upcomingGames.forEach(g => {
+                    const gameTime = new Date(g.commence_time);
+                    const timeStr = gameTime.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit'
+                    });
+                    
+                    // Get consensus odds if available
+                    let oddsStr = "";
+                    if (g.bookmakers?.[0]?.markets?.[0]?.outcomes) {
+                        const outcomes = g.bookmakers[0].markets[0].outcomes;
+                        const away = outcomes.find(o => o.name === g.away_team);
+                        const home = outcomes.find(o => o.name === g.home_team);
+                        if (away && home) {
+                            const awayOdds = away.price > 0 ? `+${away.price}` : away.price;
+                            const homeOdds = home.price > 0 ? `+${home.price}` : home.price;
+                            oddsStr = ` (${awayOdds}/${homeOdds})`;
+                        }
+                    }
+                    
+                    gamesText += `**${timeStr}** - ${g.away_team} @ ${g.home_team}${oddsStr}\n`;
+                });
+
+                embed.setDescription(gamesText);
+            } else {
+                embed.setDescription(`No ${sportName} games scheduled in the next 36 hours.`);
+            }
+
+            await message.reply({ embeds: [embed] });
+
+        } catch (error) {
+            console.error('[!games] Error:', error);
+            await message.reply("❌ Error fetching games. Try again later.");
+        }
+        return;
+    }
+    
     /* ========================================================================
        COMMAND: !math [problem]
        ======================================================================== */
@@ -620,7 +923,60 @@ Rules:
         return;
     }
 
+/* ========================================================================
+       COMMAND: !kaldebug - Debug Kalshi API
+       ======================================================================== */
+    if (lowerContent === '!kaldebug') {
+        try {
+            await message.channel.sendTyping();
 
+            const response = await axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=200&status=open');
+            const markets = response.data.markets || [];
+
+            // Find all unique categories
+            const categories = [...new Set(markets.map(m => m.category))];
+            
+            // Look for anything basketball/nba related
+            const basketballKeywords = ['BASKETBALL', 'NBA', 'BUCKS', 'WIZARDS', 'LAKERS', 'CELTICS', 'HEAT', 'BULLS', 'SIXERS', '76ERS', 'KINGS', 'ROCKETS', 'HAWKS', 'PRO BASKETBALL'];
+            
+            const sportsMarkets = markets.filter(m => {
+                const text = (m.title + ' ' + m.category + ' ' + m.ticker).toUpperCase();
+                return basketballKeywords.some(kw => text.includes(kw));
+            });
+
+            let debugText = `**Kalshi API Response**\n\n`;
+            debugText += `Total markets: ${markets.length}\n`;
+            debugText += `Categories: ${categories.slice(0, 10).join(', ')}${categories.length > 10 ? '...' : ''}\n\n`;
+            debugText += `**Sports/Basketball markets found: ${sportsMarkets.length}**\n\n`;
+
+            if (sportsMarkets.length > 0) {
+                sportsMarkets.slice(0, 8).forEach((m, i) => {
+                    const closeTime = new Date(m.close_time);
+                    const hoursLeft = Math.round((closeTime - new Date()) / (1000 * 60 * 60));
+                    debugText += `${i + 1}. **${m.title.substring(0, 50)}**\n`;
+                    debugText += `   Cat: ${m.category} | Ticker: ${m.ticker} | ${hoursLeft}h | Vol: ${m.volume}\n\n`;
+                });
+            } else {
+                // Show sample of what IS available
+                debugText += `*No basketball found. Sample markets:*\n`;
+                markets.slice(0, 5).forEach((m, i) => {
+                    debugText += `${i + 1}. [${m.category}] ${m.title.substring(0, 60)}\n`;
+                });
+            }
+
+            // Truncate if needed
+            if (debugText.length > 1900) {
+                debugText = debugText.substring(0, 1900) + '...';
+            }
+
+            await message.reply(debugText);
+
+        } catch (error) {
+            console.error('Kaldebug error:', error);
+            await message.reply(`❌ Error: ${error.message}`);
+        }
+        return;
+    }
     /* ========================================================================
        COMMAND: !summary [text]
        ======================================================================== */
