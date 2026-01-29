@@ -1,24 +1,22 @@
 /**
  * ============================================================================
- * DISCORD BOT APPLICATION
+ * DISCORD BOT - SPORTS BETTING & AI ASSISTANT
  * ============================================================================
  * 
- * Features:
- *   - Claude AI integration with web search
- *   - Kalshi market lookup
- *   - Live sports markets (24h, no futures, no parlays)
- *   - Math solver
- *   - Text summarizer
- *   - Conversation memory
- * 
  * Commands:
- *   !ask [question]    - Ask Claude anything (with web search)
- *   !sports            - Live sports markets (next 24 hours)
- *   !kalshi [ticker]   - Lookup specific Kalshi market
+ *   !odds [team]       - Compare odds across sportsbooks (The Odds API)
+ *   !games [sport]     - List today's games with odds
+ *   !kalshi [search]   - Search Kalshi prediction markets
+ *   !ask [question]    - Ask Claude AI (with web search)
  *   !math [problem]    - Step-by-step math solver
  *   !summary [text]    - Summarize long text
  *   !clear             - Clear conversation memory
  *   !help              - Show all commands
+ * 
+ * Required Environment Variables:
+ *   DISCORD_TOKEN      - Discord bot token
+ *   ANTHROPIC_API_KEY  - Claude API key
+ *   ODDS_API_KEY       - The Odds API key (free at https://the-odds-api.com)
  * 
  * ============================================================================
  */
@@ -35,17 +33,17 @@ require('dotenv').config();
 
 const SYSTEM_PROMPT = `You are a smart, witty AI assistant in a Discord server.
 You're talking to people in their 20s, so:
-- Be direct and to the point, like a coworker
+- Be direct and to the point
 - Don't over-explain or be condescending
-- Use emojis sparingly, only when it adds to the vibe
+- Use emojis sparingly
 - Keep responses concise but informative
-- It's fine to say "I don't know" or suggest they Google something obscure`;
+- It's fine to say "I don't know"`;
 
 const HISTORY_LIMIT = 20;
 
 
 /* ============================================================================
-   DISCORD CLIENT SETUP
+   INITIALIZE CLIENTS
    ============================================================================ */
 
 const client = new Client({
@@ -58,21 +56,16 @@ const client = new Client({
     partials: [Partials.Channel],
 });
 
-
-/* ============================================================================
-   ANTHROPIC CLIENT SETUP
-   ============================================================================ */
-
 const anthropic = new Anthropic({
     apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+const conversationHistory = new Map();
+
 
 /* ============================================================================
-   CONVERSATION HISTORY MANAGEMENT
+   HELPER FUNCTIONS
    ============================================================================ */
-
-const conversationHistory = new Map();
 
 function getConversationHistory(channelId) {
     if (!conversationHistory.has(channelId)) {
@@ -84,44 +77,26 @@ function getConversationHistory(channelId) {
 function addToHistory(channelId, role, content) {
     const history = getConversationHistory(channelId);
     history.push({ role, content });
-    if (history.length > HISTORY_LIMIT) {
-        history.shift();
-    }
+    if (history.length > HISTORY_LIMIT) history.shift();
 }
 
 function clearHistory(channelId) {
     conversationHistory.set(channelId, []);
 }
 
-
-/* ============================================================================
-   HELPER FUNCTIONS
-   ============================================================================ */
-
-/**
- * Send a response with typing indicator, splitting long messages if needed
- */
-async function sendResponseWithTyping(message, response) {
+async function sendResponse(message, response) {
     await message.channel.sendTyping();
-    
     if (response.length <= 2000) {
         await message.reply(response);
     } else {
-        // Split into chunks for Discord's 2000 char limit
         const chunks = response.match(/.{1,1900}/gs) || [];
         for (let i = 0; i < chunks.length; i++) {
-            if (i === 0) {
-                await message.reply(chunks[i]);
-            } else {
-                await message.channel.send(chunks[i]);
-            }
+            if (i === 0) await message.reply(chunks[i]);
+            else await message.channel.send(chunks[i]);
         }
     }
 }
 
-/**
- * Format large numbers (1000 -> 1k, 1000000 -> 1M)
- */
 function formatVolume(num) {
     if (!num) return "0";
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
@@ -129,9 +104,6 @@ function formatVolume(num) {
     return num.toString();
 }
 
-/**
- * Chat with Claude AI (includes web search capability)
- */
 async function chatWithClaude(channelId, userMessage) {
     try {
         addToHistory(channelId, 'user', userMessage);
@@ -145,7 +117,6 @@ async function chatWithClaude(channelId, userMessage) {
             tools: [{ type: "web_search_20250305", name: "web_search" }]
         });
 
-        // Extract text from response (handles web search responses too)
         const assistantMessage = response.content
             .filter(block => block.type === 'text')
             .map(block => block.text)
@@ -162,23 +133,16 @@ async function chatWithClaude(channelId, userMessage) {
 
 
 /* ============================================================================
-   BOT READY EVENT
+   BOT READY
    ============================================================================ */
 
 client.once('ready', () => {
-    console.log('══════════════════════════════════════════════════════════');
+    console.log('═══════════════════════════════════════════════════════');
     console.log(`  ✅ BOT ONLINE: ${client.user.tag}`);
-    console.log(`  📅 Started: ${new Date().toLocaleString()}`);
-    console.log('══════════════════════════════════════════════════════════');
-    console.log('  Available Commands:');
-    console.log('    !ask      - Ask Claude (with web search)');
-    console.log('    !sports   - Live sports markets (24h)');
-    console.log('    !kalshi   - Lookup Kalshi ticker');
-    console.log('    !math     - Math solver');
-    console.log('    !summary  - Summarize text');
-    console.log('    !clear    - Clear memory');
-    console.log('    !help     - Show commands');
-    console.log('══════════════════════════════════════════════════════════');
+    console.log(`  📅 ${new Date().toLocaleString()}`);
+    console.log('═══════════════════════════════════════════════════════');
+    console.log('  Commands: !odds, !games, !kalshi, !ask, !math, !summary, !help');
+    console.log('═══════════════════════════════════════════════════════');
 });
 
 
@@ -187,7 +151,6 @@ client.once('ready', () => {
    ============================================================================ */
 
 client.on('messageCreate', async (message) => {
-    // Ignore bot messages
     if (message.author.bot) return;
 
     const content = message.content.trim();
@@ -195,397 +158,63 @@ client.on('messageCreate', async (message) => {
 
 
     /* ========================================================================
-       COMMAND: !clear
-       ======================================================================== */
-    if (lowerContent === '!clear') {
-        clearHistory(message.channel.id);
-        await message.reply('🧹 Memory cleared! Starting fresh.');
-        return;
-    }
-
-
-    /* ========================================================================
        COMMAND: !help
        ======================================================================== */
     if (lowerContent === '!help') {
-        const helpEmbed = new EmbedBuilder()
+        const embed = new EmbedBuilder()
             .setColor(0x5865F2)
             .setTitle('🤖 Bot Commands')
-            .setDescription('Here\'s everything I can do:')
             .addFields(
                 { 
-                    name: '💬 Chat', 
-                    value: '`!ask [question]` - Ask me anything\n`@mention` - Mention me to chat', 
+                    name: '🎰 Sports Betting', 
+                    value: [
+                        '`!odds [team]` - Compare odds across books',
+                        '`!games [sport]` - Today\'s games (nba/nfl/mlb/nhl)',
+                        '`!kalshi [search]` - Search Kalshi markets'
+                    ].join('\n'),
                     inline: false 
                 },
                 { 
-                    name: '📊 Markets', 
-                    value: '`!sports` - Live sports markets (24h)\n`!kalshi [ticker]` - Lookup specific market', 
-                    inline: false 
-                },
-                { 
-                    name: '🛠️ Tools', 
-                    value: '`!math [problem]` - Solve math step-by-step\n`!summary [text]` - Summarize long text', 
+                    name: '💬 AI Assistant', 
+                    value: [
+                        '`!ask [question]` - Ask Claude anything',
+                        '`!math [problem]` - Solve math step-by-step',
+                        '`!summary [text]` - Summarize text'
+                    ].join('\n'),
                     inline: false 
                 },
                 { 
                     name: '⚙️ Utility', 
-                    value: '`!clear` - Clear conversation memory\n`!help` - Show this menu', 
+                    value: '`!clear` - Clear chat memory',
                     inline: false 
                 }
             )
-            .setFooter({ text: 'Powered by Claude AI' });
+            .setFooter({ text: 'Odds from The Odds API • AI by Claude' });
 
-        await message.reply({ embeds: [helpEmbed] });
+        await message.reply({ embeds: [embed] });
         return;
     }
 
 
     /* ========================================================================
-       COMMAND: !kalshi [ticker]
+       COMMAND: !clear
        ======================================================================== */
-    if (lowerContent.startsWith('!kalshi ')) {
-        const ticker = content.slice(8).trim().toUpperCase();
-        
-        if (!ticker) {
-            await message.reply("📊 Please provide a ticker. Example: `!kalshi KXHIGHNY`");
-            return;
-        }
-
-        try {
-            await message.channel.sendTyping();
-            
-            const url = `https://api.elections.kalshi.com/trade-api/v2/markets/${ticker}`;
-            const response = await axios.get(url);
-            const market = response.data.market;
-
-            const embed = new EmbedBuilder()
-                .setColor(0x00D166)
-                .setTitle(`📊 ${market.title}`)
-                .addFields(
-                    { name: 'Ticker', value: market.ticker, inline: true },
-                    { name: 'Yes Price', value: `$${(market.yes_bid / 100).toFixed(2)}`, inline: true },
-                    { name: 'No Price', value: `$${(market.no_ask / 100).toFixed(2)}`, inline: true },
-                    { name: 'Status', value: market.status, inline: true },
-                    { name: 'Closes', value: new Date(market.close_time).toLocaleString(), inline: true }
-                )
-                .setFooter({ text: 'Source: Kalshi' });
-
-            await message.reply({ embeds: [embed] });
-
-        } catch (error) {
-            console.error('Kalshi API Error:', error.message);
-            await message.reply("❌ Couldn't find that market. Check the ticker and try again.");
-        }
+    if (lowerContent === '!clear') {
+        clearHistory(message.channel.id);
+        await message.reply('🧹 Memory cleared!');
         return;
     }
 
 
-/* ========================================================================
-       COMMAND: !sports
-       Live sports markets - Next 24 hours only, no futures, no parlays
-       ======================================================================== */
-    if (lowerContent === '!sports') {
-        try {
-            await message.channel.sendTyping();
-
-            // ─────────────────────────────────────────────────────────────────
-            // FETCH DATA FROM BOTH APIs
-            // ─────────────────────────────────────────────────────────────────
-            
-            const fetchKalshi = axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=500&status=open')
-                .then(res => res.data.markets || [])
-                .catch(err => { 
-                    console.error("Kalshi API Failed:", err.message); 
-                    return []; 
-                });
-
-            const fetchPoly = axios.get('https://gamma-api.polymarket.com/events?limit=100&active=true&closed=false')
-                .then(res => Array.isArray(res.data) ? res.data : [])
-                .catch(err => { 
-                    console.error("Polymarket API Failed:", err.message); 
-                    return []; 
-                });
-
-            const [kalshiData, polyData] = await Promise.all([fetchKalshi, fetchPoly]);
-
-            console.log(`[!sports] Fetched ${kalshiData.length} Kalshi, ${polyData.length} Polymarket`);
-
-            // ─────────────────────────────────────────────────────────────────
-            // TIME FILTERS - STRICT 24 HOURS ONLY
-            // ─────────────────────────────────────────────────────────────────
-            
-            const now = new Date();
-            const in24Hours = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-
-            // ─────────────────────────────────────────────────────────────────
-            // KEYWORD DEFINITIONS
-            // ─────────────────────────────────────────────────────────────────
-
-            // Sports identifiers
-            const sportsKeywords = [
-                'NFL', 'NBA', 'UFC', 'MLB', 'NHL', 'NCAA', 'MLS', 'WNBA',
-                'FOOTBALL', 'BASKETBALL', 'BASEBALL', 'HOCKEY', 'SOCCER',
-                'MMA', 'BOXING', 'TENNIS', 'GOLF',
-                'PREMIER LEAGUE', 'CHAMPIONS LEAGUE', 'LA LIGA', 'SERIE A',
-                'LAKERS', 'CELTICS', 'WARRIORS', 'BULLS', 'HEAT', 'KNICKS', 'NETS', 'SUNS', 'BUCKS', 'NUGGETS',
-                'CHIEFS', 'EAGLES', 'COWBOYS', 'PACKERS', '49ERS', 'RAVENS', 'BILLS', 'BENGALS',
-                'YANKEES', 'DODGERS', 'RED SOX', 'METS', 'CUBS', 'ASTROS', 'BRAVES',
-                'VS', 'VERSUS', 'GAME'
-            ];
-
-            // FUTURES - These words mean it's a long-term bet (EXCLUDE)
-            const futuresPatterns = [
-                /WINNER$/i,                    // Ends with "Winner"
-                /CHAMPION/i,                   // Any champion
-                /MVP/i,                        // MVP awards
-                /ROOKIE OF THE YEAR/i,
-                /DEFENSIVE PLAYER/i,
-                /AWARD/i,
-                /WIN THE 202/i,                // "Win the 2025"
-                /202[5-9].*WINNER/i,           // "2025 Winner"
-                /WINNER.*202[5-9]/i,           // "Winner 2025"
-                /SEASON/i,
-                /CHAMPIONSHIP$/i,              // Ends with "Championship"
-                /PREMIER LEAGUE WINNER/i,
-                /CHAMPIONS LEAGUE WINNER/i,
-                /LA LIGA WINNER/i,
-                /SERIE A WINNER/i,
-                /SUPER BOWL WINNER/i,
-                /WORLD SERIES WINNER/i,
-                /STANLEY CUP WINNER/i,
-                /NBA.*WINNER/i,
-                /NFL.*WINNER/i,
-                /HALL OF FAME/i,
-                /RETIRE/i,
-                /DRAFT/i,
-                /ALL.?STAR/i
-            ];
-
-            // Parlay patterns (EXCLUDE)
-            const parlayPatterns = [
-                /\d\+/,              // "2+", "3+", etc.
-                /PARLAY/i,
-                /COMBO/i
-            ];
-
-            // ─────────────────────────────────────────────────────────────────
-            // HELPER: Check if market is a futures bet
-            // ─────────────────────────────────────────────────────────────────
-            
-            function isFuturesBet(title) {
-                return futuresPatterns.some(pattern => pattern.test(title));
-            }
-
-            function isParlay(title) {
-                return parlayPatterns.some(pattern => pattern.test(title));
-            }
-
-            function isSportsRelated(title, category = '') {
-                const text = (title + ' ' + category).toUpperCase();
-                return sportsKeywords.some(kw => text.includes(kw));
-            }
-
-            // ─────────────────────────────────────────────────────────────────
-            // PROCESS KALSHI DATA - STRICT 24H ONLY
-            // ─────────────────────────────────────────────────────────────────
-
-            const kalshiSports = kalshiData
-                .filter(m => {
-                    if (!m.title || !m.close_time) return false;
-                    
-                    const closeTime = new Date(m.close_time);
-                    
-                    // STRICT: Must close within 24 hours
-                    if (closeTime > in24Hours || closeTime < now) return false;
-                    
-                    // Must be sports
-                    if (!isSportsRelated(m.title, m.category)) return false;
-                    
-                    // No futures
-                    if (isFuturesBet(m.title)) return false;
-                    
-                    // No parlays
-                    if (isParlay(m.title)) return false;
-                    
-                    // Must have volume
-                    if ((m.volume || 0) <= 0) return false;
-                    
-                    return true;
-                })
-                .sort((a, b) => (b.volume_24h || b.volume || 0) - (a.volume_24h || a.volume || 0))
-                .slice(0, 4);
-
-            console.log(`[!sports] Kalshi 24h sports: ${kalshiSports.length}`);
-
-            // ─────────────────────────────────────────────────────────────────
-            // PROCESS POLYMARKET DATA - STRICT 24H ONLY
-            // ─────────────────────────────────────────────────────────────────
-
-            const polySports = polyData
-                .filter(e => {
-                    if (!e.title || !e.markets?.length) return false;
-                    
-                    // Must be sports
-                    if (!isSportsRelated(e.title, '')) return false;
-                    
-                    // No futures
-                    if (isFuturesBet(e.title)) return false;
-                    
-                    // No parlays
-                    if (isParlay(e.title)) return false;
-
-                    // STRICT: Check if ANY market closes within 24h
-                    const hasShortTermMarket = e.markets.some(m => {
-                        if (!m.endDate) return false;
-                        const closeTime = new Date(m.endDate);
-                        return closeTime <= in24Hours && closeTime > now;
-                    });
-                    
-                    return hasShortTermMarket;
-                })
-                .sort((a, b) => (b.volume || 0) - (a.volume || 0))
-                .slice(0, 4);
-
-            console.log(`[!sports] Polymarket 24h sports: ${polySports.length}`);
-
-            // ─────────────────────────────────────────────────────────────────
-            // BUILD DISCORD EMBED
-            // ─────────────────────────────────────────────────────────────────
-
-            const embed = new EmbedBuilder()
-                .setColor(0x00FF00)
-                .setTitle('🏈 Live Sports Markets (Next 24 Hours)')
-                .setDescription('Props, spreads & game outcomes • No futures • Sorted by volume')
-                .setFooter({ text: `Updated: ${now.toLocaleTimeString()}` });
-
-            // Kalshi Column
-            let kalshiText = "";
-            if (kalshiSports.length > 0) {
-                kalshiSports.forEach(m => {
-                    const yesPrice = m.yes_bid ? (m.yes_bid / 100).toFixed(2) : "-.--";
-                    const volume = m.volume_24h || m.volume || 0;
-                    const closeTime = new Date(m.close_time);
-                    const hoursLeft = Math.max(0, Math.round((closeTime - now) / (1000 * 60 * 60)));
-                    
-                    const shortTitle = m.title.length > 30 
-                        ? m.title.substring(0, 29) + '...' 
-                        : m.title;
-                    
-                    kalshiText += `**${shortTitle}**\n`;
-                    kalshiText += `└ 🟢 $${yesPrice} • 📊 $${formatVolume(volume)} • ⏰ ${hoursLeft}h\n\n`;
-                });
-            } else {
-                kalshiText = "No games in next 24h\n\n*Check back on game days*";
-            }
-
-            // Polymarket Column
-            let polyText = "";
-            if (polySports.length > 0) {
-                polySports.forEach(p => {
-                    let price = "-.--";
-                    let hoursLeft = "?";
-                    
-                    if (p.markets?.[0]) {
-                        if (p.markets[0].outcomePrices) {
-                            try {
-                                const parsed = JSON.parse(p.markets[0].outcomePrices);
-                                price = parseFloat(parsed[0] || 0).toFixed(2);
-                            } catch (e) { }
-                        }
-                        if (p.markets[0].endDate) {
-                            const closeTime = new Date(p.markets[0].endDate);
-                            hoursLeft = Math.max(0, Math.round((closeTime - now) / (1000 * 60 * 60)));
-                        }
-                    }
-                    
-                    const shortTitle = p.title.length > 30 
-                        ? p.title.substring(0, 29) + '...' 
-                        : p.title;
-                    
-                    polyText += `**${shortTitle}**\n`;
-                    polyText += `└ 🟢 $${price} • 📊 $${formatVolume(p.volume)} • ⏰ ${hoursLeft}h\n\n`;
-                });
-            } else {
-                polyText = "No games in next 24h\n\n*Check back on game days*";
-            }
-
-            embed.addFields(
-                { name: '🇺🇸 Kalshi', value: kalshiText, inline: true },
-                { name: '🌐 Polymarket', value: polyText, inline: true }
-            );
-
-            await message.reply({ embeds: [embed] });
-
-        } catch (error) {
-            console.error('[!sports] Error:', error);
-            await message.reply("❌ Error fetching sports markets. Try again later.");
-        }
-        return;
-    }
-
-/* ========================================================================
-       COMMAND: !debug (temporary - shows raw API data)
-       ======================================================================== */
-    if (lowerContent === '!debug') {
-        try {
-            await message.channel.sendTyping();
-
-            // Fetch Kalshi
-            const kalshiRes = await axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=100&status=open');
-            const kalshiData = kalshiRes.data.markets || [];
-
-            // Get unique categories
-            const categories = [...new Set(kalshiData.map(m => m.category))];
-            
-            // Get sample titles from each category
-            let debugText = `**Kalshi has ${kalshiData.length} open markets**\n\n`;
-            debugText += `**Categories:** ${categories.join(', ')}\n\n`;
-            
-            // Show first 10 markets
-            debugText += `**Sample markets:**\n`;
-            kalshiData.slice(0, 10).forEach((m, i) => {
-                const closeTime = new Date(m.close_time);
-                const hoursLeft = Math.round((closeTime - new Date()) / (1000 * 60 * 60));
-                debugText += `${i+1}. [${m.category}] ${m.title.substring(0, 50)}... (${hoursLeft}h)\n`;
-            });
-
-            // Check for anything sports-related
-            const sportsKeywords = ['NFL', 'NBA', 'UFC', 'MLB', 'NHL', 'GAME', 'VS', 'SPORTS', 'FOOTBALL', 'BASKETBALL'];
-            const sportish = kalshiData.filter(m => {
-                const text = (m.title + ' ' + m.category).toUpperCase();
-                return sportsKeywords.some(kw => text.includes(kw));
-            });
-
-            debugText += `\n**Sports-related markets found: ${sportish.length}**\n`;
-            sportish.slice(0, 5).forEach(m => {
-                debugText += `- ${m.title.substring(0, 60)}...\n`;
-            });
-
-            // Truncate if too long
-            if (debugText.length > 1900) {
-                debugText = debugText.substring(0, 1900) + '...';
-            }
-
-            await message.reply(debugText);
-
-        } catch (error) {
-            console.error('Debug error:', error);
-            await message.reply(`❌ Error: ${error.message}`);
-        }
-        return;
-    }
-/* ========================================================================
+    /* ========================================================================
        COMMAND: !odds [team or matchup]
-       Get odds from multiple sportsbooks
-       Example: !odds bucks vs wizards
-       Example: !odds lakers
+       Compare odds across multiple sportsbooks
        ======================================================================== */
-    if (lowerContent.startsWith('!odds ')) {
-        const query = content.slice(6).trim().toUpperCase();
+    if (lowerContent.startsWith('!odds')) {
+        const query = content.slice(5).trim().toUpperCase();
         
         if (!query) {
-            await message.reply('🎰 Usage: `!odds [team or matchup]`\nExample: `!odds bucks vs wizards` or `!odds lakers`');
+            await message.reply('🎰 **Usage:** `!odds [team]`\n**Examples:**\n• `!odds bucks`\n• `!odds lakers vs celtics`\n• `!odds chiefs`');
             return;
         }
 
@@ -595,177 +224,146 @@ client.on('messageCreate', async (message) => {
             const ODDS_API_KEY = process.env.ODDS_API_KEY;
             
             if (!ODDS_API_KEY) {
-                await message.reply('❌ Odds API key not configured. Add ODDS_API_KEY to environment variables.');
+                await message.reply('❌ ODDS_API_KEY not configured. Get a free key at https://the-odds-api.com');
                 return;
             }
 
-            // Sports to check (can expand this list)
+            // Sports to search
             const sports = [
                 'basketball_nba',
-                'football_nfl',
+                'football_nfl', 
                 'baseball_mlb',
                 'hockey_nhl',
-                'mma_mixed_martial_arts',
                 'basketball_ncaab',
-                'football_ncaaf'
+                'football_ncaaf',
+                'mma_mixed_martial_arts'
             ];
 
-            // Try each sport until we find matches
             let allGames = [];
-            
+
+            // Fetch odds from each sport
             for (const sport of sports) {
                 try {
-                    const response = await axios.get(
-                        `https://api.the-odds-api.com/v4/sports/${sport}/odds`, {
-                            params: {
-                                apiKey: ODDS_API_KEY,
-                                regions: 'us',
-                                markets: 'h2h,spreads,totals',
-                                oddsFormat: 'american'
-                            }
-                        }
-                    );
-                    
-                    if (response.data && response.data.length > 0) {
-                        allGames = allGames.concat(response.data.map(g => ({ ...g, sport })));
+                    const res = await axios.get(`https://api.the-odds-api.com/v4/sports/${sport}/odds`, {
+                        params: {
+                            apiKey: ODDS_API_KEY,
+                            regions: 'us',
+                            markets: 'h2h,spreads,totals',
+                            oddsFormat: 'american'
+                        },
+                        timeout: 5000
+                    });
+                    if (res.data?.length) {
+                        allGames = allGames.concat(res.data);
                     }
-                } catch (err) {
-                    // Sport might not be in season, continue
-                    console.log(`[!odds] ${sport}: ${err.message}`);
+                } catch (e) {
+                    // Sport may not be in season
                 }
             }
 
-            console.log(`[!odds] Found ${allGames.length} total games`);
+            console.log(`[!odds] Fetched ${allGames.length} games across all sports`);
 
-            // Search for the query in team names
-            const searchTerms = query.replace(' VS ', ' ').replace(' V ', ' ').split(' ').filter(t => t.length > 2);
+            if (allGames.length === 0) {
+                await message.reply('❌ Could not fetch odds. Try again later.');
+                return;
+            }
+
+            // Search for matching games
+            const searchTerms = query.replace(/\s+VS\s+|\s+V\s+|\s+@\s+/g, ' ').split(' ').filter(t => t.length > 2);
             
-            const matchingGames = allGames.filter(game => {
-                const homeTeam = game.home_team.toUpperCase();
-                const awayTeam = game.away_team.toUpperCase();
-                const matchup = `${homeTeam} ${awayTeam}`;
-                
+            const matches = allGames.filter(game => {
+                const matchup = `${game.home_team} ${game.away_team}`.toUpperCase();
                 return searchTerms.some(term => matchup.includes(term));
             });
 
-            console.log(`[!odds] Matching games for "${query}": ${matchingGames.length}`);
-
-            if (matchingGames.length === 0) {
+            if (matches.length === 0) {
                 // Show available games
-                const todayGames = allGames
-                    .filter(g => {
-                        const gameTime = new Date(g.commence_time);
-                        const now = new Date();
-                        const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-                        return gameTime >= now && gameTime <= tomorrow;
-                    })
+                const now = new Date();
+                const upcoming = allGames
+                    .filter(g => new Date(g.commence_time) > now)
+                    .sort((a, b) => new Date(a.commence_time) - new Date(b.commence_time))
                     .slice(0, 8);
 
-                let availableText = "**Couldn't find that matchup.**\n\n";
-                
-                if (todayGames.length > 0) {
-                    availableText += "**Games available today:**\n";
-                    todayGames.forEach(g => {
-                        const time = new Date(g.commence_time).toLocaleTimeString('en-US', { 
-                            hour: 'numeric', 
-                            minute: '2-digit' 
-                        });
-                        availableText += `• ${g.away_team} @ ${g.home_team} (${time})\n`;
+                let text = `❌ **No games found for "${query}"**\n\n`;
+                if (upcoming.length > 0) {
+                    text += '**Upcoming games:**\n';
+                    upcoming.forEach(g => {
+                        const time = new Date(g.commence_time).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                        text += `• ${g.away_team} @ ${g.home_team} (${time})\n`;
                     });
-                    availableText += "\n*Try: `!odds [team name]`*";
-                } else {
-                    availableText += "*No games found in the next 24 hours.*";
                 }
-
-                await message.reply(availableText);
+                await message.reply(text);
                 return;
             }
 
-            // Use the first matching game
-            const game = matchingGames[0];
-            const gameTime = new Date(game.commence_time);
-            const timeStr = gameTime.toLocaleString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit'
+            // Use first match
+            const game = matches[0];
+            const gameTime = new Date(game.commence_time).toLocaleString('en-US', {
+                weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
             });
 
-            // Build the embed
             const embed = new EmbedBuilder()
                 .setColor(0xFF6B00)
                 .setTitle(`🏀 ${game.away_team} @ ${game.home_team}`)
-                .setDescription(`📅 ${timeStr}`)
-                .setFooter({ text: 'Source: The Odds API • Lines may vary' });
+                .setDescription(`📅 ${gameTime}`)
+                .setFooter({ text: 'Source: The Odds API' });
 
-            // Process bookmakers
-            const bookmakers = game.bookmakers || [];
-            
-            if (bookmakers.length === 0) {
-                embed.addFields({ name: '❌ No Odds Available', value: 'Lines not yet posted for this game.', inline: false });
+            const books = game.bookmakers || [];
+
+            if (books.length === 0) {
+                embed.addFields({ name: 'No Odds', value: 'Lines not yet available', inline: false });
             } else {
-                // MONEYLINE (h2h)
-                let moneylineText = "";
-                bookmakers.forEach(book => {
+                // MONEYLINE
+                let mlText = "";
+                books.slice(0, 6).forEach(book => {
                     const h2h = book.markets.find(m => m.key === 'h2h');
                     if (h2h) {
                         const away = h2h.outcomes.find(o => o.name === game.away_team);
                         const home = h2h.outcomes.find(o => o.name === game.home_team);
                         if (away && home) {
-                            const awayOdds = away.price > 0 ? `+${away.price}` : away.price;
-                            const homeOdds = home.price > 0 ? `+${home.price}` : home.price;
-                            moneylineText += `**${book.title}:** ${game.away_team} ${awayOdds} | ${game.home_team} ${homeOdds}\n`;
+                            const aOdds = away.price > 0 ? `+${away.price}` : away.price;
+                            const hOdds = home.price > 0 ? `+${home.price}` : home.price;
+                            mlText += `**${book.title}:** ${aOdds} / ${hOdds}\n`;
                         }
                     }
                 });
-                
-                if (moneylineText) {
-                    embed.addFields({ name: '💰 Moneyline', value: moneylineText.substring(0, 1024), inline: false });
-                }
+                if (mlText) embed.addFields({ name: '💰 Moneyline (Away/Home)', value: mlText, inline: false });
 
-                // SPREADS
-                let spreadText = "";
-                bookmakers.forEach(book => {
+                // SPREAD
+                let spText = "";
+                books.slice(0, 6).forEach(book => {
                     const spread = book.markets.find(m => m.key === 'spreads');
                     if (spread) {
                         const away = spread.outcomes.find(o => o.name === game.away_team);
                         const home = spread.outcomes.find(o => o.name === game.home_team);
                         if (away && home) {
-                            const awaySpread = away.point > 0 ? `+${away.point}` : away.point;
-                            const homeSpread = home.point > 0 ? `+${home.point}` : home.point;
-                            spreadText += `**${book.title}:** ${game.away_team} ${awaySpread} | ${game.home_team} ${homeSpread}\n`;
+                            const aSpread = away.point > 0 ? `+${away.point}` : away.point;
+                            const hSpread = home.point > 0 ? `+${home.point}` : home.point;
+                            spText += `**${book.title}:** ${game.away_team} ${aSpread} | ${game.home_team} ${hSpread}\n`;
                         }
                     }
                 });
-                
-                if (spreadText) {
-                    embed.addFields({ name: '📊 Spread', value: spreadText.substring(0, 1024), inline: false });
-                }
+                if (spText) embed.addFields({ name: '📊 Spread', value: spText, inline: false });
 
-                // TOTALS (Over/Under)
-                let totalsText = "";
-                bookmakers.forEach(book => {
+                // TOTALS
+                let totText = "";
+                books.slice(0, 6).forEach(book => {
                     const totals = book.markets.find(m => m.key === 'totals');
                     if (totals) {
                         const over = totals.outcomes.find(o => o.name === 'Over');
-                        const under = totals.outcomes.find(o => o.name === 'Under');
-                        if (over && under) {
-                            totalsText += `**${book.title}:** O/U ${over.point} (O: ${over.price > 0 ? '+' + over.price : over.price} | U: ${under.price > 0 ? '+' + under.price : under.price})\n`;
+                        if (over) {
+                            totText += `**${book.title}:** O/U ${over.point}\n`;
                         }
                     }
                 });
-                
-                if (totalsText) {
-                    embed.addFields({ name: '🎯 Total (O/U)', value: totalsText.substring(0, 1024), inline: false });
-                }
+                if (totText) embed.addFields({ name: '🎯 Total (O/U)', value: totText, inline: false });
             }
 
             await message.reply({ embeds: [embed] });
 
         } catch (error) {
-            console.error('[!odds] Error:', error);
-            await message.reply("❌ Error fetching odds. Try again later.");
+            console.error('[!odds] Error:', error.message);
+            await message.reply('❌ Error fetching odds. Try again later.');
         }
         return;
     }
@@ -773,112 +371,196 @@ client.on('messageCreate', async (message) => {
 
     /* ========================================================================
        COMMAND: !games [sport]
-       List today's games
-       Example: !games nba
+       List today's games with basic odds
        ======================================================================== */
     if (lowerContent.startsWith('!games')) {
-        const sportQuery = content.slice(6).trim().toUpperCase();
+        const sportQuery = content.slice(6).trim().toUpperCase() || 'NBA';
         
         try {
             await message.channel.sendTyping();
 
             const ODDS_API_KEY = process.env.ODDS_API_KEY;
-            
             if (!ODDS_API_KEY) {
-                await message.reply('❌ Odds API key not configured.');
+                await message.reply('❌ ODDS_API_KEY not configured.');
                 return;
             }
 
-            // Map user input to API sport key
             const sportMap = {
                 'NBA': 'basketball_nba',
-                'BASKETBALL': 'basketball_nba',
                 'NFL': 'football_nfl',
-                'FOOTBALL': 'football_nfl',
                 'MLB': 'baseball_mlb',
-                'BASEBALL': 'baseball_mlb',
                 'NHL': 'hockey_nhl',
-                'HOCKEY': 'hockey_nhl',
-                'UFC': 'mma_mixed_martial_arts',
-                'MMA': 'mma_mixed_martial_arts',
                 'NCAAB': 'basketball_ncaab',
                 'CBB': 'basketball_ncaab',
                 'NCAAF': 'football_ncaaf',
-                'CFB': 'football_ncaaf'
+                'CFB': 'football_ncaaf',
+                'UFC': 'mma_mixed_martial_arts',
+                'MMA': 'mma_mixed_martial_arts'
             };
 
-            const sportKey = sportMap[sportQuery] || 'basketball_nba'; // Default to NBA
-            const sportName = sportQuery || 'NBA';
+            const sportKey = sportMap[sportQuery] || 'basketball_nba';
 
-            const response = await axios.get(
-                `https://api.the-odds-api.com/v4/sports/${sportKey}/odds`, {
-                    params: {
-                        apiKey: ODDS_API_KEY,
-                        regions: 'us',
-                        markets: 'h2h',
-                        oddsFormat: 'american'
-                    }
-                }
-            );
+            const res = await axios.get(`https://api.the-odds-api.com/v4/sports/${sportKey}/odds`, {
+                params: {
+                    apiKey: ODDS_API_KEY,
+                    regions: 'us',
+                    markets: 'h2h',
+                    oddsFormat: 'american'
+                },
+                timeout: 5000
+            });
 
-            const games = response.data || [];
+            const games = res.data || [];
             const now = new Date();
-            const tomorrow = new Date(now.getTime() + 36 * 60 * 60 * 1000);
+            const cutoff = new Date(now.getTime() + 36 * 60 * 60 * 1000);
 
-            // Filter to games in next 36 hours
-            const upcomingGames = games
+            const upcoming = games
                 .filter(g => {
-                    const gameTime = new Date(g.commence_time);
-                    return gameTime >= now && gameTime <= tomorrow;
+                    const t = new Date(g.commence_time);
+                    return t >= now && t <= cutoff;
                 })
                 .sort((a, b) => new Date(a.commence_time) - new Date(b.commence_time))
                 .slice(0, 10);
 
             const embed = new EmbedBuilder()
-                .setColor(0x5865F2)
-                .setTitle(`🏀 ${sportName} Games Today`)
-                .setFooter({ text: 'Use !odds [team] for full odds comparison' });
+                .setColor(0x00AA00)
+                .setTitle(`🏀 ${sportQuery} Games Today`)
+                .setFooter({ text: 'Use !odds [team] for full comparison' });
 
-            if (upcomingGames.length > 0) {
-                let gamesText = "";
-                
-                upcomingGames.forEach(g => {
-                    const gameTime = new Date(g.commence_time);
-                    const timeStr = gameTime.toLocaleTimeString('en-US', { 
-                        hour: 'numeric', 
-                        minute: '2-digit'
-                    });
+            if (upcoming.length > 0) {
+                let text = "";
+                upcoming.forEach(g => {
+                    const time = new Date(g.commence_time).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
                     
-                    // Get consensus odds if available
-                    let oddsStr = "";
+                    let odds = "";
                     if (g.bookmakers?.[0]?.markets?.[0]?.outcomes) {
                         const outcomes = g.bookmakers[0].markets[0].outcomes;
                         const away = outcomes.find(o => o.name === g.away_team);
                         const home = outcomes.find(o => o.name === g.home_team);
                         if (away && home) {
-                            const awayOdds = away.price > 0 ? `+${away.price}` : away.price;
-                            const homeOdds = home.price > 0 ? `+${home.price}` : home.price;
-                            oddsStr = ` (${awayOdds}/${homeOdds})`;
+                            const a = away.price > 0 ? `+${away.price}` : away.price;
+                            const h = home.price > 0 ? `+${home.price}` : home.price;
+                            odds = ` (${a}/${h})`;
                         }
                     }
                     
-                    gamesText += `**${timeStr}** - ${g.away_team} @ ${g.home_team}${oddsStr}\n`;
+                    text += `**${time}** • ${g.away_team} @ ${g.home_team}${odds}\n`;
                 });
-
-                embed.setDescription(gamesText);
+                embed.setDescription(text);
             } else {
-                embed.setDescription(`No ${sportName} games scheduled in the next 36 hours.`);
+                embed.setDescription(`No ${sportQuery} games in the next 36 hours.`);
             }
 
             await message.reply({ embeds: [embed] });
 
         } catch (error) {
-            console.error('[!games] Error:', error);
-            await message.reply("❌ Error fetching games. Try again later.");
+            console.error('[!games] Error:', error.message);
+            await message.reply('❌ Error fetching games. Try again later.');
         }
         return;
     }
-    
+
+
+    /* ========================================================================
+       COMMAND: !kalshi [search]
+       Search Kalshi prediction markets
+       ======================================================================== */
+    if (lowerContent.startsWith('!kalshi')) {
+        const query = content.slice(7).trim().toUpperCase();
+        
+        try {
+            await message.channel.sendTyping();
+
+            // Fetch Kalshi markets
+            const res = await axios.get('https://api.elections.kalshi.com/trade-api/v2/markets', {
+                params: { limit: 500, status: 'open' },
+                timeout: 10000
+            });
+
+            const markets = res.data.markets || [];
+            console.log(`[!kalshi] Fetched ${markets.length} markets`);
+
+            // Filter out multi-game parlays (contain "MULTIGAME" in ticker or multiple teams in title)
+            const singleGameMarkets = markets.filter(m => {
+                const ticker = (m.ticker || '').toUpperCase();
+                const title = (m.title || '').toUpperCase();
+                
+                // Exclude multi-game parlays
+                if (ticker.includes('MULTIGAME')) return false;
+                if (ticker.includes('EXTENDED')) return false;
+                
+                // Exclude titles with multiple "yes" (parlays)
+                const yesCount = (title.match(/YES/g) || []).length;
+                if (yesCount > 1) return false;
+                
+                // Exclude titles with commas between teams (parlays)
+                if (/YES.*,.*YES/i.test(title)) return false;
+                
+                return true;
+            });
+
+            console.log(`[!kalshi] After filtering parlays: ${singleGameMarkets.length}`);
+
+            let filtered = singleGameMarkets;
+
+            // If query provided, search for it
+            if (query) {
+                const terms = query.split(' ').filter(t => t.length > 1);
+                filtered = singleGameMarkets.filter(m => {
+                    const text = `${m.title} ${m.category} ${m.ticker}`.toUpperCase();
+                    return terms.some(term => text.includes(term));
+                });
+            }
+
+            // Sort by close time (soonest first) then by volume
+            const now = new Date();
+            filtered = filtered
+                .filter(m => m.close_time && new Date(m.close_time) > now)
+                .sort((a, b) => {
+                    // Prioritize by volume first
+                    const volDiff = (b.volume || 0) - (a.volume || 0);
+                    if (volDiff !== 0) return volDiff;
+                    // Then by close time
+                    return new Date(a.close_time) - new Date(b.close_time);
+                })
+                .slice(0, 8);
+
+            const embed = new EmbedBuilder()
+                .setColor(0x6B5BFF)
+                .setTitle(query ? `🔮 Kalshi: "${query}"` : '🔮 Kalshi Top Markets')
+                .setFooter({ text: 'Source: Kalshi • Yes/No prices shown' });
+
+            if (filtered.length > 0) {
+                let text = "";
+                filtered.forEach(m => {
+                    const yes = m.yes_bid ? `$${(m.yes_bid / 100).toFixed(2)}` : '—';
+                    const no = m.no_bid ? `$${(m.no_bid / 100).toFixed(2)}` : '—';
+                    const closeTime = new Date(m.close_time);
+                    const hoursLeft = Math.round((closeTime - now) / (1000 * 60 * 60));
+                    const timeStr = hoursLeft > 48 ? `${Math.round(hoursLeft/24)}d` : `${hoursLeft}h`;
+                    
+                    const title = m.title.length > 50 ? m.title.substring(0, 49) + '...' : m.title;
+                    text += `**${title}**\n`;
+                    text += `└ Yes: ${yes} • No: ${no} • ⏰ ${timeStr} • Vol: $${formatVolume(m.volume)}\n\n`;
+                });
+                embed.setDescription(text);
+            } else {
+                let suggestions = 'Try searching for:\n• `!kalshi nba`\n• `!kalshi trump`\n• `!kalshi inflation`\n• `!kalshi weather`';
+                embed.setDescription(query 
+                    ? `No markets found for "${query}"\n\n${suggestions}`
+                    : `No markets found.\n\n${suggestions}`);
+            }
+
+            await message.reply({ embeds: [embed] });
+
+        } catch (error) {
+            console.error('[!kalshi] Error:', error.message);
+            await message.reply('❌ Error fetching Kalshi markets. Try again later.');
+        }
+        return;
+    }
+
+
     /* ========================================================================
        COMMAND: !math [problem]
        ======================================================================== */
@@ -886,27 +568,20 @@ client.on('messageCreate', async (message) => {
         const problem = content.slice(6).trim();
         
         if (!problem) {
-            await message.reply('🔢 Give me a problem! Example: `!math 25 * 4 + 10`');
+            await message.reply('🔢 Example: `!math 25 * 4 + 10`');
             return;
         }
 
         try {
             await message.channel.sendTyping();
 
-            const mathPrompt = `Solve this math problem step-by-step:
-${problem}
-
-Rules:
-- Show clear, numbered steps
-- Explain the reasoning briefly (assume basic math knowledge)
-- Skip obvious steps, focus on the tricky parts
-- Give the final answer clearly at the end
-- Keep it concise`;
-
             const response = await anthropic.messages.create({
                 model: 'claude-sonnet-4-20250514',
                 max_tokens: 1024,
-                messages: [{ role: 'user', content: mathPrompt }],
+                messages: [{ 
+                    role: 'user', 
+                    content: `Solve step-by-step, be concise:\n${problem}` 
+                }],
             });
 
             const answer = response.content
@@ -914,96 +589,37 @@ Rules:
                 .map(block => block.text)
                 .join('\n\n');
 
-            await sendResponseWithTyping(message, answer);
+            await sendResponse(message, answer);
 
         } catch (error) {
             console.error('[!math] Error:', error);
-            await message.reply("❌ Error solving that problem. Try again?");
+            await message.reply('❌ Error solving problem.');
         }
         return;
     }
 
-/* ========================================================================
-       COMMAND: !kaldebug - Debug Kalshi API
-       ======================================================================== */
-    if (lowerContent === '!kaldebug') {
-        try {
-            await message.channel.sendTyping();
 
-            const response = await axios.get('https://api.elections.kalshi.com/trade-api/v2/markets?limit=200&status=open');
-            const markets = response.data.markets || [];
-
-            // Find all unique categories
-            const categories = [...new Set(markets.map(m => m.category))];
-            
-            // Look for anything basketball/nba related
-            const basketballKeywords = ['BASKETBALL', 'NBA', 'BUCKS', 'WIZARDS', 'LAKERS', 'CELTICS', 'HEAT', 'BULLS', 'SIXERS', '76ERS', 'KINGS', 'ROCKETS', 'HAWKS', 'PRO BASKETBALL'];
-            
-            const sportsMarkets = markets.filter(m => {
-                const text = (m.title + ' ' + m.category + ' ' + m.ticker).toUpperCase();
-                return basketballKeywords.some(kw => text.includes(kw));
-            });
-
-            let debugText = `**Kalshi API Response**\n\n`;
-            debugText += `Total markets: ${markets.length}\n`;
-            debugText += `Categories: ${categories.slice(0, 10).join(', ')}${categories.length > 10 ? '...' : ''}\n\n`;
-            debugText += `**Sports/Basketball markets found: ${sportsMarkets.length}**\n\n`;
-
-            if (sportsMarkets.length > 0) {
-                sportsMarkets.slice(0, 8).forEach((m, i) => {
-                    const closeTime = new Date(m.close_time);
-                    const hoursLeft = Math.round((closeTime - new Date()) / (1000 * 60 * 60));
-                    debugText += `${i + 1}. **${m.title.substring(0, 50)}**\n`;
-                    debugText += `   Cat: ${m.category} | Ticker: ${m.ticker} | ${hoursLeft}h | Vol: ${m.volume}\n\n`;
-                });
-            } else {
-                // Show sample of what IS available
-                debugText += `*No basketball found. Sample markets:*\n`;
-                markets.slice(0, 5).forEach((m, i) => {
-                    debugText += `${i + 1}. [${m.category}] ${m.title.substring(0, 60)}\n`;
-                });
-            }
-
-            // Truncate if needed
-            if (debugText.length > 1900) {
-                debugText = debugText.substring(0, 1900) + '...';
-            }
-
-            await message.reply(debugText);
-
-        } catch (error) {
-            console.error('Kaldebug error:', error);
-            await message.reply(`❌ Error: ${error.message}`);
-        }
-        return;
-    }
     /* ========================================================================
        COMMAND: !summary [text]
        ======================================================================== */
     if (lowerContent.startsWith('!summary ')) {
-        const textToSummarize = content.slice(9).trim();
+        const text = content.slice(9).trim();
         
-        if (!textToSummarize) {
-            await message.reply('📝 Give me something to summarize! Example: `!summary [paste text here]`');
+        if (!text) {
+            await message.reply('📝 Example: `!summary [paste text here]`');
             return;
         }
 
         try {
             await message.channel.sendTyping();
 
-            const summaryPrompt = `Summarize this text:
-${textToSummarize}
-
-Rules:
-- Hit the key points, skip the filler
-- Use bullet points if it helps clarity
-- Don't dumb it down
-- End with a TL;DR if it's longer content`;
-
             const response = await anthropic.messages.create({
                 model: 'claude-sonnet-4-20250514',
                 max_tokens: 1024,
-                messages: [{ role: 'user', content: summaryPrompt }],
+                messages: [{ 
+                    role: 'user', 
+                    content: `Summarize concisely with bullet points:\n${text}` 
+                }],
             });
 
             const summary = response.content
@@ -1011,11 +627,11 @@ Rules:
                 .map(block => block.text)
                 .join('\n\n');
 
-            await sendResponseWithTyping(message, summary);
+            await sendResponse(message, summary);
 
         } catch (error) {
             console.error('[!summary] Error:', error);
-            await message.reply("❌ Error generating summary. Try again?");
+            await message.reply('❌ Error generating summary.');
         }
         return;
     }
@@ -1033,22 +649,22 @@ Rules:
         }
 
         const response = await chatWithClaude(message.channel.id, question);
-        await sendResponseWithTyping(message, response);
+        await sendResponse(message, response);
         return;
     }
 
 
     /* ========================================================================
-       MENTION HANDLER (@bot)
+       MENTION HANDLER
        ======================================================================== */
     if (message.mentions.has(client.user)) {
         const question = content.replace(/<@!?\d+>/g, '').trim();
         
         if (question) {
             const response = await chatWithClaude(message.channel.id, question);
-            await sendResponseWithTyping(message, response);
+            await sendResponse(message, response);
         } else {
-            await message.reply('👋 Hey! Ask me something.');
+            await message.reply('👋 Ask me something!');
         }
         return;
     }
@@ -1059,5 +675,5 @@ Rules:
    STARTUP
    ============================================================================ */
 
-console.log('🚀 Initializing Bot...');
+console.log('🚀 Starting bot...');
 client.login(process.env.DISCORD_TOKEN);
