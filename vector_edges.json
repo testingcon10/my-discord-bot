@@ -1,0 +1,58 @@
+[
+  {
+    "team": "LAL",
+    "opponent": "BOS",
+    "spread": 6.5,
+    "total": 228.5,
+    "moneyline": 220,
+    "status": "WEAK_EDGE",
+    "sample_size": 50,
+    "avg_similarity": 0.945,
+    "edges": [
+      {
+        "type": "MONEYLINE",
+        "direction": "BET",
+        "edge": 15.0,
+        "win_rate": 46.0,
+        "sample_size": 50,
+        "confidence": 0.30000000000000004
+      },
+      {
+        "type": "SPREAD",
+        "direction": "COVER",
+        "edge": 6.0,
+        "win_rate": 56.0,
+        "sample_size": 50,
+        "confidence": 0.1200000000000001
+      }
+    ]
+  },
+  {
+    "team": "GSW",
+    "opponent": "PHX",
+    "spread": -4.5,
+    "total": 232.0,
+    "moneyline": -180,
+    "status": "WEAK_EDGE",
+    "sample_size": 50,
+    "avg_similarity": 0.953,
+    "edges": [
+      {
+        "type": "MONEYLINE",
+        "direction": "FADE",
+        "edge": -10.0,
+        "win_rate": 54.0,
+        "sample_size": 50,
+        "confidence": 0.19999999999999996
+      },
+      {
+        "type": "TOTAL",
+        "direction": "OVER",
+        "edge": 10.0,
+        "win_rate": 60.0,
+        "sample_size": 50,
+        "confidence": 0.19999999999999996
+      }
+    ]
+  }
+]
