@@ -1,3 +1,14 @@
-nfl_data_py
-pandas
+# Core
 numpy
+requests
+python-dotenv
+
+# Sports Data
+nba_api
+nfl_data_py
+
+# Vector Search (optional but recommended)
+faiss-cpu
+
+# Data Processing
+pandas

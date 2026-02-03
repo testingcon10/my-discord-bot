@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-02-02T20:52:07.055898",
+  "summary": {
+    "nba_games": 4,
+    "nfl_games": 1,
+    "nba_injuries": 112,
+    "nfl_injuries": 800
+  },
+  "edges": [
+    {
+      "team": "Lakers",
+      "opponent": "Celtics",
+      "status": "STRONG_EDGE",
+      "sample_size": 50,
+      "avg_similarity": 0.898,
+      "edges": [
+        {
+          "type": "MONEYLINE",
+          "direction": "BET",
+          "advantage": 19.6,
+          "target_prob": 48.1,
+          "market_prob": 28.6,
+          "strength": "STRONG",
+          "confidence": 1.96
+        },
+        {
+          "type": "TOTAL",
+          "direction": "OVER",
+          "advantage": 7.8,
+          "target_prob": 57.8,
+          "market_prob": 50.0,
+          "strength": "STRONG",
+          "confidence": 0.78
+        }
+      ],
+      "meta": {
+        "target_model": {
+          "ml_prob": 0.4814365968126284,
+          "spread_prob": 0.5015858578605173,
+          "over_prob": 0.5776627518421915,
+          "sample_size": 50,
+          "avg_similarity": 0.8983097267150879
+        },
+        "draft_model": {
+          "ml_prob": 0.286,
+          "spread_prob": 0.5,
+          "over_prob": 0.5
+        }
+      }
+    }
+  ],
+  "arbitrage": []
+}

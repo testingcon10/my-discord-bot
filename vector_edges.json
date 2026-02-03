@@ -1,58 +1,43 @@
 [
   {
-    "team": "LAL",
-    "opponent": "BOS",
-    "spread": 6.5,
-    "total": 228.5,
-    "moneyline": 220,
-    "status": "WEAK_EDGE",
+    "team": "Lakers",
+    "opponent": "Celtics",
+    "status": "STRONG_EDGE",
     "sample_size": 50,
-    "avg_similarity": 0.945,
+    "avg_similarity": 0.898,
     "edges": [
       {
         "type": "MONEYLINE",
         "direction": "BET",
-        "edge": 15.0,
-        "win_rate": 46.0,
-        "sample_size": 50,
-        "confidence": 0.30000000000000004
-      },
-      {
-        "type": "SPREAD",
-        "direction": "COVER",
-        "edge": 6.0,
-        "win_rate": 56.0,
-        "sample_size": 50,
-        "confidence": 0.1200000000000001
-      }
-    ]
-  },
-  {
-    "team": "GSW",
-    "opponent": "PHX",
-    "spread": -4.5,
-    "total": 232.0,
-    "moneyline": -180,
-    "status": "WEAK_EDGE",
-    "sample_size": 50,
-    "avg_similarity": 0.953,
-    "edges": [
-      {
-        "type": "MONEYLINE",
-        "direction": "FADE",
-        "edge": -10.0,
-        "win_rate": 54.0,
-        "sample_size": 50,
-        "confidence": 0.19999999999999996
+        "advantage": 19.6,
+        "target_prob": 48.1,
+        "market_prob": 28.6,
+        "strength": "STRONG",
+        "confidence": 1.96
       },
       {
         "type": "TOTAL",
         "direction": "OVER",
-        "edge": 10.0,
-        "win_rate": 60.0,
-        "sample_size": 50,
-        "confidence": 0.19999999999999996
+        "advantage": 7.8,
+        "target_prob": 57.8,
+        "market_prob": 50.0,
+        "strength": "STRONG",
+        "confidence": 0.78
       }
-    ]
+    ],
+    "meta": {
+      "target_model": {
+        "ml_prob": 0.4814365968126284,
+        "spread_prob": 0.5015858578605173,
+        "over_prob": 0.5776627518421915,
+        "sample_size": 50,
+        "avg_similarity": 0.8983097267150879
+      },
+      "draft_model": {
+        "ml_prob": 0.286,
+        "spread_prob": 0.5,
+        "over_prob": 0.5
+      }
+    }
   }
 ]
