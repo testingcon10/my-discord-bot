@@ -1,6 +1,6 @@
 {
   "sport": "nba",
-  "timestamp": "2026-02-02T20:57:53.145955",
+  "timestamp": "2026-02-03T04:41:03.774723",
   "games": [
     {
       "game_id": "401810567",
@@ -29,21 +29,21 @@
       "game_id": "401810568",
       "name": "Houston Rockets at Indiana Pacers",
       "date": "2026-02-03T00:00Z",
-      "status": "STATUS_IN_PROGRESS",
-      "status_detail": "10:22 - 4th Quarter",
+      "status": "STATUS_FINAL",
+      "status_detail": "Final",
       "period": 4,
-      "clock": "10:22",
+      "clock": "12:00",
       "home": {
         "team": "Indiana Pacers",
         "abbrev": "IND",
-        "score": 92,
-        "record": "13-36"
+        "score": 114,
+        "record": "13-37"
       },
       "away": {
         "team": "Houston Rockets",
         "abbrev": "HOU",
-        "score": 90,
-        "record": "30-17"
+        "score": 118,
+        "record": "31-17"
       },
       "odds": {},
       "venue": "Gainbridge Fieldhouse"
@@ -52,21 +52,21 @@
       "game_id": "401810569",
       "name": "Minnesota Timberwolves at Memphis Grizzlies",
       "date": "2026-02-03T00:30Z",
-      "status": "STATUS_HALFTIME",
-      "status_detail": "Halftime",
-      "period": 2,
-      "clock": "0.0",
+      "status": "STATUS_FINAL",
+      "status_detail": "Final",
+      "period": 4,
+      "clock": "12:00",
       "home": {
         "team": "Memphis Grizzlies",
         "abbrev": "MEM",
-        "score": 66,
-        "record": "18-29"
+        "score": 137,
+        "record": "19-29"
       },
       "away": {
         "team": "Minnesota Timberwolves",
         "abbrev": "MIN",
-        "score": 58,
-        "record": "31-19"
+        "score": 128,
+        "record": "31-20"
       },
       "odds": {},
       "venue": "FedExForum"
@@ -75,30 +75,23 @@
       "game_id": "401810570",
       "name": "Philadelphia 76ers at LA Clippers",
       "date": "2026-02-03T03:00Z",
-      "status": "STATUS_SCHEDULED",
-      "status_detail": "Mon, February 2nd at 10:00 PM EST",
-      "period": 0,
-      "clock": "0.0",
+      "status": "STATUS_FINAL",
+      "status_detail": "Final",
+      "period": 4,
+      "clock": "12:00",
       "home": {
         "team": "LA Clippers",
         "abbrev": "LAC",
-        "score": 0,
-        "record": "23-25"
+        "score": 113,
+        "record": "23-26"
       },
       "away": {
         "team": "Philadelphia 76ers",
         "abbrev": "PHI",
-        "score": 0,
-        "record": "27-21"
+        "score": 128,
+        "record": "28-21"
       },
-      "odds": {
-        "spread": 1.5,
-        "spread_odds": -110,
-        "over_under": 218.5,
-        "home_ml": 0,
-        "away_ml": 0,
-        "provider": "Draft Kings"
-      },
+      "odds": {},
       "venue": "Intuit Dome"
     }
   ],
@@ -569,9 +562,9 @@
       "player_id": null,
       "player": "James Harden",
       "position": "G",
-      "status": "Out",
+      "status": "Day-To-Day",
       "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:21Z"
+      "injury_date": "2026-02-03T07:46Z"
     },
     {
       "team": "Unknown",
@@ -942,16 +935,6 @@
       "status": "Out",
       "injury_type": "Unknown",
       "injury_date": "2025-11-24T16:19Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Joel Embiid",
-      "position": "C",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T01:08Z"
     },
     {
       "team": "Unknown",

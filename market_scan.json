@@ -1,585 +1,658 @@
 {
-  "sport": "basketball_nba",
-  "timestamp": "2026-02-02T20:57:56.373476",
-  "game_count": 11,
-  "games": [
-    {
-      "game": "Houston Rockets @ Indiana Pacers",
-      "commence_time": "2026-02-03T00:12:00Z",
-      "moneyline": {
-        "home": {
-          "odds": 115,
-          "book": "MyBookie.ag"
+  "timestamp": "2026-02-03T12:19:01.211591",
+  "nba": {
+    "sport": "basketball_nba",
+    "timestamp": "2026-02-03T12:19:06.075006",
+    "game_count": 10,
+    "games": [
+      {
+        "game": "Denver Nuggets @ Detroit Pistons",
+        "game_id": "19a5443c8ea8f228498d950cb51a24a4",
+        "commence_time": "2026-02-04T00:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": -170,
+            "book": "BetOnline.ag"
+          },
+          "away_ml": {
+            "odds": 155,
+            "book": "BetUS"
+          },
+          "home_spread": {
+            "point": -4.0,
+            "odds": -101,
+            "book": "LowVig.ag"
+          },
+          "away_spread": {
+            "point": 3.5,
+            "odds": -105,
+            "book": "BetMGM"
+          },
+          "over": {
+            "point": 229.5,
+            "odds": -104,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 228.5,
+            "odds": -108,
+            "book": "DraftKings"
+          }
         },
-        "away": {
-          "odds": -105,
-          "book": "BetMGM"
+        "line_movement": {
+          "spread_open": -4.0,
+          "spread_current": -3.9444444444444446,
+          "spread_move": 0.05555555555555536,
+          "total_open": 227.55555555555554,
+          "total_current": 228.83333333333334,
+          "total_move": 1.2777777777777999,
+          "hours_tracked": 7.1
         },
-        "home_range": [
-          -120,
-          115
-        ],
-        "away_range": [
-          -143,
-          -105
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "DraftKings",
-          "team": "Indiana Pacers",
-          "line": -1.5,
-          "odds": 100
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
         },
-        "away": {
-          "book": "FanDuel",
-          "team": "Houston Rockets",
-          "line": -1.5,
-          "odds": -114
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.28,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 2.18
         }
       },
-      "total": {
-        "over": {
-          "book": "MyBookie.ag",
-          "direction": "Over",
-          "line": 228.5,
-          "odds": -105
+      {
+        "game": "Utah Jazz @ Indiana Pacers",
+        "game_id": "635e88c2f951b24786768df6799cea86",
+        "commence_time": "2026-02-04T00:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": -149,
+            "book": "LowVig.ag"
+          },
+          "away_ml": {
+            "odds": 135,
+            "book": "Bovada"
+          },
+          "home_spread": {
+            "point": -3.0,
+            "odds": -106,
+            "book": "LowVig.ag"
+          },
+          "away_spread": {
+            "point": 2.5,
+            "odds": -102,
+            "book": "BetMGM"
+          },
+          "over": {
+            "point": 237.0,
+            "odds": -105,
+            "book": "Bovada"
+          },
+          "under": {
+            "point": 236.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          }
         },
-        "under": {
-          "book": "FanDuel",
-          "direction": "Under",
-          "line": 232.5,
-          "odds": -104
+        "line_movement": {
+          "spread_open": -3.5555555555555554,
+          "spread_current": -3.0555555555555554,
+          "spread_move": 0.5,
+          "total_open": 236.72222222222223,
+          "total_current": 236.55555555555554,
+          "total_move": -0.16666666666668561,
+          "hours_tracked": 7.1
+        },
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
+        },
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.37,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 2.39
         }
       },
-      "book_count": 5
-    },
-    {
-      "game": "Minnesota Timberwolves @ Memphis Grizzlies",
-      "commence_time": "2026-02-03T00:44:00Z",
-      "moneyline": {
-        "home": {
-          "odds": -111,
-          "book": "MyBookie.ag"
+      {
+        "game": "New York Knicks @ Washington Wizards",
+        "game_id": "b115535fb5004176720bf3e256b127db",
+        "commence_time": "2026-02-04T00:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": 517,
+            "book": "LowVig.ag"
+          },
+          "away_ml": {
+            "odds": -650,
+            "book": "FanDuel"
+          },
+          "home_spread": {
+            "point": 12.5,
+            "odds": -105,
+            "book": "BetMGM"
+          },
+          "away_spread": {
+            "point": -13.5,
+            "odds": -101,
+            "book": "LowVig.ag"
+          },
+          "over": {
+            "point": 227.5,
+            "odds": -105,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 227.5,
+            "odds": -106,
+            "book": "FanDuel"
+          }
         },
-        "away": {
-          "odds": -105,
-          "book": "DraftKings"
+        "line_movement": {
+          "spread_open": 13.555555555555555,
+          "spread_current": 13.166666666666666,
+          "spread_move": -0.3888888888888893,
+          "total_open": 228.11111111111111,
+          "total_current": 227.55555555555554,
+          "total_move": -0.5555555555555713,
+          "hours_tracked": 7.1
         },
-        "home_range": [
-          -125,
-          -111
-        ],
-        "away_range": [
-          -111,
-          -105
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "BetMGM",
-          "team": "Memphis Grizzlies",
-          "line": -1.5,
-          "odds": -102
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
         },
-        "away": {
-          "book": "MyBookie.ag",
-          "team": "Minnesota Timberwolves",
-          "line": -0.5,
-          "odds": -111
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.33,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 2.87
         }
       },
-      "total": {
-        "over": {
-          "book": "FanDuel",
-          "direction": "Over",
-          "line": 243.5,
-          "odds": 100
+      {
+        "game": "Atlanta Hawks @ Miami Heat",
+        "game_id": "01033031be4b2306531dce32f69191b5",
+        "commence_time": "2026-02-04T00:40:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": -154,
+            "book": "MyBookie.ag"
+          },
+          "away_ml": {
+            "odds": 145,
+            "book": "Bovada"
+          },
+          "home_spread": {
+            "point": -3.5,
+            "odds": -102,
+            "book": "DraftKings"
+          },
+          "away_spread": {
+            "point": 4.0,
+            "odds": -105,
+            "book": "Bovada"
+          },
+          "over": {
+            "point": 241.0,
+            "odds": -107,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 240.5,
+            "odds": -105,
+            "book": "DraftKings"
+          }
         },
-        "under": {
-          "book": "BetMGM",
-          "direction": "Under",
-          "line": 243.5,
-          "odds": -115
+        "line_movement": {
+          "spread_open": -4.222222222222222,
+          "spread_current": -3.388888888888889,
+          "spread_move": 0.8333333333333335,
+          "total_open": 239.77777777777777,
+          "total_current": 240.88888888888889,
+          "total_move": 1.1111111111111143,
+          "hours_tracked": 7.1
+        },
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
+        },
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.31,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 1.45
         }
       },
-      "book_count": 5
-    },
-    {
-      "game": "Philadelphia 76ers @ Los Angeles Clippers",
-      "commence_time": "2026-02-03T03:10:00Z",
-      "moneyline": {
-        "home": {
-          "odds": 105,
-          "book": "BetMGM"
+      {
+        "game": "Los Angeles Lakers @ Brooklyn Nets",
+        "game_id": "4cc413ea9714a3e472033030eac2adb7",
+        "commence_time": "2026-02-04T00:40:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": 330,
+            "book": "FanDuel"
+          },
+          "away_ml": {
+            "odds": -330,
+            "book": "Bovada"
+          },
+          "home_spread": {
+            "point": 9.0,
+            "odds": -107,
+            "book": "LowVig.ag"
+          },
+          "away_spread": {
+            "point": -9.5,
+            "odds": 100,
+            "book": "DraftKings"
+          },
+          "over": {
+            "point": 222.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 222.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          }
         },
-        "away": {
-          "odds": -110,
-          "book": "BetRivers"
+        "line_movement": {
+          "spread_open": 8.055555555555555,
+          "spread_current": 9.0,
+          "spread_move": 0.9444444444444446,
+          "total_open": 222.5,
+          "total_current": 222.38888888888889,
+          "total_move": -0.11111111111111427,
+          "hours_tracked": 7.1
         },
-        "home_range": [
-          -112,
-          105
-        ],
-        "away_range": [
-          -125,
-          -110
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "LowVig.ag",
-          "team": "Los Angeles Clippers",
-          "line": 1.0,
-          "odds": -105
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
         },
-        "away": {
-          "book": "DraftKings",
-          "team": "Philadelphia 76ers",
-          "line": -1.5,
-          "odds": -105
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.41,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 0.0
         }
       },
-      "total": {
-        "over": {
-          "book": "FanDuel",
-          "direction": "Over",
-          "line": 218.5,
-          "odds": -106
+      {
+        "game": "Boston Celtics @ Dallas Mavericks",
+        "game_id": "e0d51f970fc760f66ccb9b94f0d7527a",
+        "commence_time": "2026-02-04T01:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": 225,
+            "book": "Bovada"
+          },
+          "away_ml": {
+            "odds": -240,
+            "book": "BetUS"
+          },
+          "home_spread": {
+            "point": 7.0,
+            "odds": -105,
+            "book": "Bovada"
+          },
+          "away_spread": {
+            "point": -7.0,
+            "odds": -101,
+            "book": "LowVig.ag"
+          },
+          "over": {
+            "point": 223.5,
+            "odds": -105,
+            "book": "BetMGM"
+          },
+          "under": {
+            "point": 223.0,
+            "odds": -107,
+            "book": "LowVig.ag"
+          }
         },
-        "under": {
-          "book": "LowVig.ag",
-          "direction": "Under",
-          "line": 218.0,
-          "odds": -104
+        "line_movement": {
+          "spread_open": 7.611111111111111,
+          "spread_current": 6.833333333333333,
+          "spread_move": -0.7777777777777777,
+          "total_open": 222.22222222222223,
+          "total_current": 223.05555555555554,
+          "total_move": 0.8333333333333144,
+          "hours_tracked": 7.1
+        },
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
+        },
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.24,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 1.36
         }
       },
-      "book_count": 9
-    },
-    {
-      "game": "Denver Nuggets @ Detroit Pistons",
-      "commence_time": "2026-02-04T00:10:00Z",
-      "moneyline": {
-        "home": {
-          "odds": -175,
-          "book": "BetRivers"
+      {
+        "game": "Chicago Bulls @ Milwaukee Bucks",
+        "game_id": "6e77a178712aabf4adad2f5c2761833a",
+        "commence_time": "2026-02-04T01:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": 130,
+            "book": "Bovada"
+          },
+          "away_ml": {
+            "odds": -138,
+            "book": "LowVig.ag"
+          },
+          "home_spread": {
+            "point": 3.0,
+            "odds": -105,
+            "book": "Bovada"
+          },
+          "away_spread": {
+            "point": -2.5,
+            "odds": -106,
+            "book": "LowVig.ag"
+          },
+          "over": {
+            "point": 223.0,
+            "odds": -107,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 223.0,
+            "odds": -107,
+            "book": "LowVig.ag"
+          }
         },
-        "away": {
-          "odds": 160,
-          "book": "DraftKings"
+        "line_movement": {
+          "spread_open": 3.1666666666666665,
+          "spread_current": 2.611111111111111,
+          "spread_move": -0.5555555555555554,
+          "total_open": 225.44444444444446,
+          "total_current": 223.61111111111111,
+          "total_move": -1.8333333333333428,
+          "hours_tracked": 7.1
         },
-        "home_range": [
-          -192,
-          -175
-        ],
-        "away_range": [
-          138,
-          160
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "LowVig.ag",
-          "team": "Detroit Pistons",
-          "line": -4.0,
-          "odds": -106
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
         },
-        "away": {
-          "book": "DraftKings",
-          "team": "Denver Nuggets",
-          "line": 4.5,
-          "odds": -105
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.21,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 1.46
         }
       },
-      "total": {
-        "over": {
-          "book": "LowVig.ag",
-          "direction": "Over",
-          "line": 226.0,
-          "odds": -107
+      {
+        "game": "Orlando Magic @ Oklahoma City Thunder",
+        "game_id": "cbd809d5c1bf7515e3baa1882f0356ad",
+        "commence_time": "2026-02-04T01:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": -250,
+            "book": "BetUS"
+          },
+          "away_ml": {
+            "odds": 220,
+            "book": "BetRivers"
+          },
+          "home_spread": {
+            "point": -7.0,
+            "odds": -101,
+            "book": "LowVig.ag"
+          },
+          "away_spread": {
+            "point": 6.5,
+            "odds": -105,
+            "book": "BetMGM"
+          },
+          "over": {
+            "point": 219.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 219.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          }
         },
-        "under": {
-          "book": "LowVig.ag",
-          "direction": "Under",
-          "line": 226.0,
-          "odds": -107
+        "line_movement": {
+          "spread_open": -6.777777777777778,
+          "spread_current": -6.888888888888889,
+          "spread_move": -0.1111111111111116,
+          "total_open": 219.88888888888889,
+          "total_current": 219.61111111111111,
+          "total_move": -0.27777777777777146,
+          "hours_tracked": 7.1
+        },
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
+        },
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.21,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 2.68
         }
       },
-      "book_count": 5
-    },
-    {
-      "game": "New York Knicks @ Washington Wizards",
-      "commence_time": "2026-02-04T00:10:00Z",
-      "moneyline": {
-        "home": {
-          "odds": 570,
-          "book": "FanDuel"
+      {
+        "game": "Philadelphia 76ers @ Golden State Warriors",
+        "game_id": "b3edd94288c50752fc0b9bd809fd69cc",
+        "commence_time": "2026-02-04T03:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": -140,
+            "book": "Bovada"
+          },
+          "away_ml": {
+            "odds": 132,
+            "book": "LowVig.ag"
+          },
+          "home_spread": {
+            "point": -3.5,
+            "odds": -108,
+            "book": "DraftKings"
+          },
+          "away_spread": {
+            "point": 3.0,
+            "odds": -101,
+            "book": "LowVig.ag"
+          },
+          "over": {
+            "point": 221.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 221.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          }
         },
-        "away": {
-          "odds": -750,
-          "book": "DraftKings"
+        "line_movement": {
+          "spread_open": -2.357142857142857,
+          "spread_current": -3.111111111111111,
+          "spread_move": -0.753968253968254,
+          "total_open": 219.14285714285714,
+          "total_current": 221.16666666666666,
+          "total_move": 2.0238095238095184,
+          "hours_tracked": 7.1
         },
-        "home_range": [
-          510,
-          570
-        ],
-        "away_range": [
-          -835,
-          -750
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "LowVig.ag",
-          "team": "Washington Wizards",
-          "line": 13.5,
-          "odds": -106
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
         },
-        "away": {
-          "book": "LowVig.ag",
-          "team": "New York Knicks",
-          "line": -13.5,
-          "odds": -106
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.31,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 1.44
         }
       },
-      "total": {
-        "over": {
-          "book": "LowVig.ag",
-          "direction": "Over",
-          "line": 226.5,
-          "odds": -107
+      {
+        "game": "Phoenix Suns @ Portland Trail Blazers",
+        "game_id": "6d3f4f581df87818646720ba857a14cb",
+        "commence_time": "2026-02-04T04:10:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": 140,
+            "book": "Bovada"
+          },
+          "away_ml": {
+            "odds": -135,
+            "book": "DraftKings"
+          },
+          "home_spread": {
+            "point": 3.5,
+            "odds": -105,
+            "book": "Bovada"
+          },
+          "away_spread": {
+            "point": -2.5,
+            "odds": -103,
+            "book": "LowVig.ag"
+          },
+          "over": {
+            "point": 218.5,
+            "odds": -102,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 218.5,
+            "odds": -110,
+            "book": "MyBookie.ag"
+          }
         },
-        "under": {
-          "book": "LowVig.ag",
-          "direction": "Under",
-          "line": 226.5,
-          "odds": -107
+        "line_movement": {
+          "spread_open": 3.6666666666666665,
+          "spread_current": 2.6666666666666665,
+          "spread_move": -1.0,
+          "total_open": 217.55555555555554,
+          "total_current": 218.38888888888889,
+          "total_move": 0.8333333333333428,
+          "hours_tracked": 7.1
+        },
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
+        },
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.33,
+        "book_count": 9,
+        "arbitrage": {
+          "exists": true,
+          "profit_pct": 0.89,
+          "home_odds": 140,
+          "home_book": "Bovada",
+          "away_odds": -135,
+          "away_book": "DraftKings"
         }
-      },
-      "book_count": 5
-    },
-    {
-      "game": "Atlanta Hawks @ Miami Heat",
-      "commence_time": "2026-02-04T00:40:00Z",
-      "moneyline": {
-        "home": {
-          "odds": -180,
-          "book": "FanDuel"
+      }
+    ],
+    "alerts": [
+      {
+        "type": "ARBITRAGE",
+        "game": "Phoenix Suns @ Portland Trail Blazers",
+        "detail": "0.89% guaranteed profit"
+      }
+    ],
+    "alert_count": 1
+  },
+  "nfl": {
+    "sport": "americanfootball_nfl",
+    "timestamp": "2026-02-03T12:19:06.299036",
+    "game_count": 1,
+    "games": [
+      {
+        "game": "Seattle Seahawks @ New England Patriots",
+        "game_id": "b64e3587d7a4cf01a568e7150a2a1aec",
+        "commence_time": "2026-02-08T23:30:00Z",
+        "best_odds": {
+          "home_ml": {
+            "odds": 195,
+            "book": "DraftKings"
+          },
+          "away_ml": {
+            "odds": -225,
+            "book": "BetMGM"
+          },
+          "home_spread": {
+            "point": 4.5,
+            "odds": -104,
+            "book": "LowVig.ag"
+          },
+          "away_spread": {
+            "point": -4.5,
+            "odds": -106,
+            "book": "LowVig.ag"
+          },
+          "over": {
+            "point": 45.5,
+            "odds": -107,
+            "book": "LowVig.ag"
+          },
+          "under": {
+            "point": 45.5,
+            "odds": -105,
+            "book": "DraftKings"
+          }
         },
-        "away": {
-          "odds": 160,
-          "book": "DraftKings"
+        "line_movement": {
+          "spread_open": 4.625,
+          "spread_current": 4.625,
+          "spread_move": 0.0,
+          "total_open": 45.5625,
+          "total_current": 45.5,
+          "total_move": -0.0625,
+          "hours_tracked": 7.1
         },
-        "home_range": [
-          -192,
-          -180
-        ],
-        "away_range": [
-          143,
-          160
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "FanDuel",
-          "team": "Miami Heat",
-          "line": -4.5,
-          "odds": -108
+        "velocity": {
+          "spread_velocity": 0,
+          "is_sharp": false
         },
-        "away": {
-          "book": "DraftKings",
-          "team": "Atlanta Hawks",
-          "line": 4.5,
-          "odds": -105
+        "steam_move": {
+          "detected": false
+        },
+        "book_disagreement": 0.22,
+        "book_count": 8,
+        "arbitrage": {
+          "exists": false,
+          "vig_pct": 3.13
         }
-      },
-      "total": {
-        "over": {
-          "book": "FanDuel",
-          "direction": "Over",
-          "line": 239.5,
-          "odds": -108
-        },
-        "under": {
-          "book": "FanDuel",
-          "direction": "Under",
-          "line": 239.5,
-          "odds": -112
-        }
-      },
-      "book_count": 3
-    },
-    {
-      "game": "Los Angeles Lakers @ Brooklyn Nets",
-      "commence_time": "2026-02-04T00:40:00Z",
-      "moneyline": {
-        "home": {
-          "odds": 280,
-          "book": "DraftKings"
-        },
-        "away": {
-          "odds": -330,
-          "book": "FanDuel"
-        },
-        "home_range": [
-          250,
-          280
-        ],
-        "away_range": [
-          -355,
-          -330
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "DraftKings",
-          "team": "Brooklyn Nets",
-          "line": 8.5,
-          "odds": -105
-        },
-        "away": {
-          "book": "FanDuel",
-          "team": "Los Angeles Lakers",
-          "line": -8.5,
-          "odds": -110
-        }
-      },
-      "total": {
-        "over": {
-          "book": "FanDuel",
-          "direction": "Over",
-          "line": 222.5,
-          "odds": -108
-        },
-        "under": {
-          "book": "DraftKings",
-          "direction": "Under",
-          "line": 222.5,
-          "odds": -110
-        }
-      },
-      "book_count": 3
-    },
-    {
-      "game": "Boston Celtics @ Dallas Mavericks",
-      "commence_time": "2026-02-04T01:10:00Z",
-      "moneyline": {
-        "home": {
-          "odds": 245,
-          "book": "FanDuel"
-        },
-        "away": {
-          "odds": -290,
-          "book": "DraftKings"
-        },
-        "home_range": [
-          235,
-          245
-        ],
-        "away_range": [
-          -315,
-          -290
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "LowVig.ag",
-          "team": "Dallas Mavericks",
-          "line": 7.5,
-          "odds": -106
-        },
-        "away": {
-          "book": "LowVig.ag",
-          "team": "Boston Celtics",
-          "line": -7.5,
-          "odds": -106
-        }
-      },
-      "total": {
-        "over": {
-          "book": "LowVig.ag",
-          "direction": "Over",
-          "line": 222.0,
-          "odds": -107
-        },
-        "under": {
-          "book": "LowVig.ag",
-          "direction": "Under",
-          "line": 222.0,
-          "odds": -107
-        }
-      },
-      "book_count": 5
-    },
-    {
-      "game": "Chicago Bulls @ Milwaukee Bucks",
-      "commence_time": "2026-02-04T01:10:00Z",
-      "moneyline": {
-        "home": {
-          "odds": 132,
-          "book": "FanDuel"
-        },
-        "away": {
-          "odds": -148,
-          "book": "DraftKings"
-        },
-        "home_range": [
-          123,
-          132
-        ],
-        "away_range": [
-          -156,
-          -148
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "DraftKings",
-          "team": "Milwaukee Bucks",
-          "line": 2.5,
-          "odds": -105
-        },
-        "away": {
-          "book": "FanDuel",
-          "team": "Chicago Bulls",
-          "line": -3.0,
-          "odds": -112
-        }
-      },
-      "total": {
-        "over": {
-          "book": "DraftKings",
-          "direction": "Over",
-          "line": 227.5,
-          "odds": -105
-        },
-        "under": {
-          "book": "FanDuel",
-          "direction": "Under",
-          "line": 226.5,
-          "odds": -110
-        }
-      },
-      "book_count": 3
-    },
-    {
-      "game": "Orlando Magic @ Oklahoma City Thunder",
-      "commence_time": "2026-02-04T01:10:00Z",
-      "moneyline": {
-        "home": {
-          "odds": -265,
-          "book": "BetRivers"
-        },
-        "away": {
-          "odds": 220,
-          "book": "FanDuel"
-        },
-        "home_range": [
-          -270,
-          -265
-        ],
-        "away_range": [
-          205,
-          220
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "DraftKings",
-          "team": "Oklahoma City Thunder",
-          "line": -7.5,
-          "odds": -105
-        },
-        "away": {
-          "book": "FanDuel",
-          "team": "Orlando Magic",
-          "line": 6.5,
-          "odds": -106
-        }
-      },
-      "total": {
-        "over": {
-          "book": "FanDuel",
-          "direction": "Over",
-          "line": 220.5,
-          "odds": -106
-        },
-        "under": {
-          "book": "DraftKings",
-          "direction": "Under",
-          "line": 219.5,
-          "odds": -110
-        }
-      },
-      "book_count": 3
-    },
-    {
-      "game": "Phoenix Suns @ Portland Trail Blazers",
-      "commence_time": "2026-02-04T04:10:00Z",
-      "moneyline": {
-        "home": {
-          "odds": 160,
-          "book": "DraftKings"
-        },
-        "away": {
-          "odds": -184,
-          "book": "FanDuel"
-        },
-        "home_range": [
-          154,
-          160
-        ],
-        "away_range": [
-          -200,
-          -184
-        ]
-      },
-      "spread": {
-        "home": {
-          "book": "DraftKings",
-          "team": "Portland Trail Blazers",
-          "line": 4.5,
-          "odds": -105
-        },
-        "away": {
-          "book": "FanDuel",
-          "team": "Phoenix Suns",
-          "line": -4.5,
-          "odds": -110
-        }
-      },
-      "total": {
-        "over": {
-          "book": "BetRivers",
-          "direction": "Over",
-          "line": 219.5,
-          "odds": -112
-        },
-        "under": {
-          "book": "DraftKings",
-          "direction": "Under",
-          "line": 219.5,
-          "odds": -105
-        }
-      },
-      "book_count": 3
-    }
-  ],
-  "arbitrages": [
-    {
-      "type": "ARBITRAGE",
-      "home_team": "Indiana Pacers",
-      "away_team": "Houston Rockets",
-      "home_odds": 115,
-      "home_book": "MyBookie.ag",
-      "away_odds": -105,
-      "away_book": "BetMGM",
-      "home_stake": 47.59,
-      "away_stake": 52.41,
-      "guaranteed_profit": 2.32,
-      "roi_pct": 2.32,
-      "total_implied": 97.73
-    }
-  ],
-  "arbitrage_count": 1
+      }
+    ],
+    "alerts": [],
+    "alert_count": 0
+  }
 }

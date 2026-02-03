@@ -1,6 +1,6 @@
 {
   "sport": "nfl",
-  "timestamp": "2026-02-02T20:57:54.973091",
+  "timestamp": "2026-02-03T04:41:05.359950",
   "games": [
     {
       "game_id": "401831718",
@@ -27,6 +27,16 @@
     }
   ],
   "injuries": [
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "Zaven Collins",
+      "position": "LB",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T02:09Z"
+    },
     {
       "team": "Unknown",
       "team_abbrev": "???",
@@ -271,21 +281,71 @@
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
-      "player": "Rivaldo Fairweather",
-      "position": "TE",
-      "status": "Active",
+      "player": "Tyrone Wheatley Jr.",
+      "position": "OT",
+      "status": "Injured Reserve",
       "injury_type": "Unknown",
-      "injury_date": "2026-01-05T14:27Z"
+      "injury_date": "2026-02-03T09:03Z"
     },
     {
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
-      "player": "Tyrone Wheatley Jr.",
-      "position": "OT",
-      "status": "Injured Reserve",
+      "player": "Leonard Floyd",
+      "position": "DE",
+      "status": "Active",
       "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:02Z"
+      "injury_date": "2026-02-03T03:34Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "Ruke Orhorhoro",
+      "position": "DT",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T03:15Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "LaCale London",
+      "position": "DE",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T03:05Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "JD Bertrand",
+      "position": "LB",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T02:55Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "Jalon Walker",
+      "position": "LB",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T02:40Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "David Onyemata",
+      "position": "DT",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T02:21Z"
     },
     {
       "team": "Unknown",
@@ -471,61 +531,21 @@
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
-      "player": "Ronnie Harrison Jr.",
+      "player": "Mike Green",
       "position": "LB",
-      "status": "Questionable",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-05T14:50Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Brandon Dorlus",
-      "position": "DT",
-      "status": "Questionable",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-05T14:50Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Trenton Gill",
-      "position": "P",
       "status": "Active",
       "injury_type": "Unknown",
-      "injury_date": "2026-01-05T14:27Z"
+      "injury_date": "2026-02-03T03:58Z"
     },
     {
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
-      "player": "Malik Heath",
-      "position": "WR",
+      "player": "Chidobe Awuzie",
+      "position": "CB",
       "status": "Active",
       "injury_type": "Unknown",
-      "injury_date": "2026-01-05T14:27Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tyler Allgeier",
-      "position": "RB",
-      "status": "Active",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-05T04:21Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Darnell Mooney",
-      "position": "WR",
-      "status": "Active",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-05T04:06Z"
+      "injury_date": "2026-02-03T03:50Z"
     },
     {
       "team": "Unknown",
@@ -761,31 +781,11 @@
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
-      "player": "Rashod Bateman",
-      "position": "WR",
-      "status": "Questionable",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-05T14:50Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Amani Oruwariye",
-      "position": "CB",
-      "status": "Active",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-05T14:31Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
       "player": "Jordan Phillips",
       "position": "DT",
       "status": "Injured Reserve",
       "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:02Z"
+      "injury_date": "2026-02-03T09:03Z"
     },
     {
       "team": "Unknown",
@@ -3781,6 +3781,16 @@
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
+      "player": "Jake Haener",
+      "position": "QB",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T00:08Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
       "player": "Gardner Minshew",
       "position": "QB",
       "status": "Injured Reserve",
@@ -4016,16 +4026,6 @@
       "status": "Active",
       "injury_type": "Unknown",
       "injury_date": "2026-01-05T05:09Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kareem Hunt",
-      "position": "RB",
-      "status": "Active",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-05T04:30Z"
     },
     {
       "team": "Unknown",
@@ -4621,16 +4621,6 @@
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
-      "player": "Larrell Murchison",
-      "position": "DE",
-      "status": "Active",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-26T12:14Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
       "player": "Blake Corum",
       "position": "RB",
       "status": "Active",
@@ -4776,6 +4766,16 @@
       "status": "Active",
       "injury_type": "Unknown",
       "injury_date": "2026-01-16T21:47Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "Poona Ford",
+      "position": "DT",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-01-16T01:08Z"
     },
     {
       "team": "Unknown",
@@ -5281,6 +5281,16 @@
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
+      "player": "Drake Maye",
+      "position": "QB",
+      "status": "Questionable",
+      "injury_type": "Unknown",
+      "injury_date": "2026-02-03T02:05Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
       "player": "Hunter Henry",
       "position": "TE",
       "status": "Questionable",
@@ -5336,16 +5346,6 @@
       "status": "Questionable",
       "injury_type": "Unknown",
       "injury_date": "2026-01-31T00:34Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Drake Maye",
-      "position": "QB",
-      "status": "Questionable",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-31T00:26Z"
     },
     {
       "team": "Unknown",
@@ -5785,7 +5785,7 @@
       "position": "S",
       "status": "Out",
       "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:02Z"
+      "injury_date": "2026-02-03T09:03Z"
     },
     {
       "team": "Unknown",
@@ -7151,16 +7151,6 @@
       "team": "Unknown",
       "team_abbrev": "???",
       "player_id": null,
-      "player": "Velus Jones Jr.",
-      "position": "RB",
-      "status": "Active",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-27T01:42Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
       "player": "Cam Akers",
       "position": "RB",
       "status": "Active",
@@ -7276,6 +7266,16 @@
       "status": "Active",
       "injury_type": "Unknown",
       "injury_date": "2026-01-23T00:36Z"
+    },
+    {
+      "team": "Unknown",
+      "team_abbrev": "???",
+      "player_id": null,
+      "player": "Rylie Mills",
+      "position": "DT",
+      "status": "Active",
+      "injury_type": "Unknown",
+      "injury_date": "2026-01-19T13:37Z"
     },
     {
       "team": "Unknown",

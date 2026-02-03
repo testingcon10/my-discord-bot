@@ -1,0 +1,1004 @@
+{
+  "19a5443c8ea8f228498d950cb51a24a4": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412821",
+      "spread": -4.0,
+      "total": 227.55555555555554,
+      "home_ml": -177,
+      "away_ml": 148,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "MyBookie.ag": -4.0,
+        "DraftKings": -4.5,
+        "BetRivers": -4.0,
+        "BetOnline.ag": -4.0,
+        "LowVig.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.0,
+        "BetMGM": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801074",
+      "spread": -4.0,
+      "total": 227.55555555555554,
+      "home_ml": -177,
+      "away_ml": 148,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "MyBookie.ag": -4.0,
+        "DraftKings": -4.5,
+        "BetRivers": -4.0,
+        "BetOnline.ag": -4.0,
+        "LowVig.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.0,
+        "BetMGM": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.889963",
+      "spread": -4.055555555555555,
+      "total": 227.61111111111111,
+      "home_ml": -178,
+      "away_ml": 150,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "MyBookie.ag": -4.0,
+        "DraftKings": -4.5,
+        "BetRivers": -4.5,
+        "BetOnline.ag": -4.0,
+        "LowVig.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.0,
+        "BetMGM": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227017",
+      "spread": -4.0,
+      "total": 227.55555555555554,
+      "home_ml": -176,
+      "away_ml": 148,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "MyBookie.ag": -4.0,
+        "DraftKings": -4.5,
+        "BetRivers": -4.0,
+        "BetOnline.ag": -4.0,
+        "LowVig.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.0,
+        "BetMGM": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070405",
+      "spread": -3.9444444444444446,
+      "total": 228.83333333333334,
+      "home_ml": -176,
+      "away_ml": 148,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "MyBookie.ag": -4.0,
+        "DraftKings": -3.5,
+        "BetRivers": -4.5,
+        "BetOnline.ag": -4.0,
+        "LowVig.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.0,
+        "BetMGM": -3.5
+      }
+    }
+  ],
+  "635e88c2f951b24786768df6799cea86": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412860",
+      "spread": -3.5555555555555554,
+      "total": 236.72222222222223,
+      "home_ml": -159,
+      "away_ml": 134,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "BetMGM": -3.5,
+        "LowVig.ag": -3.5,
+        "MyBookie.ag": -3.5,
+        "BetOnline.ag": -3.5,
+        "BetUS": -3.5,
+        "DraftKings": -3.5,
+        "BetRivers": -3.5,
+        "Bovada": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801095",
+      "spread": -3.5555555555555554,
+      "total": 236.77777777777777,
+      "home_ml": -159,
+      "away_ml": 134,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "BetMGM": -3.5,
+        "LowVig.ag": -3.5,
+        "MyBookie.ag": -3.5,
+        "BetOnline.ag": -3.5,
+        "BetUS": -3.5,
+        "DraftKings": -3.5,
+        "BetRivers": -3.5,
+        "Bovada": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890058",
+      "spread": -3.5555555555555554,
+      "total": 236.77777777777777,
+      "home_ml": -159,
+      "away_ml": 134,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "BetMGM": -3.5,
+        "LowVig.ag": -3.5,
+        "MyBookie.ag": -3.5,
+        "BetOnline.ag": -3.5,
+        "BetUS": -3.5,
+        "DraftKings": -3.5,
+        "BetRivers": -3.5,
+        "Bovada": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227086",
+      "spread": -3.5555555555555554,
+      "total": 236.77777777777777,
+      "home_ml": -159,
+      "away_ml": 134,
+      "book_spreads": {
+        "FanDuel": -4.0,
+        "BetMGM": -3.5,
+        "LowVig.ag": -3.5,
+        "MyBookie.ag": -3.5,
+        "BetOnline.ag": -3.5,
+        "BetUS": -3.5,
+        "DraftKings": -3.5,
+        "BetRivers": -3.5,
+        "Bovada": -3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070436",
+      "spread": -3.0555555555555554,
+      "total": 236.55555555555554,
+      "home_ml": -154,
+      "away_ml": 129,
+      "book_spreads": {
+        "FanDuel": -3.5,
+        "BetMGM": -2.5,
+        "LowVig.ag": -3.0,
+        "MyBookie.ag": -3.0,
+        "BetOnline.ag": -3.0,
+        "BetUS": -3.0,
+        "DraftKings": -2.5,
+        "BetRivers": -3.5,
+        "Bovada": -3.5
+      }
+    }
+  ],
+  "b115535fb5004176720bf3e256b127db": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412884",
+      "spread": 13.555555555555555,
+      "total": 228.11111111111111,
+      "home_ml": 499,
+      "away_ml": -711,
+      "book_spreads": {
+        "FanDuel": 13.5,
+        "LowVig.ag": 13.5,
+        "BetOnline.ag": 13.5,
+        "MyBookie.ag": 13.5,
+        "DraftKings": 13.5,
+        "BetRivers": 14.0,
+        "BetUS": 13.5,
+        "Bovada": 13.5,
+        "BetMGM": 13.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801108",
+      "spread": 13.555555555555555,
+      "total": 228.11111111111111,
+      "home_ml": 499,
+      "away_ml": -711,
+      "book_spreads": {
+        "FanDuel": 13.5,
+        "LowVig.ag": 13.5,
+        "BetOnline.ag": 13.5,
+        "MyBookie.ag": 13.5,
+        "DraftKings": 13.5,
+        "BetRivers": 14.0,
+        "BetUS": 13.5,
+        "Bovada": 13.5,
+        "BetMGM": 13.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890124",
+      "spread": 13.555555555555555,
+      "total": 228.05555555555554,
+      "home_ml": 499,
+      "away_ml": -711,
+      "book_spreads": {
+        "FanDuel": 13.5,
+        "LowVig.ag": 13.5,
+        "BetOnline.ag": 13.5,
+        "MyBookie.ag": 13.5,
+        "DraftKings": 13.5,
+        "BetRivers": 14.0,
+        "BetUS": 13.5,
+        "Bovada": 13.5,
+        "BetMGM": 13.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227132",
+      "spread": 13.555555555555555,
+      "total": 228.05555555555554,
+      "home_ml": 499,
+      "away_ml": -711,
+      "book_spreads": {
+        "FanDuel": 13.5,
+        "LowVig.ag": 13.5,
+        "BetOnline.ag": 13.5,
+        "MyBookie.ag": 13.5,
+        "DraftKings": 13.5,
+        "BetRivers": 14.0,
+        "BetUS": 13.5,
+        "Bovada": 13.5,
+        "BetMGM": 13.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070457",
+      "spread": 13.166666666666666,
+      "total": 227.55555555555554,
+      "home_ml": 497,
+      "away_ml": -706,
+      "book_spreads": {
+        "FanDuel": 13.0,
+        "LowVig.ag": 13.5,
+        "BetOnline.ag": 13.5,
+        "MyBookie.ag": 13.0,
+        "DraftKings": 13.5,
+        "BetRivers": 13.0,
+        "BetUS": 13.0,
+        "Bovada": 13.5,
+        "BetMGM": 12.5
+      }
+    }
+  ],
+  "01033031be4b2306531dce32f69191b5": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412905",
+      "spread": -4.222222222222222,
+      "total": 239.77777777777777,
+      "home_ml": -180,
+      "away_ml": 151,
+      "book_spreads": {
+        "FanDuel": -4.5,
+        "MyBookie.ag": -4.5,
+        "DraftKings": -3.5,
+        "BetRivers": -4.5,
+        "LowVig.ag": -4.0,
+        "BetOnline.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.5,
+        "BetMGM": -4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801120",
+      "spread": -4.333333333333333,
+      "total": 239.77777777777777,
+      "home_ml": -178,
+      "away_ml": 150,
+      "book_spreads": {
+        "FanDuel": -4.5,
+        "MyBookie.ag": -4.5,
+        "DraftKings": -4.5,
+        "BetRivers": -4.5,
+        "LowVig.ag": -4.0,
+        "BetOnline.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.5,
+        "BetMGM": -4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890180",
+      "spread": -4.277777777777778,
+      "total": 239.83333333333334,
+      "home_ml": -178,
+      "away_ml": 149,
+      "book_spreads": {
+        "FanDuel": -4.5,
+        "MyBookie.ag": -4.5,
+        "DraftKings": -4.5,
+        "BetRivers": -4.5,
+        "LowVig.ag": -4.0,
+        "BetOnline.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.0,
+        "BetMGM": -4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227173",
+      "spread": -4.277777777777778,
+      "total": 239.83333333333334,
+      "home_ml": -177,
+      "away_ml": 149,
+      "book_spreads": {
+        "FanDuel": -4.5,
+        "MyBookie.ag": -4.5,
+        "DraftKings": -4.5,
+        "BetRivers": -4.5,
+        "LowVig.ag": -4.0,
+        "BetOnline.ag": -4.0,
+        "BetUS": -4.0,
+        "Bovada": -4.0,
+        "BetMGM": -4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070476",
+      "spread": -3.388888888888889,
+      "total": 240.88888888888889,
+      "home_ml": -158,
+      "away_ml": 134,
+      "book_spreads": {
+        "FanDuel": -3.5,
+        "MyBookie.ag": -3.0,
+        "DraftKings": -3.5,
+        "BetRivers": -3.5,
+        "LowVig.ag": -3.0,
+        "BetOnline.ag": -3.0,
+        "BetUS": -3.5,
+        "Bovada": -4.0,
+        "BetMGM": -3.5
+      }
+    }
+  ],
+  "4cc413ea9714a3e472033030eac2adb7": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412925",
+      "spread": 8.055555555555555,
+      "total": 222.5,
+      "home_ml": 271,
+      "away_ml": -344,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 8.0,
+        "DraftKings": 7.5,
+        "BetRivers": 8.5,
+        "LowVig.ag": 8.0,
+        "BetOnline.ag": 8.0,
+        "BetUS": 8.0,
+        "Bovada": 8.0,
+        "BetMGM": 8.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801131",
+      "spread": 8.0,
+      "total": 222.5,
+      "home_ml": 271,
+      "away_ml": -343,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 8.0,
+        "DraftKings": 7.5,
+        "BetRivers": 8.5,
+        "LowVig.ag": 8.0,
+        "BetOnline.ag": 8.0,
+        "BetUS": 8.0,
+        "Bovada": 7.5,
+        "BetMGM": 8.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890303",
+      "spread": 8.055555555555555,
+      "total": 222.44444444444446,
+      "home_ml": 270,
+      "away_ml": -340,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 8.0,
+        "DraftKings": 7.5,
+        "BetRivers": 8.5,
+        "LowVig.ag": 8.0,
+        "BetOnline.ag": 8.0,
+        "BetUS": 8.0,
+        "Bovada": 8.0,
+        "BetMGM": 8.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227214",
+      "spread": 7.944444444444445,
+      "total": 222.44444444444446,
+      "home_ml": 270,
+      "away_ml": -340,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 8.0,
+        "DraftKings": 7.5,
+        "BetRivers": 8.5,
+        "LowVig.ag": 8.0,
+        "BetOnline.ag": 8.0,
+        "BetUS": 8.0,
+        "Bovada": 8.0,
+        "BetMGM": 7.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070494",
+      "spread": 9.0,
+      "total": 222.38888888888889,
+      "home_ml": 302,
+      "away_ml": -385,
+      "book_spreads": {
+        "FanDuel": 9.0,
+        "MyBookie.ag": 9.0,
+        "DraftKings": 9.5,
+        "BetRivers": 9.0,
+        "LowVig.ag": 9.0,
+        "BetOnline.ag": 9.0,
+        "BetUS": 9.0,
+        "Bovada": 8.0,
+        "BetMGM": 9.5
+      }
+    }
+  ],
+  "e0d51f970fc760f66ccb9b94f0d7527a": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412944",
+      "spread": 7.611111111111111,
+      "total": 222.22222222222223,
+      "home_ml": 229,
+      "away_ml": -283,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 7.5,
+        "DraftKings": 7.5,
+        "BetRivers": 8.0,
+        "LowVig.ag": 7.5,
+        "BetOnline.ag": 7.5,
+        "BetUS": 7.5,
+        "Bovada": 7.5,
+        "BetMGM": 7.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801143",
+      "spread": 7.611111111111111,
+      "total": 222.22222222222223,
+      "home_ml": 230,
+      "away_ml": -284,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 7.5,
+        "DraftKings": 7.5,
+        "BetRivers": 8.0,
+        "LowVig.ag": 7.5,
+        "BetOnline.ag": 7.5,
+        "BetUS": 7.5,
+        "Bovada": 7.5,
+        "BetMGM": 7.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890385",
+      "spread": 7.611111111111111,
+      "total": 222.33333333333334,
+      "home_ml": 229,
+      "away_ml": -284,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 7.5,
+        "DraftKings": 7.5,
+        "BetRivers": 8.0,
+        "LowVig.ag": 7.5,
+        "BetOnline.ag": 7.5,
+        "BetUS": 7.5,
+        "Bovada": 7.5,
+        "BetMGM": 7.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227253",
+      "spread": 7.333333333333333,
+      "total": 222.16666666666666,
+      "home_ml": 223,
+      "away_ml": -273,
+      "book_spreads": {
+        "FanDuel": 8.0,
+        "MyBookie.ag": 7.5,
+        "DraftKings": 7.5,
+        "BetRivers": 7.5,
+        "LowVig.ag": 7.0,
+        "BetOnline.ag": 7.0,
+        "BetUS": 7.0,
+        "Bovada": 7.0,
+        "BetMGM": 7.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070512",
+      "spread": 6.833333333333333,
+      "total": 223.05555555555554,
+      "home_ml": 209,
+      "away_ml": -258,
+      "book_spreads": {
+        "FanDuel": 7.0,
+        "MyBookie.ag": 6.5,
+        "DraftKings": 6.5,
+        "BetRivers": 7.0,
+        "LowVig.ag": 7.0,
+        "BetOnline.ag": 7.0,
+        "BetUS": 7.0,
+        "Bovada": 7.0,
+        "BetMGM": 6.5
+      }
+    }
+  ],
+  "6e77a178712aabf4adad2f5c2761833a": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412962",
+      "spread": 3.1666666666666665,
+      "total": 225.44444444444446,
+      "home_ml": 128,
+      "away_ml": -153,
+      "book_spreads": {
+        "FanDuel": 3.0,
+        "MyBookie.ag": 3.0,
+        "BetRivers": 3.0,
+        "DraftKings": 3.5,
+        "LowVig.ag": 3.0,
+        "BetOnline.ag": 3.0,
+        "BetUS": 3.0,
+        "Bovada": 3.5,
+        "BetMGM": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801154",
+      "spread": 3.111111111111111,
+      "total": 225.44444444444446,
+      "home_ml": 127,
+      "away_ml": -151,
+      "book_spreads": {
+        "FanDuel": 3.0,
+        "MyBookie.ag": 3.0,
+        "BetRivers": 3.0,
+        "DraftKings": 3.5,
+        "LowVig.ag": 3.0,
+        "BetOnline.ag": 3.0,
+        "BetUS": 3.0,
+        "Bovada": 3.0,
+        "BetMGM": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890446",
+      "spread": 3.111111111111111,
+      "total": 225.44444444444446,
+      "home_ml": 127,
+      "away_ml": -151,
+      "book_spreads": {
+        "FanDuel": 3.0,
+        "MyBookie.ag": 3.0,
+        "BetRivers": 3.0,
+        "DraftKings": 3.5,
+        "LowVig.ag": 3.0,
+        "BetOnline.ag": 3.0,
+        "BetUS": 3.0,
+        "Bovada": 3.0,
+        "BetMGM": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227291",
+      "spread": 3.111111111111111,
+      "total": 225.44444444444446,
+      "home_ml": 127,
+      "away_ml": -151,
+      "book_spreads": {
+        "FanDuel": 3.0,
+        "MyBookie.ag": 3.0,
+        "BetRivers": 3.0,
+        "DraftKings": 3.5,
+        "LowVig.ag": 3.0,
+        "BetOnline.ag": 3.0,
+        "BetUS": 3.0,
+        "Bovada": 3.0,
+        "BetMGM": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070529",
+      "spread": 2.611111111111111,
+      "total": 223.61111111111111,
+      "home_ml": 120,
+      "away_ml": -142,
+      "book_spreads": {
+        "FanDuel": 2.5,
+        "MyBookie.ag": 2.5,
+        "BetRivers": 3.0,
+        "DraftKings": 2.5,
+        "LowVig.ag": 2.5,
+        "BetOnline.ag": 2.5,
+        "BetUS": 2.5,
+        "Bovada": 3.0,
+        "BetMGM": 2.5
+      }
+    }
+  ],
+  "cbd809d5c1bf7515e3baa1882f0356ad": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412980",
+      "spread": -6.777777777777778,
+      "total": 219.88888888888889,
+      "home_ml": -256,
+      "away_ml": 209,
+      "book_spreads": {
+        "FanDuel": -7.0,
+        "MyBookie.ag": -6.5,
+        "DraftKings": -6.5,
+        "BetRivers": -7.0,
+        "LowVig.ag": -7.0,
+        "BetOnline.ag": -7.0,
+        "BetUS": -6.5,
+        "Bovada": -7.0,
+        "BetMGM": -6.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801165",
+      "spread": -6.777777777777778,
+      "total": 219.88888888888889,
+      "home_ml": -256,
+      "away_ml": 209,
+      "book_spreads": {
+        "FanDuel": -7.0,
+        "MyBookie.ag": -6.5,
+        "DraftKings": -6.5,
+        "BetRivers": -7.0,
+        "LowVig.ag": -7.0,
+        "BetOnline.ag": -7.0,
+        "BetUS": -6.5,
+        "Bovada": -7.0,
+        "BetMGM": -6.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890504",
+      "spread": -6.777777777777778,
+      "total": 219.88888888888889,
+      "home_ml": -256,
+      "away_ml": 209,
+      "book_spreads": {
+        "FanDuel": -7.0,
+        "MyBookie.ag": -6.5,
+        "DraftKings": -6.5,
+        "BetRivers": -7.0,
+        "LowVig.ag": -7.0,
+        "BetOnline.ag": -7.0,
+        "BetUS": -6.5,
+        "Bovada": -7.0,
+        "BetMGM": -6.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227332",
+      "spread": -6.777777777777778,
+      "total": 219.88888888888889,
+      "home_ml": -256,
+      "away_ml": 209,
+      "book_spreads": {
+        "FanDuel": -7.0,
+        "MyBookie.ag": -6.5,
+        "DraftKings": -6.5,
+        "BetRivers": -7.0,
+        "LowVig.ag": -7.0,
+        "BetOnline.ag": -7.0,
+        "BetUS": -6.5,
+        "Bovada": -7.0,
+        "BetMGM": -6.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070547",
+      "spread": -6.888888888888889,
+      "total": 219.61111111111111,
+      "home_ml": -263,
+      "away_ml": 215,
+      "book_spreads": {
+        "FanDuel": -7.0,
+        "MyBookie.ag": -7.0,
+        "DraftKings": -6.5,
+        "BetRivers": -7.0,
+        "LowVig.ag": -7.0,
+        "BetOnline.ag": -7.0,
+        "BetUS": -7.0,
+        "Bovada": -7.0,
+        "BetMGM": -6.5
+      }
+    }
+  ],
+  "b3edd94288c50752fc0b9bd809fd69cc": [
+    {
+      "timestamp": "2026-02-03T05:11:34.412994",
+      "spread": -2.357142857142857,
+      "total": 219.14285714285714,
+      "home_ml": -132,
+      "away_ml": 111,
+      "book_spreads": {
+        "FanDuel": -2.5,
+        "BetRivers": -2.0,
+        "MyBookie.ag": -2.5,
+        "DraftKings": -2.5,
+        "Bovada": -2.0,
+        "LowVig.ag": -2.5,
+        "BetOnline.ag": -2.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801174",
+      "spread": -2.375,
+      "total": 219.0625,
+      "home_ml": -134,
+      "away_ml": 112,
+      "book_spreads": {
+        "FanDuel": -2.5,
+        "BetRivers": -2.0,
+        "MyBookie.ag": -2.5,
+        "DraftKings": -2.5,
+        "Bovada": -2.0,
+        "LowVig.ag": -2.5,
+        "BetOnline.ag": -2.5,
+        "BetMGM": -2.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890555",
+      "spread": -2.375,
+      "total": 219.0625,
+      "home_ml": -134,
+      "away_ml": 112,
+      "book_spreads": {
+        "FanDuel": -2.5,
+        "BetRivers": -2.0,
+        "MyBookie.ag": -2.5,
+        "DraftKings": -2.5,
+        "Bovada": -2.0,
+        "LowVig.ag": -2.5,
+        "BetOnline.ag": -2.5,
+        "BetMGM": -2.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227367",
+      "spread": -2.5,
+      "total": 219.0625,
+      "home_ml": -136,
+      "away_ml": 114,
+      "book_spreads": {
+        "FanDuel": -2.5,
+        "BetRivers": -2.0,
+        "MyBookie.ag": -2.5,
+        "DraftKings": -2.5,
+        "Bovada": -3.0,
+        "LowVig.ag": -2.5,
+        "BetOnline.ag": -2.5,
+        "BetMGM": -2.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070565",
+      "spread": -3.111111111111111,
+      "total": 221.16666666666666,
+      "home_ml": -150,
+      "away_ml": 127,
+      "book_spreads": {
+        "FanDuel": -3.0,
+        "BetRivers": -3.0,
+        "MyBookie.ag": -3.5,
+        "DraftKings": -3.5,
+        "Bovada": -2.5,
+        "LowVig.ag": -3.0,
+        "BetOnline.ag": -3.0,
+        "BetMGM": -3.5,
+        "BetUS": -3.0
+      }
+    }
+  ],
+  "6d3f4f581df87818646720ba857a14cb": [
+    {
+      "timestamp": "2026-02-03T05:11:34.413012",
+      "spread": 3.6666666666666665,
+      "total": 217.55555555555554,
+      "home_ml": 135,
+      "away_ml": -161,
+      "book_spreads": {
+        "FanDuel": 4.5,
+        "MyBookie.ag": 3.5,
+        "DraftKings": 3.5,
+        "BetRivers": 4.0,
+        "LowVig.ag": 3.5,
+        "BetOnline.ag": 3.5,
+        "BetMGM": 3.5,
+        "BetUS": 3.5,
+        "Bovada": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:50.801185",
+      "spread": 3.6666666666666665,
+      "total": 217.55555555555554,
+      "home_ml": 135,
+      "away_ml": -161,
+      "book_spreads": {
+        "FanDuel": 4.5,
+        "MyBookie.ag": 3.5,
+        "DraftKings": 3.5,
+        "BetRivers": 4.0,
+        "LowVig.ag": 3.5,
+        "BetOnline.ag": 3.5,
+        "BetMGM": 3.5,
+        "BetUS": 3.5,
+        "Bovada": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:30.890610",
+      "spread": 3.6666666666666665,
+      "total": 217.55555555555554,
+      "home_ml": 136,
+      "away_ml": -161,
+      "book_spreads": {
+        "FanDuel": 4.5,
+        "MyBookie.ag": 3.5,
+        "DraftKings": 3.5,
+        "BetRivers": 4.0,
+        "LowVig.ag": 3.5,
+        "BetOnline.ag": 3.5,
+        "BetMGM": 3.5,
+        "BetUS": 3.5,
+        "Bovada": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.227412",
+      "spread": 3.6666666666666665,
+      "total": 217.55555555555554,
+      "home_ml": 136,
+      "away_ml": -161,
+      "book_spreads": {
+        "FanDuel": 4.5,
+        "MyBookie.ag": 3.5,
+        "DraftKings": 3.5,
+        "BetRivers": 4.0,
+        "LowVig.ag": 3.5,
+        "BetOnline.ag": 3.5,
+        "BetMGM": 3.5,
+        "BetUS": 3.5,
+        "Bovada": 3.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.070582",
+      "spread": 2.6666666666666665,
+      "total": 218.38888888888889,
+      "home_ml": 119,
+      "away_ml": -142,
+      "book_spreads": {
+        "FanDuel": 2.5,
+        "MyBookie.ag": 2.5,
+        "DraftKings": 2.5,
+        "BetRivers": 3.0,
+        "LowVig.ag": 2.5,
+        "BetOnline.ag": 2.5,
+        "BetMGM": 2.5,
+        "BetUS": 2.5,
+        "Bovada": 3.5
+      }
+    }
+  ],
+  "b64e3587d7a4cf01a568e7150a2a1aec": [
+    {
+      "timestamp": "2026-02-03T05:11:34.687742",
+      "spread": 4.625,
+      "total": 45.5625,
+      "home_ml": 191,
+      "away_ml": -233,
+      "book_spreads": {
+        "DraftKings": 4.5,
+        "LowVig.ag": 4.5,
+        "FanDuel": 4.5,
+        "BetMGM": 4.5,
+        "BetRivers": 4.5,
+        "BetOnline.ag": 5.0,
+        "MyBookie.ag": 5.0,
+        "BetUS": 4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:14:51.075433",
+      "spread": 4.625,
+      "total": 45.5625,
+      "home_ml": 191,
+      "away_ml": -233,
+      "book_spreads": {
+        "DraftKings": 4.5,
+        "LowVig.ag": 4.5,
+        "FanDuel": 4.5,
+        "BetMGM": 4.5,
+        "BetRivers": 4.5,
+        "BetOnline.ag": 5.0,
+        "MyBookie.ag": 5.0,
+        "BetUS": 4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:36:31.105284",
+      "spread": 4.625,
+      "total": 45.5625,
+      "home_ml": 191,
+      "away_ml": -233,
+      "book_spreads": {
+        "DraftKings": 4.5,
+        "LowVig.ag": 4.5,
+        "FanDuel": 4.5,
+        "BetMGM": 4.5,
+        "BetRivers": 4.5,
+        "BetOnline.ag": 5.0,
+        "MyBookie.ag": 5.0,
+        "BetUS": 4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T05:50:49.464209",
+      "spread": 4.625,
+      "total": 45.5625,
+      "home_ml": 191,
+      "away_ml": -233,
+      "book_spreads": {
+        "DraftKings": 4.5,
+        "LowVig.ag": 4.5,
+        "FanDuel": 4.5,
+        "BetMGM": 4.5,
+        "BetRivers": 4.5,
+        "BetOnline.ag": 5.0,
+        "MyBookie.ag": 5.0,
+        "BetUS": 4.5
+      }
+    },
+    {
+      "timestamp": "2026-02-03T12:19:06.296022",
+      "spread": 4.625,
+      "total": 45.5,
+      "home_ml": 191,
+      "away_ml": -233,
+      "book_spreads": {
+        "DraftKings": 4.5,
+        "LowVig.ag": 4.5,
+        "FanDuel": 4.5,
+        "BetMGM": 4.5,
+        "BetRivers": 4.5,
+        "BetOnline.ag": 5.0,
+        "MyBookie.ag": 5.0,
+        "BetUS": 4.5
+      }
+    }
+  ]
+}

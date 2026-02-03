@@ -1,1126 +1,686 @@
-{
-  "updated": "2026-02-02T20:57:53.988200",
-  "count": 112,
-  "injuries": [
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kristaps Porzingis",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:08Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Onyeka Okongwu",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:06Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Duop Reath",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T17:22Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "N'Faly Dante",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-12-23T16:23Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jayson Tatum",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-10-09T16:40Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Ziaire Williams",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:35Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Noah Clowney",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:31Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Haywood Highsmith",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-31T21:52Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "KJ Simpson",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-25T21:59Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Mason Plumlee",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-12-31T15:55Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Dario Saric",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:50Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Julian Phillips",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:46Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kevin Huerter",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:45Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jalen Smith",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:44Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Josh Giddey",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:41Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tre Jones",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-30T20:27Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Zach Collins",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-14T23:29Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Noa Essengue",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-12-03T23:24Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Dennis Schroder",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T05:27Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Keon Ellis",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T05:27Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Darius Garland",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T01:04Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Evan Mobley",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-27T21:24Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Max Strus",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-06T19:13Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Brandon Williams",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:38Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "P.J. Washington",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:36Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Anthony Davis",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-13T23:58Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Dereck Lively II",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-12-21T18:06Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kyrie Irving",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-12-13T16:04Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Dante Exum",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-11-20T20:07Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Cameron Johnson",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:16Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Christian Braun",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:11Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Aaron Gordon",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-29T21:43Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tamar Bates",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-12-22T22:53Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Caris LeVert",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:21Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tolu Smith",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-31T06:03Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Moses Moody",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:08Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "L.J. Cryer",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:04Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Stephen Curry",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:20Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Seth Curry",
-      "position": "SG",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T01:28Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jonathan Kuminga",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-25T20:37Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jimmy Butler III",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-20T13:11Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kevin Durant",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T22:13Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Steven Adams",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-28T20:34Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Fred VanVleet",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-09-22T20:02Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Obi Toppin",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-31T22:28Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tyrese Haliburton",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-27T14:58Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "James Harden",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:21Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Derrick Jones Jr.",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:19Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "TyTy Washington Jr.",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T16:31Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Bradley Beal",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-11-12T20:14Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Adou Thiero",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:50Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Bronny James",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:44Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Austin Reaves",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:36Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Scotty Pippen Jr.",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T23:25Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "John Konchar",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T23:24Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Santi Aldama",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T23:22Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Ja Morant",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-24T16:07Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Zach Edey",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-14T15:12Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Brandon Clarke",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-14T15:12Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Nikola Jovic",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:55Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tyler Herro",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:52Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Norman Powell",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:52Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Terry Rozier",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-10-23T16:24Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Gary Harris",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T20:50Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Giannis Antetokounmpo",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-28T16:28Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kevin Porter Jr.",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-22T00:58Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Taurean Prince",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-01T16:50Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Terrence Shannon Jr.",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T23:07Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Hunter Dickinson",
-      "position": "C",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T16:52Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Dejounte Murray",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-07T16:39Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Mitchell Robinson",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:56Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Miles McBride",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:54Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kevin McCullar Jr.",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T16:24Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jalen Williams",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:33Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Isaiah Hartenstein",
-      "position": "C",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:33Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jaylin Williams",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:27Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Ajay Mitchell",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:24Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Chet Holmgren",
-      "position": "C",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:23Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Shai Gilgeous-Alexander",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:23Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Alex Caruso",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T23:20Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Nikola Topic",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-10-30T16:35Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Thomas Sorber",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-09-05T21:43Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Franz Wagner",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:23Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Colin Castleton",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-11-24T16:19Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Joel Embiid",
-      "position": "C",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T01:08Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Paul George",
-      "position": "F",
-      "status": "Suspension",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-31T16:49Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jalen Green",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:23Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Devin Booker",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:21Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Kris Murray",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:15Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jrue Holiday",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:10Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Scoot Henderson",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:08Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Deni Avdija",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-03T01:05Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Matisse Thybulle",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T01:12Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Damian Lillard",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-09-25T16:32Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Keegan Murray",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T19:26Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Domantas Sabonis",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T05:27Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "De'Andre Hunter",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T04:54Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Russell Westbrook",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T18:04Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Stephon Castle",
-      "position": "G",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T07:40Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jeremy Sochan",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-01T19:39Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jakob Poeltl",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-25T16:19Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Chucky Hepburn",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-06T16:34Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Jusuf Nurkic",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:10Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Keyonte George",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T22:07Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Georges Niang",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-31T22:20Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Elijah Harkless",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-31T03:17Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Walker Kessler",
-      "position": "C",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2025-11-05T18:51Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Anthony Gill",
-      "position": "F",
-      "status": "Day-To-Day",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:44Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tre Johnson",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:41Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Tristan Vukcevic",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-02-02T21:40Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Cam Whitmore",
-      "position": "F",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-15T22:15Z"
-    },
-    {
-      "team": "Unknown",
-      "team_abbrev": "???",
-      "player_id": null,
-      "player": "Trae Young",
-      "position": "G",
-      "status": "Out",
-      "injury_type": "Unknown",
-      "injury_date": "2026-01-14T20:58Z"
-    }
-  ]
-}
+[
+  {
+    "team": "???",
+    "player": "Kristaps Porzingis",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Onyeka Okongwu",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Duop Reath",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "N'Faly Dante",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Chris Boucher",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jayson Tatum",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Haywood Highsmith",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "KJ Simpson",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Mason Plumlee",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Dario Saric",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Julian Phillips",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kevin Huerter",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jalen Smith",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Josh Giddey",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Tre Jones",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Zach Collins",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Noa Essengue",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Dennis Schroder",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Keon Ellis",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Darius Garland",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Evan Mobley",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Max Strus",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "D'Angelo Russell",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Brandon Williams",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "P.J. Washington",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Anthony Davis",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Dereck Lively II",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kyrie Irving",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Dante Exum",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Cameron Johnson",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Christian Braun",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Aaron Gordon",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Tamar Bates",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Caris LeVert",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Tolu Smith",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Moses Moody",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "L.J. Cryer",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Stephen Curry",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Seth Curry",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jonathan Kuminga",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jimmy Butler III",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kevin Durant",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Steven Adams",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Fred VanVleet",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Obi Toppin",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Tyrese Haliburton",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "James Harden",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Derrick Jones Jr.",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "TyTy Washington Jr.",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Bradley Beal",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Adou Thiero",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Bronny James",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Austin Reaves",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "John Konchar",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Scotty Pippen Jr.",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Santi Aldama",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Ja Morant",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Zach Edey",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Brandon Clarke",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Nikola Jovic",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Tyler Herro",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Norman Powell",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Terry Rozier",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Gary Harris",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Giannis Antetokounmpo",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kevin Porter Jr.",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Taurean Prince",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Terrence Shannon Jr.",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Hunter Dickinson",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Dejounte Murray",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Mitchell Robinson",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Miles McBride",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kevin McCullar Jr.",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jalen Williams",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Isaiah Hartenstein",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jaylin Williams",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Ajay Mitchell",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Chet Holmgren",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Shai Gilgeous-Alexander",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Alex Caruso",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Nikola Topic",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Thomas Sorber",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Franz Wagner",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Colin Castleton",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Joel Embiid",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Paul George",
+    "status": "Suspension",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jalen Green",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Devin Booker",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kris Murray",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jrue Holiday",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Scoot Henderson",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Deni Avdija",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Matisse Thybulle",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Damian Lillard",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Keegan Murray",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Domantas Sabonis",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "De'Andre Hunter",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Russell Westbrook",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Stephon Castle",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jeremy Sochan",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jakob Poeltl",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Chucky Hepburn",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kevin Love",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Kyle Anderson",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Jusuf Nurkic",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Keyonte George",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Georges Niang",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Elijah Harkless",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Walker Kessler",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Anthony Gill",
+    "status": "Day-To-Day",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Tre Johnson",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Tristan Vukcevic",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Cam Whitmore",
+    "status": "Out",
+    "injury": "?"
+  },
+  {
+    "team": "???",
+    "player": "Trae Young",
+    "status": "Out",
+    "injury": "?"
+  }
+]
