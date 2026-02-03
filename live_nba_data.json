@@ -1,6 +1,6 @@
 {
   "sport": "nba",
-  "timestamp": "2026-02-02T20:52:03.951927",
+  "timestamp": "2026-02-02T20:57:53.145955",
   "games": [
     {
       "game_id": "401810567",
@@ -30,19 +30,19 @@
       "name": "Houston Rockets at Indiana Pacers",
       "date": "2026-02-03T00:00Z",
       "status": "STATUS_IN_PROGRESS",
-      "status_detail": "37.7 - 3rd Quarter",
-      "period": 3,
-      "clock": "37.7",
+      "status_detail": "10:22 - 4th Quarter",
+      "period": 4,
+      "clock": "10:22",
       "home": {
         "team": "Indiana Pacers",
         "abbrev": "IND",
-        "score": 85,
+        "score": 92,
         "record": "13-36"
       },
       "away": {
         "team": "Houston Rockets",
         "abbrev": "HOU",
-        "score": 85,
+        "score": 90,
         "record": "30-17"
       },
       "odds": {},

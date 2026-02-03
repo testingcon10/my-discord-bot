@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-02T20:52:07.055898",
+  "timestamp": "2026-02-02T20:57:56.375174",
   "summary": {
     "nba_games": 4,
     "nfl_games": 1,
@@ -49,5 +49,20 @@
       }
     }
   ],
-  "arbitrage": []
+  "arbitrage": [
+    {
+      "type": "ARBITRAGE",
+      "home_team": "Indiana Pacers",
+      "away_team": "Houston Rockets",
+      "home_odds": 115,
+      "home_book": "MyBookie.ag",
+      "away_odds": -105,
+      "away_book": "BetMGM",
+      "home_stake": 47.59,
+      "away_stake": 52.41,
+      "guaranteed_profit": 2.32,
+      "roi_pct": 2.32,
+      "total_implied": 97.73
+    }
+  ]
 }
